@@ -1,63 +1,56 @@
 <!doctype html>
 <html>
-<head>
-{% load static %}
-  <meta charset="utf-8">
-  <title>Bootstrap Vertical Menu Demo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <head>
+        {% load static %}
 
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <title>Bootstrap Vertical Menu Demo</title>
 
-  <!-- Twitter Bootstrap -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-  <link rel="stylesheet" type="text/css" href="{% static 'application/menu.css' %}" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'application/menu.css' %}" />
 
-</head>
-<body>
-<div class="container">
-<h1>Bootstrap Vertical Menu Demo</h1>
-</div>
-  <nav class="navbar navbar-vertical-left">
-    <ul class="nav navbar-nav">
-      <li>
-        <a href>
-          <i class="fa fa-fw fa-lg fa-star"></i>
-          <span>Menu 1</span>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <i class="fa fa-fw fa-lg fa-font"></i>
-          <span>Menu 2</span>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <i class="fa fa-fw fa-lg fa-rocket"></i>
-          <span>Menu 3</span>
-        </a>
-      </li>
-      <li>
-        <a href>
-          <i class="fa fa-fw fa-lg fa-cog"></i>
-          <span>Menu 4</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
-
-  <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-<script>
-    $(document).ready(function() {
-      $('a').click(function(event) {
-        $('a').removeClass('selected');
-        $(this).addClass('selected');
-        event.preventDefault();
-      })
-    });
-  </script>
-
-</body>
+        <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('a').click(function(event) {
+                    $('a').removeClass('selected');
+                    $(this).addClass('selected');
+                    event.preventDefault();
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Bootstrap Vertical Menu Demo</h1>
+        </div>
+        <div class="navbar navbar-vertical-left">
+            <div class="navbar navbar-logo">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href><img src="{% static 'resources/cpt_logo.png' %}" alt="logo" height="200" width="100"><img src="{% static 'resources/politechnika_logo.png' %}" alt="logo" height="200" width="150"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar navbar-buttons">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href><i class="glyphicon glyphicon-home"></i><span>strona główna</span></a>
+                    </li>
+                    <li>
+                        <a href><i class="glyphicon glyphicon-user"></i><span>o nas</span></a>
+                    </li>
+                    <li>
+                        <a href><i class="glyphicon glyphicon-earphone"></i><span>kontakt</span></a>
+                    </li>
+                    <li>
+                        <a href><i class="glyphicon glyphicon-cog"></i><span>ustawienia</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
 </html>
