@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{% static 'application/menu.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'application/logo.css' %}" />
 
         <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
         <script>
@@ -27,27 +28,41 @@
         <div class="container">
             <h1>Bootstrap Vertical Menu Demo</h1>
         </div>
-        <div class="navbar navbar-vertical-left">
+        <div class="navbar navbar-menu-vertical-left">
             <div class="navbar navbar-logo">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-ul">
                     <li>
-                        <a href><img src="{% static 'resources/cpt_logo.png' %}" alt="logo" height="200" width="100"><img src="{% static 'resources/politechnika_logo.png' %}" alt="logo" height="200" width="150"></a>
+                        <a href>
+                            <img class="cpt_logo" src="{% static 'resources/cpt_logo.png' %}"><img class="politechnika_logo" src="{% static 'resources/politechnika_logo.png' %}">
+                        </a>
                     </li>
                 </ul>
             </div>
             <div class="navbar navbar-buttons">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-ul">
                     <li>
-                        <a href><i class="glyphicon glyphicon-home"></i><span>strona główna</span></a>
+                        <a href>
+                            <i class="glyphicon glyphicon-home"></i>
+                            <span>strona główna</span>
+                        </a>
                     </li>
                     <li>
-                        <a href><i class="glyphicon glyphicon-user"></i><span>o nas</span></a>
+                        <a href>
+                            <i class="glyphicon glyphicon-user"></i>
+                            <span>o nas</span>
+                        </a>
                     </li>
                     <li>
-                        <a href><i class="glyphicon glyphicon-earphone"></i><span>kontakt</span></a>
+                        <a href>
+                            <i class="glyphicon glyphicon-earphone"></i>
+                            <span>kontakt</span>
+                        </a>
                     </li>
                     <li>
-                        <a href><i class="glyphicon glyphicon-cog"></i><span>ustawienia</span></a>
+                        <a href>
+                            <i class="glyphicon glyphicon-cog"></i>
+                            <span>ustawienia</span>
+                        </a>
                     </li>
                 </ul>
             </div>
