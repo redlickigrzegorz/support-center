@@ -1,6 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Fault
 
 
 def index(request):
-    return render(request, 'application/index.html')
+    faults = Fault.objects.all()
+
+    context = {'faults': faults,
+               'fields': Fault().get_fields(), }
+
+    return render(request, 'application/index.html', context)
