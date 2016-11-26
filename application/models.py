@@ -19,3 +19,6 @@ class Fault(models.Model):
             all_fields.append(field)
 
         return [(field.name, field.value_to_string(self)) for field in all_fields]
+
+    def __str__(self):
+        return self.topic
