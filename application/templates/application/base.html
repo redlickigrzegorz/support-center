@@ -3,7 +3,7 @@
     <head>
         {% load static %}
 
-        <title>Bootstrap Vertical Menu Demo</title>
+        <title>CPT</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -11,16 +11,27 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="{% static 'application/menu.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'application/body.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'application/logo.css' %}" />
 
         {% include 'application/scripts.html' %}
     </head>
     <body>
+        <div class="navbar navbar-menu-horizontal-top">
+
+        </div>
+        <div class="navbar navbar-menu-vertical-right">
+
+        </div>
+        <div class="navbar navbar-body">
+            {% block body %}
+            {% endblock %}
+        </div>
         <div class="navbar navbar-menu-vertical-left">
             <div class="navbar navbar-logo">
                 <ul class="nav navbar-ul">
                     <li>
-                        <a href>
+                        <a class="menu-button" href>
                             <img class="cpt_logo" src="{% static 'resources/cpt_logo.png' %}"><img class="politechnika_logo" src="{% static 'resources/politechnika_logo.png' %}">
                         </a>
                     </li>
@@ -55,8 +66,5 @@
                 </ul>
             </div>
         </div>
-
-        {% block body %}
-        {% endblock %}
     </body>
 </html>
