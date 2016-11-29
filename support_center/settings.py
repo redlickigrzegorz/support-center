@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'application.apps.ApplicationConfig',
+    'cti.apps.CtiConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'support_center.wsgi.application'
+WSGI_APPLICATION = 'support_center.wsgi.cti'
 
 
 # Database

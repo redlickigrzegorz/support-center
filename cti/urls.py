@@ -2,7 +2,7 @@ from django.conf.urls import url
 from . import views
 
 
-app_name = 'application'
+app_name = 'cti'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),

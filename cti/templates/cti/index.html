@@ -1,4 +1,4 @@
-{% extends 'application/base.html' %}
+{% extends 'cti/base.html' %}
 
 {% block body %}
 
@@ -17,7 +17,7 @@
                 {% for fault in faults %}
                     <tr class="accordion-toggle">
                         {% for name, value in fault.get_fields %}
-                                <td title="{{ value }}" style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{% url 'application:detail' fault.id %}">{{ value }}</a></td>
+                                <td title="{{ value }}" style="max-width: 100px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="{% url 'cti:detail' fault.id %}">{{ value }}</a></td>
                         {% endfor %}
                     </tr>
                 {% endfor %}

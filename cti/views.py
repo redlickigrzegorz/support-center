@@ -6,7 +6,7 @@ from .forms import FaultForm
 
 
 def index(request):
-    template = loader.get_template('application/index.html')
+    template = loader.get_template('cti/index.html')
     faults = Fault.objects.all()
 
     context = {'faults': faults,
@@ -16,7 +16,7 @@ def index(request):
 
 
 def detail(request, fault_id):
-    template = loader.get_template('application/detail.html')
+    template = loader.get_template('cti/detail.html')
     try:
         fault = Fault.objects.get(pk=fault_id)
         context = {'fault': fault,
@@ -28,7 +28,7 @@ def detail(request, fault_id):
 
 
 def add_fault(request):
-    template = loader.get_template('application/add_fault.html')
+    template = loader.get_template('cti/add_fault.html')
 
     if request.method == "POST":
         form = FaultForm(request.POST)
