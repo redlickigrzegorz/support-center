@@ -41,3 +41,22 @@ def add_fault(request):
     context = {'form': form}
 
     return HttpResponse(template.render(context, request))
+
+def edit_fault(request, fault_id):
+    template = loader.get_template('cti/edit_fault.html')
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+        form = FaultForm(request.POST or None, instance=fault)
+
+        if request.method == "POST":
+            if form.is_valid():
+                fault = form.save(commit=False)
+                fault.save()
+
+        context = {'form': form}
+
+        return HttpResponse(template.render(context, request))
+
+    except Fault.DoesNotExist:
+        raise Http404("Fault does not exist")
