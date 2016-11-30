@@ -74,7 +74,7 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-deployment = False
+deployment = True
 
 if deployment:
     DATABASES = {
@@ -124,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 

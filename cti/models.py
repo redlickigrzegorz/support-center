@@ -4,7 +4,7 @@ from django.db import models
 class Fault(models.Model):
     issuer = models.IntegerField()
     phone_number = models.IntegerField()
-    date_time = models.CharField(max_length=20)
+    date_time = models.DateTimeField()
     topic = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
     object_number = models.IntegerField()
