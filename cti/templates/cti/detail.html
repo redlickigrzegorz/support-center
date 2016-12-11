@@ -1,5 +1,25 @@
-<h1>{{ fault.issuer }}</h1>
-<ul>
-    {{ fault.topic }}
-    {{ fault.description }}
-</ul>
+{% extends 'cti/base.html' %}
+
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% for name, value in fault.get_fields %}
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{{ name }}</label>
+                                    <div class="col-md-9">{{ value }}</div>
+                                </div>
+                            {% endfor %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,27 +1,31 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-offset-4 col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-body" style="background-color: lightgrey">
+{% extends 'cti/base.html' %}
 
-                    <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {% for field in form %}
+{% block body %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-offset-4 col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                <div class="form-group">
+                                    <label class="control-label col-md-3">{{ field.label_tag }}</label>
+                                    <div class="col-md-9">{{ field }}</div>
+                                </div>
+                            {% endfor %}
                             <div class="form-group">
-                                <label class="control-label col-md-3">{{ field.label_tag }}</label>
-                                <div class="col-md-9">{{ field }}</div>
-                            </div>
-                        {% endfor %}
-                        <div class="form-group">
 
-                            <div class="col-md-offset-9 col-md-2">
-                                <button type="submit" class="btn btn-primary">submit</button>
+                                <div class="col-md-offset-9 col-md-2">
+                                    <button type="submit" class="btn btn-default">edytuj</button>
+                                </div>
                             </div>
-
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+
+{% endblock %}

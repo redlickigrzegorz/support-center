@@ -19,8 +19,7 @@ def detail(request, fault_id):
     template = loader.get_template('cti/detail.html')
     try:
         fault = Fault.objects.get(pk=fault_id)
-        context = {'fault': fault,
-                   'fields': Fault().get_fields(), }
+        context = {'fault': fault }
     except Fault.DoesNotExist:
         raise Http404("Fault does not exist")
 
