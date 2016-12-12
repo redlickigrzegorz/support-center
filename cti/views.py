@@ -3,7 +3,27 @@ from django.http import HttpResponse
 from .models import Fault
 from django.http import Http404
 from .forms import FaultForm
+from django.contrib.auth import authenticate
+from django.http import HttpResponseRedirect
+from django.contrib import auth
+from django.shortcuts import get_object_or_404, render
 
+
+def login(request):
+    next = request.GET.get('next', 'index')
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect(next)
+            else:
+                return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
+        else:
+            return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
+    return render(request, "cti/login.html", {'redirect_to': next})
 
 def index(request):
     template = loader.get_template('cti/index.html')
