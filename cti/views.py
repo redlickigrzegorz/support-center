@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.shortcuts import get_object_or_404, render
+from django.core.urlresolvers import reverse
 
 
 def login(request):
@@ -24,6 +25,10 @@ def login(request):
         else:
             return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
     return render(request, "cti/login.html", {'redirect_to': next})
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('cti:login'))
 
 def index(request):
     template = loader.get_template('cti/index.html')
