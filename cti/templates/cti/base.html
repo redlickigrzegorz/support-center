@@ -27,20 +27,20 @@
         <nav class="navbar navbar-fixed-top navbar-sidebar" style="margin-top: 50px;">
             <ul class="nav">
                 <li>
-                    <a href>
+                    <a href="{% url 'cti:index' %}">
                         <span class="glyphicon glyphicon-home"></span>
                         home
                     </a>
                 </li>
                 <li>
-                    <a href>
-                        <span class="glyphicon glyphicon-user"></span>
+                    <a href="{% url 'cti:add_fault' %}">
+                        <span class="glyphicon glyphicon-plus"></span>
                         add fault
                     </a>
                 </li>
                 <li>
                     <a href>
-                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="glyphicon glyphicon-th-list"></span>
                         my faults
                     </a>
                 </li>
