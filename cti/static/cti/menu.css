@@ -35,6 +35,14 @@
     background: #781e19;
     color: #ffffff;
 }
+.dropdown-menu > li > a {
+    color: #969594;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+    background: #781e19;
+    color: #ffffff;
+}
 .navbar-default .navbar-nav > .active > a,
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
@@ -44,8 +52,8 @@
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-    color: #555;
-    background-color: #D5D5D5;
+    background: #781e19;
+    color: #ffffff;
 }
 /* caret */
 .navbar-default .navbar-nav > .dropdown > a .caret {
