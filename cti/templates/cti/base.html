@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="{% static 'cti/menu.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
@@ -55,7 +55,7 @@
                     <li>
                         <a href>
                             <span class="glyphicon glyphicon-earphone"></span>
-                            help
+                            contact
                         </a>
                     </li>
                     {% if user.is_authenticated %}
@@ -104,8 +104,10 @@
         </nav>
         <div class="container-fluid" style="margin-top: 100px; margin-left: 200px;">
             <div class="navbar navbar-body">
+            {% include 'cti/contact_modal.html' %}
                 {% block body %}
                 {% endblock %}
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal">Add a comment</button>
             </div>
         </div>
         <footer class="footer navbar-fixed-bottom">
