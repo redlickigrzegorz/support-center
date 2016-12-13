@@ -3,7 +3,7 @@
     <head>
         {% load static %}
 
-        <title>CPT</title>
+        <title>{% block title %}{% endblock %}</title>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -18,7 +18,11 @@
     </head>
     <body style="background-color: #f7f7f7">
         <nav class="navbar navbar-fixed-top navbar-default" style="margin-top: 50px;">
-            <div class="container"></div>
+            <div class="container">
+                <div class="navbar-header navbar-title">
+                    {% block header %}{% endblock %}
+                </div>
+            </div>
         </nav>
         <nav class="navbar navbar-fixed-top navbar-sidebar" style="margin-top: 50px;">
             <ul class="nav">
