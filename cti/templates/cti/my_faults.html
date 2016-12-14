@@ -1,0 +1,31 @@
+{% extends 'cti/base.html' %}
+
+{% block title %}my faults{% endblock %}
+
+{% block header %}list of my faults{% endblock %}
+
+{% block body %}
+    <div class="table-responsive">
+         <table class="table table-striped">
+            <thead>
+                <tr>
+                    {% for field, _ in fields %}
+                        <th>{{ field }}</th>
+                    {% endfor %}
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fault in faults %}
+                    <tr>
+                        {% for name, value in fault.get_fields %}
+                                <td>{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

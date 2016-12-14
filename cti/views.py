@@ -26,13 +26,25 @@ def login(request):
             return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
     return render(request, "cti/login.html", {'redirect_to': next})
 
+
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('cti:login'))
 
+
 def index(request):
     template = loader.get_template('cti/index.html')
     faults = Fault.objects.all()
+
+    context = {'faults': faults,
+               'fields': Fault().get_fields(), }
+
+    return HttpResponse(template.render(context, request))
+
+
+def my_faults(request):
+    template = loader.get_template('cti/my_faults.html')
+    faults = Fault.objects.filter(issuer=request.user.get_username())
 
     context = {'faults': faults,
                'fields': Fault().get_fields(), }
@@ -65,6 +77,7 @@ def add_fault(request):
     context = {'form': form}
 
     return HttpResponse(template.render(context, request))
+
 
 def edit_fault(request, fault_id):
     template = loader.get_template('cti/edit_fault.html')
