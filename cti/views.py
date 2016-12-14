@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
+from datetime import datetime
 
 
 def login(request):
@@ -74,7 +75,8 @@ def add_fault(request):
     else:
         form = FaultForm()
 
-    context = {'form': form}
+    context = {'form': form,
+               'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S") }
 
     return HttpResponse(template.render(context, request))
 
