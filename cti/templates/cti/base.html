@@ -53,7 +53,7 @@
                 </div>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href>
+                        <a href="" data-toggle="modal" data-target="#contact-modal">
                             <span class="glyphicon glyphicon-earphone"></span>
                             contact
                         </a>
@@ -104,10 +104,9 @@
         </nav>
         <div class="container-fluid" style="margin-top: 100px; margin-left: 200px;">
             <div class="navbar navbar-body">
-            {% include 'cti/contact_modal.html' %}
+                {% include 'cti/contact_modal.html' %}
                 {% block body %}
                 {% endblock %}
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentModal">Add a comment</button>
             </div>
         </div>
         <footer class="footer navbar-fixed-bottom">
