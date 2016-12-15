@@ -6,6 +6,18 @@
 
 {% block body %}
     <div class="table-responsive">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <div class="col-md-offset-4 col-md-4" style="text-align: center;">
+                        <div class="alert alert-{{ message.tags }}">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </ul>
+        {% endif %}
          <table class="table table-striped">
             <thead>
                 <tr>
@@ -21,17 +33,17 @@
             <tbody>
                 {% for fault in faults %}
                     <tr>
-                        <td>{{ fault.id }}</td>
-                        <td>{{ fault.issuer }}</td>
-                        <td>{{ fault.date_time }}</td>
-                        <td>{{ fault.topic }}</td>
-                        <td>{{ fault.status }}</td>
+                        <td style="width: 5%;">{{ fault.id }}</td>
+                        <td style="width: 15%;">{{ fault.issuer }}</td>
+                        <td style="width: 20%;">{{ fault.date_time }}</td>
+                        <td style="width: 40%;">{{ fault.topic }}</td>
+                        <td style="width: 5%;">{{ fault.status }}</td>
                         <td>
                             <a href="{% url 'cti:detail' fault.id %}" class="btn btn-default" role="button">details</a>
                         </td>
                         {% if request.user.is_superuser %}
                             <td>
-                                <a href="{% url 'cti:delete_fault' fault.id %}" class="btn btn-default" role="button">assign to me</a>
+                                <a href="{% url 'cti:assign_to_me' fault.id %}" class="btn btn-default" role="button">assign to me</a>
                             </td>
                             <td>
                                 <a href="{% url 'cti:delete_fault' fault.id %}" class="btn btn-default" role="button">delete</a>

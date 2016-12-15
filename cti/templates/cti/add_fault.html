@@ -5,7 +5,18 @@
 {% block header %}adding new fault{% endblock %}
 
 {% block body %}
-
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="col-md-offset-4 col-md-4" style="text-align: center;">
+                    <div class="alert alert-{{ message.tags }}">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-offset-4 col-md-4">

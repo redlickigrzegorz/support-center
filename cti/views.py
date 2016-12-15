@@ -10,6 +10,7 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def login(request):
@@ -120,6 +121,28 @@ def delete_fault(request, fault_id):
             fault.save()
 
         faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
+
+        context = {'faults': faults,
+                   'fields': Fault().get_fields(), }
+
+        return HttpResponse(template.render(context, request))
+
+    except Fault.DoesNotExist:
+        raise Http404("Fault does not exist")
+
+
+@login_required
+def assign_to_me(request, fault_id):
+    template = loader.get_template('cti/index.html')
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.handler == '0':
+            fault.handler = request.user.get_username()
+            fault.save()
+
+        faults = Fault.objects.filter(is_visible=True)
 
         context = {'faults': faults,
                    'fields': Fault().get_fields(), }

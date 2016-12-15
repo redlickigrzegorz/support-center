@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^add/$', views.add_fault, name='add_fault'),
     url(r'^edit/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
-    url(r'^delete/(?P<fault_id>[0-9]+)/$', views.delete_fault, name='delete_fault')
+    url(r'^delete/(?P<fault_id>[0-9]+)/$', views.delete_fault, name='delete_fault'),
+    url(r'^assign_to_me/(?P<fault_id>[0-9]+)/$', views.assign_to_me, name='assign_to_me')
 ]
