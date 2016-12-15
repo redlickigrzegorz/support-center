@@ -25,6 +25,7 @@
                     <th>issuer</th>
                     <th>date time</th>
                     <th>topic</th>
+                    <th>handler</th>
                     <th>status</th>
                     <th></th>
                     <th></th>
@@ -36,7 +37,8 @@
                         <td style="width: 5%;">{{ fault.id }}</td>
                         <td style="width: 15%;">{{ fault.issuer }}</td>
                         <td style="width: 20%;">{{ fault.date_time }}</td>
-                        <td style="width: 40%;">{{ fault.topic }}</td>
+                        <td style="width: 30%;">{{ fault.topic }}</td>
+                        <td style="width: 15%;">{{ fault.handler }}</td>
                         <td style="width: 5%;">
                             {% if fault.status == 0 %}
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>

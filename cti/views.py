@@ -39,7 +39,7 @@ def logout(request):
 @login_required
 def index(request):
     template = loader.get_template('cti/index.html')
-    faults = Fault.objects.filter(is_visible=True)
+    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
     context = {'faults': faults,
                'fields': Fault().get_fields() }
@@ -114,7 +114,7 @@ def edit_fault(request, fault_id):
 
 @login_required
 def delete_fault(request, fault_id):
-    template = loader.get_template('cti/my_faults.html')
+    template = loader.get_template('cti/index.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -122,8 +122,9 @@ def delete_fault(request, fault_id):
         if fault.is_visible:
             fault.is_visible = False
             fault.save()
+            messages.success(request, "fault deleted successful")
 
-        faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
+        faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
         context = {'faults': faults,
                    'fields': Fault().get_fields(), }
@@ -143,9 +144,13 @@ def assign_to_me(request, fault_id):
 
         if fault.handler == '0':
             fault.handler = request.user.get_username()
+            fault.status = 1
             fault.save()
+            messages.success(request, "fault assigned successful")
+        else:
+            messages.warning(request, "fault is already assigned")
 
-        faults = Fault.objects.filter(is_visible=True)
+        faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
         context = {'faults': faults,
                    'fields': Fault().get_fields(), }
@@ -154,3 +159,14 @@ def assign_to_me(request, fault_id):
 
     except Fault.DoesNotExist:
         raise Http404("Fault does not exist")
+
+
+@login_required
+def resolved_faults(request):
+    template = loader.get_template('cti/index.html')
+    faults = Fault.objects.filter(is_visible=True, status=2)
+
+    context = {'faults': faults,
+               'fields': Fault().get_fields()}
+
+    return HttpResponse(template.render(context, request))
