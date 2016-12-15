@@ -79,6 +79,7 @@ def add_fault(request):
         if form.is_valid():
             error = form.save(commit=False)
             error.save()
+            messages.success(request, "fault added successful")
     else:
         form = FaultForm()
 
