@@ -12,6 +12,7 @@ class FaultForm(forms.ModelForm):
     status = forms.IntegerField()
     handler = forms.CharField()
     priority = forms.IntegerField()
+    is_visible = forms.BooleanField()
 
     class Meta:
         model = Fault

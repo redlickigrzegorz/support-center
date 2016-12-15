@@ -13,29 +13,58 @@
                     <div class="panel-body">
                         <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
-                            {% for field in form %}
-                                {% if field.name == 'issuer'%}
-                                    <div class="form-group">
-                                        <div style="width: 75%; margin: 0 auto;">
-                                            <input type="text" id="{{ field.name }}" maxlength="30" name="{{ field.name }}" class="form-control" placeholder="{{ field.name }}" value="{{ request.user }}">
-                                        </div>
-                                    </div>
-                                {% elif field.name == 'date_time'%}
-                                    <div class="form-group">
-                                        <div style="width: 75%; margin: 0 auto;">
-                                            <input type="text" id="{{ field.name }}" maxlength="30" name="{{ field.name }}" class="form-control" placeholder="{{ field.name }}" value="{{ datetime }}">
-                                        </div>
-                                    </div>
-                                {% else %}
-                                    <div class="form-group">
-                                        <div style="width: 75%; margin: 0 auto;">
-                                            <input type="text" id="{{ field.name }}" maxlength="30" name="{{ field.name }}" class="form-control" placeholder="{{ field.name }}">
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
                             <div class="form-group">
-                                <button type="submit" style="width: 50%; float: right; color: #969594" class="btn btn-default">add</button>
+                                <div style="width: 25%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="hidden" id="issuer" maxlength="30" name="issuer" class="form-control" placeholder="issuer" value="{{ request.user }}" style="text-align: left;" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="hidden" id="date_time" maxlength="30" name="date_time" class="form-control" placeholder="date_time" value="{{ datetime }}" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="text" id="phone_number" maxlength="30" name="phone_number" class="form-control" placeholder="phone_number" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="text" id="object_number" maxlength="30" name="object_number" class="form-control" placeholder="object_number" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="text" id="topic" maxlength="30" name="topic" class="form-control" placeholder="topic" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <textarea id="description" name="description" class="form-control" placeholder="description" style="height: 100px; text-align: left;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="hidden" id="status" maxlength="30" name="status" class="form-control" placeholder="status" value="0" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="hidden" id="handler" maxlength="30" name="handler" class="form-control" placeholder="handler" value="0" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="hidden" id="priority" maxlength="30" name="priority" class="form-control" placeholder="priority" value="0" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <input type="hidden" id="is_visible" maxlength="30" name="is_visible" class="form-control" placeholder="is_visible" value="1" style="text-align: left;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" style="width: 30%; float: right; margin: 0 auto; margin-right: 10%; color: #969594" class="btn btn-default">add</button>
                             </div>
                         </form>
                     </div>
