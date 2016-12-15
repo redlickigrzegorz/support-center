@@ -11,6 +11,7 @@ class Fault(models.Model):
     status = models.IntegerField()
     handler = models.CharField(max_length=20)
     priority = models.IntegerField()
+    is_visible = models.BooleanField(default=True)
 
     def get_fields(self):
         all_fields = []
