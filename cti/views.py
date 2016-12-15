@@ -41,7 +41,7 @@ def index(request):
     faults = Fault.objects.filter(is_visible=True)
 
     context = {'faults': faults,
-               'fields': Fault().get_fields(), }
+               'fields': Fault().get_fields() }
 
     return HttpResponse(template.render(context, request))
 
@@ -49,7 +49,7 @@ def index(request):
 @login_required
 def my_faults(request):
     template = loader.get_template('cti/my_faults.html')
-    faults = Fault.objects.filter(issuer=request.user.get_username())
+    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
 
     context = {'faults': faults,
                'fields': Fault().get_fields(), }
@@ -110,7 +110,7 @@ def edit_fault(request, fault_id):
 
 @login_required
 def delete_fault(request, fault_id):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/my_faults.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -119,7 +119,7 @@ def delete_fault(request, fault_id):
             fault.is_visible = False
             fault.save()
 
-        faults = Fault.objects.all()
+        faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
 
         context = {'faults': faults,
                    'fields': Fault().get_fields(), }

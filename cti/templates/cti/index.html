@@ -9,9 +9,11 @@
          <table class="table table-striped">
             <thead>
                 <tr>
-                    {% for field, _ in fields %}
-                        <th>{{ field }}</th>
-                    {% endfor %}
+                    <th>id</th>
+                    <th>issuer</th>
+                    <th>date time</th>
+                    <th>topic</th>
+                    <th>status</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -19,9 +21,22 @@
             <tbody>
                 {% for fault in faults %}
                     <tr>
-                        {% for name, value in fault.get_fields %}
-                                <td>{{ value }}</td>
-                        {% endfor %}
+                        <td>{{ fault.id }}</td>
+                        <td>{{ fault.issuer }}</td>
+                        <td>{{ fault.date_time }}</td>
+                        <td>{{ fault.topic }}</td>
+                        <td>{{ fault.status }}</td>
+                        <td>
+                            <a href="{% url 'cti:detail' fault.id %}" class="btn btn-default" role="button">details</a>
+                        </td>
+                        {% if request.user.is_superuser %}
+                            <td>
+                                <a href="{% url 'cti:delete_fault' fault.id %}" class="btn btn-default" role="button">assign to me</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'cti:delete_fault' fault.id %}" class="btn btn-default" role="button">delete</a>
+                            </td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>
