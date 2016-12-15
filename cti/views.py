@@ -11,6 +11,7 @@ from django.core.urlresolvers import reverse
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.contrib.auth.models import User
 
 
 def login(request):
@@ -170,3 +171,25 @@ def resolved_faults(request):
                'fields': Fault().get_fields()}
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        old_pass = request.POST['old_password']
+        new_pass = request.POST['new_password']
+        new_pass_repeat = request.POST['new_password_repeat']
+        user = User.objects.get(username__exact=request.user)
+        if new_pass != new_pass_repeat:
+            messages.warning(request, 'New password fields are different! ')
+        if not user.check_password(old_pass):
+            messages.warning(request, 'Old password is wrong')
+        if user.check_password(old_pass) and new_pass == new_pass_repeat:
+            user.set_password(new_pass)
+            user.save()
+            user = authenticate(username=request.user, password=new_pass)
+            auth.login(request, user)
+            messages.success(request, 'Password has been changed')
+            return HttpResponseRedirect(reverse('cti:index'))
+
+    return render(request, 'cti/change_password.html')

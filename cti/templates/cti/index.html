@@ -2,7 +2,7 @@
 
 {% block title %}faults{% endblock %}
 
-{% block header %}list of all faults{% endblock %}
+{% block header %}list of faults{% endblock %}
 
 {% block body %}
     <div class="table-responsive">
@@ -52,6 +52,9 @@
                             <a href="{% url 'cti:detail' fault.id %}" class="btn btn-default" role="button">details</a>
                         </td>
                         {% if request.user.is_superuser %}
+                            <td>
+                                <a href="{% url 'cti:edit_fault' fault.id %}" class="btn btn-default" role="button">edit</a>
+                            </td>
                             <td>
                                 <a href="{% url 'cti:assign_to_me' fault.id %}" class="btn btn-default" role="button">assign to me</a>
                             </td>

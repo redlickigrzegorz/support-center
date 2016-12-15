@@ -1,5 +1,9 @@
 {% extends 'cti/base.html' %}
 
+{% block title %}detail{% endblock %}
+
+{% block header %}detail for fault{% endblock %}
+
 {% block body %}
 
     <div class="container-fluid">
@@ -10,9 +14,9 @@
                         <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             {% for name, value in fault.get_fields %}
-                                <div class="form-group">
-                                    <label class="control-label col-md-3">{{ name }}</label>
-                                    <div class="col-md-9">{{ value }}</div>
+                                <div class="row" style="margin-left: 10%">
+                                    <label>{{ name }}</label>
+                                    <label>{{ value }}</label>
                                 </div>
                             {% endfor %}
                         </form>
