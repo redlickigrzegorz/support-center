@@ -9,6 +9,7 @@ from django.contrib import auth
 from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -28,14 +29,16 @@ def login(request):
     return render(request, "cti/login.html", {'redirect_to': next})
 
 
+@login_required
 def logout(request):
     auth.logout(request)
     return HttpResponseRedirect(reverse('cti:login'))
 
 
+@login_required
 def index(request):
     template = loader.get_template('cti/index.html')
-    faults = Fault.objects.all()
+    faults = Fault.objects.filter(is_visible=True)
 
     context = {'faults': faults,
                'fields': Fault().get_fields(), }
@@ -43,6 +46,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def my_faults(request):
     template = loader.get_template('cti/my_faults.html')
     faults = Fault.objects.filter(issuer=request.user.get_username())
@@ -53,6 +57,7 @@ def my_faults(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def detail(request, fault_id):
     template = loader.get_template('cti/detail.html')
     try:
@@ -64,6 +69,7 @@ def detail(request, fault_id):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def add_fault(request):
     template = loader.get_template('cti/add_fault.html')
 
@@ -81,6 +87,7 @@ def add_fault(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def edit_fault(request, fault_id):
     template = loader.get_template('cti/edit_fault.html')
 
@@ -94,6 +101,28 @@ def edit_fault(request, fault_id):
                 fault.save()
 
         context = {'form': form}
+
+        return HttpResponse(template.render(context, request))
+
+    except Fault.DoesNotExist:
+        raise Http404("Fault does not exist")
+
+
+@login_required
+def delete_fault(request, fault_id):
+    template = loader.get_template('cti/index.html')
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.is_visible:
+            fault.is_visible = False
+            fault.save()
+
+        faults = Fault.objects.all()
+
+        context = {'faults': faults,
+                   'fields': Fault().get_fields(), }
 
         return HttpResponse(template.render(context, request))
 
