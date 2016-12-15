@@ -100,8 +100,10 @@ def edit_fault(request, fault_id):
             if form.is_valid():
                 fault = form.save(commit=False)
                 fault.save()
+                messages.success(request, "fault edited successful")
 
-        context = {'form': form}
+        context = {'form': form,
+                   'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S") }
 
         return HttpResponse(template.render(context, request))
 
