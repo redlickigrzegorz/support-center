@@ -85,6 +85,9 @@ if deployment:
             'PASSWORD': 'gaTmKQXHxm',
             'HOST': 'sql7.freemysqlhosting.net',
             'PORT': '3306',
+            'OPTIONS': {
+                'init_command': 'SET default_storage_engine=INNODB',
+            }
         }
     }
 else:
@@ -96,6 +99,9 @@ else:
             'PASSWORD': 'root',
             'HOST': 'localhost',
             'PORT': '3306',
+            'OPTIONS': {
+                'init_command': 'SET default_storage_engine=INNODB',
+            }
         }
     }
 
