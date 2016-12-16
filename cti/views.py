@@ -143,7 +143,7 @@ def assign_to_me(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        if fault.handler == '0':
+        if fault.handler == '0' or fault.handler == '':
             fault.handler = request.user.get_username()
             fault.status = 1
             fault.save()
