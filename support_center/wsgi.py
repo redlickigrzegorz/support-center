@@ -14,3 +14,4 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "support_center.settings")
 
 application = get_wsgi_application()
+cti = get_wsgi_application()
