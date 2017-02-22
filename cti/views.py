@@ -196,4 +196,4 @@ def change_password(request):
 
 
 def test(request):
-    return render(request, 'cti/php/test.php')
+    return render(request, 'cti/test.html')
