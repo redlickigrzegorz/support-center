@@ -193,3 +193,7 @@ def change_password(request):
             return HttpResponseRedirect(reverse('cti:index'))
 
     return render(request, 'cti/change_password.html')
+
+
+def test(request):
+    return render(request, 'cti/php/test.php')
