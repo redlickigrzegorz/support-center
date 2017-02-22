@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^resolved_faults/$', views.resolved_faults, name='resolved_faults'),
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^test/$', views.test, name='test'),
+    url(r'^login_mobile/$', views.login_mobile, name='login_mobile'),
 ]

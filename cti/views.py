@@ -204,3 +204,26 @@ def test(request):
     context = {'faults': serialized_obj}
 
     return HttpResponse(template.render(context, request))
+
+
+def login_mobile(request):
+    template = loader.get_template('cti/login_mobile.html')
+    login_status = {'login_status': "false"}
+    context = {'status': sorted(login_status.items())}
+
+    if request.method == "POST":
+        username = request.POST['index_no']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                login_status = {'login_status': "true"}
+                context = {'status': sorted(login_status.items())}
+                return HttpResponse(template.render(context, request))
+            else:
+                return HttpResponse(template.render(context, request))
+        else:
+            return HttpResponse(template.render(context, request))
+
+    return HttpResponse(template.render(context, request))
