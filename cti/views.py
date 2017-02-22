@@ -12,6 +12,7 @@ from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core import serializers
 
 
 def login(request):
@@ -196,4 +197,10 @@ def change_password(request):
 
 
 def test(request):
-    return render(request, 'cti/test.html')
+    template = loader.get_template('cti/test.html')
+    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+
+    serialized_obj = serializers.serialize('json', faults)
+    context = {'faults': serialized_obj}
+
+    return HttpResponse(template.render(context, request))
