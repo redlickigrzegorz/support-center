@@ -208,8 +208,7 @@ def test(request):
 
 def login_mobile(request):
     template = loader.get_template('cti/login_mobile.html')
-    login_status = {'login_status': "false"}
-    context = {'status': sorted(login_status.items())}
+    context = {'login_status': "false"}
 
     if request.method == "POST":
         username = request.POST['index_no']
@@ -218,8 +217,7 @@ def login_mobile(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                login_status = {'login_status': "true"}
-                context = {'status': sorted(login_status.items())}
+                context = {'login_status': "true"}
                 return HttpResponse(template.render(context, request))
             else:
                 return HttpResponse(template.render(context, request))
