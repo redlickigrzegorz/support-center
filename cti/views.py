@@ -196,16 +196,6 @@ def change_password(request):
     return render(request, 'cti/change_password.html')
 
 
-def test(request):
-    template = loader.get_template('cti/test.html')
-    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
-
-    serialized_obj = serializers.serialize('json', faults)
-    context = {'faults': serialized_obj}
-
-    return HttpResponse(template.render(context, request))
-
-
 def login_mobile(request):
     template = loader.get_template('cti/login_mobile.html')
     context = {'login_status': "false"}
@@ -233,5 +223,16 @@ def logout_mobile(request):
     context = {'login_status': "false"}
 
     auth.logout(request)
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def index_mobile(request):
+    template = loader.get_template('cti/index_mobile.html')
+    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+
+    serialized_obj = serializers.serialize('json', faults)
+    context = {'faults': serialized_obj}
 
     return HttpResponse(template.render(context, request))
