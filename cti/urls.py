@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^index_mobile/$', views.index_mobile, name='index_mobile'),
     url(r'^login_mobile/$', views.login_mobile, name='login_mobile'),
     url(r'^logout_mobile/$', views.logout_mobile, name='logout_mobile'),
+    url(r'^my_faults_mobile/$', views.my_faults_mobile, name='my_faults_mobile'),
 ]

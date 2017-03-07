@@ -236,3 +236,14 @@ def index_mobile(request):
     context = {'faults': serialized_obj}
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def my_faults_mobile(request):
+    template = loader.get_template('cti/my_faults_mobile.html')
+    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
+
+    serialized_obj = serializers.serialize('json', faults)
+    context = {'faults': serialized_obj}
+
+    return HttpResponse(template.render(context, request))
