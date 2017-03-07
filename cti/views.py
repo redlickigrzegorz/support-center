@@ -326,6 +326,29 @@ def delete_fault_mobile(request, fault_id):
 
 
 @login_required
+def assign_to_me_mobile(request, fault_id):
+    template = loader.get_template('cti/assign_fault_mobile.html')
+    context = {'assign_fault_status': "false"}
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.handler == '0' or fault.handler == '':
+            fault.handler = request.user.get_username()
+            fault.status = 1
+            fault.save()
+
+            context = {'assign_fault_status': "true"}
+
+            return HttpResponse(template.render(context, request))
+
+        return HttpResponse(template.render(context, request))
+
+    except Fault.DoesNotExist:
+        raise Http404("Fault does not exist")
+
+
+@login_required
 def resolved_faults_mobile(request):
     template = loader.get_template('cti/resolved_faults_mobile.html')
     faults = Fault.objects.filter(is_visible=True, status=2)
