@@ -247,3 +247,15 @@ def my_faults_mobile(request):
     context = {'faults': serialized_obj}
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def detail_mobile(request, fault_id):
+    template = loader.get_template('cti/detail_mobile.html')
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+        context = {'fault': fault.get_fields() }
+    except Fault.DoesNotExist:
+        raise Http404("Fault does not exist")
+
+    return HttpResponse(template.render(context, request))
