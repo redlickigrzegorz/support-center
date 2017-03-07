@@ -259,3 +259,21 @@ def detail_mobile(request, fault_id):
         raise Http404("Fault does not exist")
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def add_fault_mobile(request):
+    template = loader.get_template('cti/add_fault_mobile.html')
+    context = {'add_fault_status': "false"}
+
+    if request.method == "POST":
+        form = FaultForm(request.POST)
+        if form.is_valid():
+            error = form.save(commit=False)
+            error.save()
+
+            context = {'add_fault_status': "true"}
+
+            return HttpResponse(template.render(context, request))
+
+    return HttpResponse(template.render(context, request))
