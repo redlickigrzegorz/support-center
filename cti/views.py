@@ -225,3 +225,13 @@ def login_mobile(request):
             return HttpResponse(template.render(context, request))
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def logout_mobile(request):
+    template = loader.get_template('cti/login_mobile.html')
+    context = {'login_status': "false"}
+
+    auth.logout(request)
+
+    return HttpResponse(template.render(context, request))
