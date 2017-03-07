@@ -277,3 +277,14 @@ def add_fault_mobile(request):
             return HttpResponse(template.render(context, request))
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def resolved_faults_mobile(request):
+    template = loader.get_template('cti/resolved_faults_mobile.html')
+    faults = Fault.objects.filter(is_visible=True, status=2)
+
+    serialized_obj = serializers.serialize('json', faults)
+    context = {'faults': serialized_obj}
+
+    return HttpResponse(template.render(context, request))

@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^my_faults_mobile/$', views.my_faults_mobile, name='my_faults_mobile'),
     url(r'^detail_mobile/(?P<fault_id>[0-9]+)/$', views.detail_mobile, name='detail_mobile'),
     url(r'^add_fault_mobile/$', views.add_fault_mobile, name='add_fault_mobile'),
+    url(r'^resolved_faults_mobile/$', views.resolved_faults_mobile, name='resolved_faults_mobile'),
 ]
