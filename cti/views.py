@@ -293,9 +293,31 @@ def edit_fault_mobile(request, fault_id):
                 fault = form.save(commit=False)
                 fault.save()
 
-                context = {'add_fault_status': "true"}
+                context = {'edit_fault_status': "true"}
 
                 return HttpResponse(template.render(context, request))
+
+        return HttpResponse(template.render(context, request))
+
+    except Fault.DoesNotExist:
+        raise Http404("Fault does not exist")
+
+
+@login_required
+def delete_fault_mobile(request, fault_id):
+    template = loader.get_template('cti/delete_fault_mobile.html')
+    context = {'delete_fault_status': "false"}
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.is_visible:
+            fault.is_visible = False
+            fault.save()
+
+            context = {'delete_fault_status': "true"}
+
+            return HttpResponse(template.render(context, request))
 
         return HttpResponse(template.render(context, request))
 
