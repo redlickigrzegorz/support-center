@@ -13,6 +13,18 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
+from ldap3 import Server, Connection, ALL
+
+
+def test(request):
+    template = loader.get_template('cti/test.html')
+    server = Server("10.105.10.97")
+    conn = Connection(server)
+    result = conn.bind()
+
+    context = {'result': result}
+
+    return HttpResponse(template.render(context, request))
 
 
 def login(request):
