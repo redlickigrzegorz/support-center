@@ -13,14 +13,52 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
-from ldap3 import Server, Connection, ALL
+from ldap3 import Server, Connection, AUTH_SIMPLE, STRATEGY_SYNC, SUBTREE, ALL, ALL_ATTRIBUTES, LDAPInvalidCredentialsResult
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
     server = Server("10.105.10.97")
-    conn = Connection(server)
-    result = conn.bind()
+
+    user_dn = "cn=nss,dc=cti,dc=lan"
+    password = "alamakota"
+
+#    c = Connection(server, authentication=AUTH_SIMPLE, user=user_dn, password=password, check_names=True, lazy=False,
+#                   client_strategy=STRATEGY_SYNC, raise_exceptions=False)
+#    c.open()
+#    c.bind()
+
+#    result = c.search(search_base="dc=cti,dc=lan", search_filter="(uid=180269)", search_scope=SUBTREE)
+#    c.authentication
+#    c.unbind()
+
+    c = Connection(server,
+                   user=user_dn,
+                   password=password,
+                   authentication=AUTH_SIMPLE,
+                   client_strategy=STRATEGY_SYNC,
+                   raise_exceptions=True)
+    c.open()
+    username_search_filter = "(uid=180269)"
+
+    result = "first part"
+
+    if c.search(search_base="dc=cti,dc=lan", search_filter=username_search_filter, search_scope=SUBTREE,
+                attributes=ALL_ATTRIBUTES):
+        user_information = c.response[0]
+        user_dn = user_information["dn"]
+        password = "py!oF=ososy"
+        c = Connection(server,
+                       authentication=AUTH_SIMPLE,
+                       user=user_dn,
+                       password=password,
+                       client_strategy=STRATEGY_SYNC,
+                       raise_exceptions=True)
+        c.open()
+        try:
+            result = c.bind()
+        except LDAPInvalidCredentialsResult as e:
+            result = "not working" + e
 
     context = {'result': result}
 
