@@ -28,6 +28,20 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '212.191.92.101']
 
 
+# LDAP auth settings.
+
+LDAP_AUTH_URL = "ldap://10.105.10.97"
+
+LDAP_AUTH_SEARCH_BASE = "dc=cti,dc=lan"
+
+AUTHENTICATION_BACKENDS = (
+    "django_python3_ldap.auth.LDAPBackend",
+)
+
+LDAP_AUTH_CONNECTION_USERNAME = "cn=nss,dc=cti,dc=lan"
+LDAP_AUTH_CONNECTION_PASSWORD = "alamakota"
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_python3_ldap',
 ]
 
 MIDDLEWARE = [
