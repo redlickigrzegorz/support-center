@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '212.191.92.101']
 
-
+'''
 # LDAP auth settings.
 
 LDAP_AUTH_URL = "ldap://10.105.10.97"
@@ -40,7 +40,7 @@ AUTHENTICATION_BACKENDS = (
 
 LDAP_AUTH_CONNECTION_USERNAME = "cn=nss,dc=cti,dc=lan"
 LDAP_AUTH_CONNECTION_PASSWORD = "alamakota"
-
+'''
 
 # Application definition
 
