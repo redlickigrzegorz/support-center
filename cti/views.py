@@ -16,6 +16,7 @@ from django.core import serializers
 from ldap3 import Server, Connection, SUBTREE
 from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
     LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD
+from django_python3_ldap.auth import LDAPBackend
 
 
 def test(request):
@@ -63,8 +64,6 @@ def login(request):
 
         username = c.response[0]['dn']
         if c.rebind(user=username, password=password):
-            user = User.objects.create_user('180269', 'lennon@thebeatles.com', password)
-            auth.login(request, user)
             return HttpResponseRedirect(next)
         else:
             return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
