@@ -14,26 +14,27 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
 from ldap3 import Server, Connection, SUBTREE
+from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
+    LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
 
-    username = "cn=nss,dc=cti,dc=lan"
-    password = "alamakota"
-
-    server = Server('10.105.10.97')
-    c = Connection(server, user=username, password=password)
+    server = Server(LDAP_AUTH_URL)
+    c = Connection(server, user=LDAP_AUTH_CONNECTION_USERNAME, password=LDAP_AUTH_CONNECTION_PASSWORD)
 
     c.open()
     c.bind()
 
-    c.search(search_base='dc=cti,dc=lan',
-             search_filter='(uid=180269)',
-             search_scope=SUBTREE)
+    if c.bind():
+        user_search_filter = '(uid={})'.format('180269')
+        c.search(search_base=LDAP_AUTH_SEARCH_BASE,
+                 search_filter=user_search_filter,
+                 search_scope=SUBTREE)
 
-    result = c.response[0]['dn']
-    if c.rebin(user=result, password='py!oF=ososy'):
+    username = c.response[0]['dn']
+    if c.rebind(user=username, password='py!oF=ososy'):
         result = 'dziala'
 
     context = {'result': result}
