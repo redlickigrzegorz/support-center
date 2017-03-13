@@ -21,22 +21,22 @@ from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
 def test(request):
     template = loader.get_template('cti/test.html')
 
-    server = Server(LDAP_AUTH_URL)
-    c = Connection(server, user=LDAP_AUTH_CONNECTION_USERNAME, password=LDAP_AUTH_CONNECTION_PASSWORD)
+    #server = Server(LDAP_AUTH_URL)
+    #c = Connection(server, user=LDAP_AUTH_CONNECTION_USERNAME, password=LDAP_AUTH_CONNECTION_PASSWORD)
 
-    c.open()
-    c.bind()
+    #c.open()
+    #c.bind()
 
-    if c.bind():
-        user_search_filter = '(uid={})'.format('180269')
-        c.search(search_base=LDAP_AUTH_SEARCH_BASE,
-                 search_filter=user_search_filter,
-                 search_scope=SUBTREE)
+    #if c.bind():
+    #    user_search_filter = '(uid={})'.format('180269')
+    #    c.search(search_base=LDAP_AUTH_SEARCH_BASE,
+    #             search_filter=user_search_filter,
+    #             search_scope=SUBTREE)
 
-    username = c.response[0]['dn']
-    if c.rebind(user=username, password='py!oF=ososy'):
-        result = 'dziala'
-
+    #username = c.response[0]['dn']
+    #if c.rebind(user=username, password='py!oF=ososy'):
+    #    result = 'dziala'
+    result = "dzialajuszkuje"
     context = {'result': result}
 
     return HttpResponse(template.render(context, request))
@@ -44,18 +44,40 @@ def test(request):
 
 def login(request):
     next = request.GET.get('next', 'index')
+
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                auth.login(request, user)
-                return HttpResponseRedirect(next)
-            else:
-                return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
+
+        server = Server(LDAP_AUTH_URL)
+        c = Connection(server, user=LDAP_AUTH_CONNECTION_USERNAME, password=LDAP_AUTH_CONNECTION_PASSWORD)
+
+        c.open()
+        c.bind()
+
+        if c.bind():
+            user_search_filter = '(uid={})'.format(username)
+            c.search(search_base=LDAP_AUTH_SEARCH_BASE,
+                     search_filter=user_search_filter,
+                     search_scope=SUBTREE)
+
+        username = c.response[0]['dn']
+        if c.rebind(user=username, password=password):
+            user = User.objects.create_user('180269', 'lennon@thebeatles.com', password)
+            auth.login(request, user)
+            return HttpResponseRedirect(next)
         else:
-            return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
+            return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
+
+        #user = authenticate(username=username, password=password)
+        #if user is not None:
+        #    if user.is_active:
+        #        auth.login(request, user)
+        #        return HttpResponseRedirect(next)
+        #    else:
+        #        return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
+        #else:
+        #    return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
     return render(request, "cti/login.html", {'redirect_to': next})
 
 
