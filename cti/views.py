@@ -32,7 +32,9 @@ def test(request):
              search_filter='(uid=180269)',
              search_scope=SUBTREE)
 
-    result = c.response
+    result = c.response[0]['dn']
+    if c.rebin(user=result, password='py!oF=ososy'):
+        result = 'dziala'
 
     context = {'result': result}
 
