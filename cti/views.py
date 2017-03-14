@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
+from django.http import JsonResponse
 
 
 def test(request):
@@ -21,7 +22,7 @@ def test(request):
     serialized_obj = serializers.serialize('json', faults)
     context = {'faults': serialized_obj}
 
-    return context
+    return JsonResponse(context)
 
 
 def login(request):
