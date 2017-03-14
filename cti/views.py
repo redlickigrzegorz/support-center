@@ -13,70 +13,34 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
-from ldap3 import Server, Connection, SUBTREE
-from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
-    LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD
-from django_python3_ldap.auth import LDAPBackend
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
 
-    #server = Server(LDAP_AUTH_URL)
-    #c = Connection(server, user=LDAP_AUTH_CONNECTION_USERNAME, password=LDAP_AUTH_CONNECTION_PASSWORD)
+    result = 'dziala'
 
-    #c.open()
-    #c.bind()
-
-    #if c.bind():
-    #    user_search_filter = '(uid={})'.format('180269')
-    #    c.search(search_base=LDAP_AUTH_SEARCH_BASE,
-    #             search_filter=user_search_filter,
-    #             search_scope=SUBTREE)
-
-    #username = c.response[0]['dn']
-    #if c.rebind(user=username, password='py!oF=ososy'):
-    #    result = 'dziala'
-    result = "dzialajuszkuje"
     context = {'result': result}
 
     return HttpResponse(template.render(context, request))
 
 
 def login(request):
-    next = request.GET.get('next', 'index')
+    next = request.GET.get('next', 'test')
 
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
 
-        server = Server(LDAP_AUTH_URL)
-        c = Connection(server, user=LDAP_AUTH_CONNECTION_USERNAME, password=LDAP_AUTH_CONNECTION_PASSWORD)
-
-        c.open()
-        c.bind()
-
-        if c.bind():
-            user_search_filter = '(uid={})'.format(username)
-            c.search(search_base=LDAP_AUTH_SEARCH_BASE,
-                     search_filter=user_search_filter,
-                     search_scope=SUBTREE)
-
-        username = c.response[0]['dn']
-        if c.rebind(user=username, password=password):
-            return HttpResponseRedirect(next)
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                auth.login(request, user)
+                return HttpResponseRedirect(next)
+            else:
+                return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
         else:
-            return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
-
-        #user = authenticate(username=username, password=password)
-        #if user is not None:
-        #    if user.is_active:
-        #        auth.login(request, user)
-        #        return HttpResponseRedirect(next)
-        #    else:
-        #        return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
-        #else:
-        #    return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
+            return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
     return render(request, "cti/login.html", {'redirect_to': next})
 
 
