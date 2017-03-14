@@ -16,17 +16,16 @@ from django.core import serializers
 
 
 def test(request):
-    template = loader.get_template('cti/test.html')
+    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
-    result = 'dziala'
+    serialized_obj = serializers.serialize('json', faults)
+    context = {'faults': serialized_obj}
 
-    context = {'result': result}
-
-    return HttpResponse(template.render(context, request))
+    return context
 
 
 def login(request):
-    next = request.GET.get('next', 'test')
+    next = request.GET.get('next', 'index')
 
     if request.method == "POST":
         username = request.POST['username']
