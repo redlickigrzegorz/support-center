@@ -32,6 +32,7 @@ def login(request):
         password = request.POST['password']
 
         user = authenticate(username=username, password=password)
+
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
@@ -40,6 +41,7 @@ def login(request):
                 return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
         else:
             return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
+
     return render(request, "cti/login.html", {'redirect_to': next})
 
 

@@ -14,14 +14,11 @@ class LDAPBackend(object):
         c.open()
 
         if c.bind():
-            pattern = r"(\d+)@edu.p.lodz.pl"
+            pattern = r"^(\d+)@edu.p.lodz.pl$"
             match = re.search(pattern, username)
 
             if match:
-                email = match.group(0)
                 username = match.group(1)
-            else:
-                email = "{}@edu.p.lodz.pl".format(username)
 
             user_search_filter = '(uid={})'.format(username)
 
@@ -42,7 +39,7 @@ class LDAPBackend(object):
                         if match:
                             user.first_name = match.group(1)
                             user.last_name = match.group(2)
-                            user.email = email
+                            user.email = "{}@edu.p.lodz.pl".format(username)
                             user.is_superuser = False
                             user.is_staff = False
 
