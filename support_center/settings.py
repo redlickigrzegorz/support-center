@@ -28,7 +28,9 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1', '212.191.92.101']
 
 
-# auth settings.
+# Authentication settings
+
+AUTH_USER_MODEL = "cti.User"
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',

@@ -1,4 +1,4 @@
-from cti.models import LDAP_User
+from cti.models import User
 from ldap3 import Server, Connection, SUBTREE
 from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
     LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD
@@ -22,9 +22,9 @@ class LDAPBackend(object):
 
                 if c.rebind(user=common_name, password=password):
                     try:
-                        user = LDAP_User.objects.get(username=username)
-                    except LDAP_User.DoesNotExist:
-                        user = LDAP_User(username=username)
+                        user = User.objects.get(username=username)
+                    except User.DoesNotExist:
+                        user = User(username=username)
                         user.save()
 
                     return user
@@ -33,6 +33,6 @@ class LDAPBackend(object):
 
     def get_user(self, user_id):
         try:
-            return LDAP_User.objects.get(pk=user_id)
-        except LDAP_User.DoesNotExist:
+            return User.objects.get(pk=user_id)
+        except User.DoesNotExist:
             return None
