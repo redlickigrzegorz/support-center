@@ -29,7 +29,7 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
 
-                return HttpResponseRedirect('/index/')
+                return HttpResponseRedirect(reverse('cti:index'))
             else:
                 context['error_message'] = 'your account has been disabled'
         else:
