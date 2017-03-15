@@ -33,7 +33,7 @@ def login(request):
             else:
                 context['error_message'] = 'your account has been disabled'
         else:
-            context['error_message'] = 'Invalid login'
+            context['error_message'] = 'invalid login'
 
     return HttpResponse(template.render(context, request))
 
