@@ -12,10 +12,14 @@ urlpatterns = [
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^json/logout/$', views_json.logout, name='logout_json'),
 
+    #index
+    url(r'^index/$', views.index, name='index'),
+    url(r'^json/index/$', views_json.index, name='index_json'),
+
 
     url(r'^my_faults/$', views.my_faults, name='my_faults'),
     url(r'^logout/$', views.logout, name='logout'),
-    url(r'^index/$', views.index, name='index'),
+
     url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^add/$', views.add_fault, name='add_fault'),
     url(r'^edit/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
@@ -24,8 +28,6 @@ urlpatterns = [
     url(r'^resolved_faults/$', views.resolved_faults, name='resolved_faults'),
     url(r'^change_password/$', views.change_password, name='change_password'),
     # mobile views
-
-    url(r'^index_mobile/$', views_json.index_mobile, name='index_mobile'),
 
     url(r'^my_faults_mobile/$', views_json.my_faults_mobile, name='my_faults_mobile'),
     url(r'^detail_mobile/(?P<fault_id>[0-9]+)/$', views_json.detail_mobile, name='detail_mobile'),

@@ -48,6 +48,7 @@ def logout(request):
 @login_required
 def index(request):
     template = loader.get_template('cti/index.html')
+
     faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
     context = {'faults': faults,
