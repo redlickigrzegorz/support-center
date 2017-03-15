@@ -142,9 +142,8 @@ def detail(request, fault_id):
 
 
 @login_required
-def assign_to_me_mobile(request, fault_id):
-    template = loader.get_template('cti/assign_fault_mobile.html')
-    context = {'assign_fault_status': "false"}
+def assign_to_me(request, fault_id):
+    result = {'assign_fault_status': False}
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -154,20 +153,38 @@ def assign_to_me_mobile(request, fault_id):
             fault.status = 1
             fault.save()
 
-            context = {'assign_fault_status': "true"}
+            result['assign_fault_status'] = True
 
-            return HttpResponse(template.render(context, request))
-
-        return HttpResponse(template.render(context, request))
+        return JsonResponse(result)
 
     except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
+        raise Http404("fault does not exist")
 
 
-def test(request):
-    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+@login_required
+def change_password(request):
+    result = {'change_password_status': False}
 
-    serialized_obj = serializers.serialize('json', faults)
-    context = {'faults': serialized_obj}
+    if request.method == "POST":
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_password_repeat = request.POST['new_password_repeat']
 
-    return JsonResponse(context)
+        user = User.objects.get(username__exact=request.user)
+
+        if new_password != new_password_repeat:
+            messages.warning(request, 'new password fields are different! ')
+
+        if not user.check_password(old_password):
+            messages.warning(request, 'old password is wrong')
+
+        if user.check_password(old_password) and new_password == new_password_repeat:
+            user.set_password(new_password)
+            user.save()
+            user = authenticate(username=request.user, password=new_password)
+            auth.login(request, user)
+            messages.success(request, 'password has been changed')
+
+            result['change_password_status'] = True
+
+    return JsonResponse(result)

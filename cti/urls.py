@@ -40,13 +40,11 @@ urlpatterns = [
     url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^json/detail/(?P<fault_id>[0-9]+)/$', views_json.detail, name='detail_json'),
 
-
-
+    #assigning fault
     url(r'^assign_to_me/(?P<fault_id>[0-9]+)/$', views.assign_to_me, name='assign_to_me'),
+    url(r'^json/assign_to_me/(?P<fault_id>[0-9]+)/$', views_json.assign_to_me, name='assign_to_me_json'),
+
+    #changing password
     url(r'^change_password/$', views.change_password, name='change_password'),
-    # mobile views
-
-    url(r'^assign_fault_mobile/(?P<fault_id>[0-9]+)/$', views_json.assign_to_me_mobile, name='assign_to_me_mobilei'),
-
-    url(r'^test/$', views_json.test, name='test'),
+    url(r'^json/change_password/$', views_json.change_password, name='change_password_json'),
 ]

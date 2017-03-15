@@ -182,26 +182,33 @@ def assign_to_me(request, fault_id):
         return HttpResponse(template.render(context, request))
 
     except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
+        raise Http404("fault does not exist")
 
 
 @login_required
 def change_password(request):
+    template = loader.get_template('cti/change_password.html')
+
     if request.method == "POST":
-        old_pass = request.POST['old_password']
-        new_pass = request.POST['new_password']
-        new_pass_repeat = request.POST['new_password_repeat']
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_password_repeat = request.POST['new_password_repeat']
+
         user = User.objects.get(username__exact=request.user)
-        if new_pass != new_pass_repeat:
-            messages.warning(request, 'New password fields are different! ')
-        if not user.check_password(old_pass):
-            messages.warning(request, 'Old password is wrong')
-        if user.check_password(old_pass) and new_pass == new_pass_repeat:
-            user.set_password(new_pass)
+
+        if new_password != new_password_repeat:
+            messages.warning(request, 'new password fields are different! ')
+
+        if not user.check_password(old_password):
+            messages.warning(request, 'old password is wrong')
+
+        if user.check_password(old_password) and new_password == new_password_repeat:
+            user.set_password(new_password)
             user.save()
-            user = authenticate(username=request.user, password=new_pass)
+            user = authenticate(username=request.user, password=new_password)
             auth.login(request, user)
-            messages.success(request, 'Password has been changed')
+            messages.success(request, 'password has been changed')
+
             return HttpResponseRedirect(reverse('cti:index'))
 
-    return render(request, 'cti/change_password.html')
+    return HttpResponse(template.render(request))
