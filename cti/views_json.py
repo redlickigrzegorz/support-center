@@ -65,6 +65,15 @@ def my_faults(request):
     return JsonResponse(result)
 
 
+@login_required
+def resolved_faults(request):
+    faults = Fault.objects.filter(is_visible=True, status=2)
+
+    result = {'faults': serializers.serialize('json', faults)}
+
+    return JsonResponse(result)
+
+
 def test(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
@@ -171,14 +180,3 @@ def assign_to_me_mobile(request, fault_id):
 
     except Fault.DoesNotExist:
         raise Http404("Fault does not exist")
-
-
-@login_required
-def resolved_faults_mobile(request):
-    template = loader.get_template('cti/resolved_faults_mobile.html')
-    faults = Fault.objects.filter(is_visible=True, status=2)
-
-    serialized_obj = serializers.serialize('json', faults)
-    context = {'faults': serialized_obj}
-
-    return HttpResponse(template.render(context, request))

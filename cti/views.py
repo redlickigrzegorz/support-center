@@ -70,6 +70,18 @@ def my_faults(request):
 
 
 @login_required
+def resolved_faults(request):
+    template = loader.get_template('cti/index.html')
+
+    faults = Fault.objects.filter(is_visible=True, status=2)
+
+    context = {'faults': faults,
+               'fields': Fault().get_fields()}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
 def detail(request, fault_id):
     template = loader.get_template('cti/detail.html')
     try:
@@ -170,17 +182,6 @@ def assign_to_me(request, fault_id):
 
     except Fault.DoesNotExist:
         raise Http404("Fault does not exist")
-
-
-@login_required
-def resolved_faults(request):
-    template = loader.get_template('cti/index.html')
-    faults = Fault.objects.filter(is_visible=True, status=2)
-
-    context = {'faults': faults,
-               'fields': Fault().get_fields()}
-
-    return HttpResponse(template.render(context, request))
 
 
 @login_required
