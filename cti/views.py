@@ -15,7 +15,9 @@ from django.contrib.auth.models import User
 
 
 def login(request):
-    next = request.GET.get('next', 'index')
+    template = loader.get_template('cti/login.html')
+
+    context = {'error_message': ''}
 
     if request.method == "POST":
         username = request.POST['username']
@@ -26,13 +28,14 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
-                return HttpResponseRedirect(next)
-            else:
-                return render(request, 'cti/login.html', {'error_message': 'Your account has been disabled'})
-        else:
-            return render(request, 'cti/login.html', {'error_message': 'Invalid login'})
 
-    return render(request, "cti/login.html", {'redirect_to': next})
+                return HttpResponseRedirect('/index/')
+            else:
+                context['error_message'] = 'your account has been disabled'
+        else:
+            context['error_message'] = 'Invalid login'
+
+    return HttpResponse(template.render(context, request))
 
 
 @login_required

@@ -90,36 +90,19 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-deployment = True
-
-if deployment:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sql7144346',
-            'USER': 'sql7144346',
-            'PASSWORD': 'gaTmKQXHxm',
-            'HOST': 'sql7.freemysqlhosting.net',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB',
-            }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'sql7144346',
+        'USER': 'sql7144346',
+        'PASSWORD': 'gaTmKQXHxm',
+        'HOST': 'sql7.freemysqlhosting.net',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': 'SET default_storage_engine=INNODB',
         }
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'support_center_test_database',
-            'USER': 'root',
-            'PASSWORD': 'root',
-            'HOST': 'localhost',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB',
-            }
-        }
-    }
+}
 
 
 # Password validation

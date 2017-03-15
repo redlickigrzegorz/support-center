@@ -16,6 +16,28 @@ from django.core import serializers
 from django.http import JsonResponse
 
 
+def login(request):
+    result = {'login_status': False,
+              'error_message': ''}
+
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                result['login_status'] = True
+                auth.login(request, user)
+            else:
+                result['error_message'] = 'your account has been disabled'
+        else:
+            result['error_message'] = 'invalid login'
+
+    return JsonResponse(result)
+
+
 def test(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
@@ -25,35 +47,9 @@ def test(request):
     return JsonResponse(context)
 
 
-def login_mobile(request):
-    template = loader.get_template('cti/login_mobile.html')
-    context = {'login_status': "false"}
-
-    if request.method == "POST":
-        username = request.POST['index_no']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                auth.login(request, user)
-                context = {'login_status': "true"}
-                return HttpResponse(template.render(context, request))
-            else:
-                return HttpResponse(template.render(context, request))
-        else:
-            return HttpResponse(template.render(context, request))
-
-    return HttpResponse(template.render(context, request))
-
-
 @login_required
 def logout_mobile(request):
-    template = loader.get_template('cti/login_mobile.html')
-    context = {'login_status': "false"}
-
-    auth.logout(request)
-
-    return HttpResponse(template.render(context, request))
+    pass
 
 
 @login_required
