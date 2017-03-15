@@ -74,31 +74,9 @@ def resolved_faults(request):
     return JsonResponse(result)
 
 
-def test(request):
-    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
-
-    serialized_obj = serializers.serialize('json', faults)
-    context = {'faults': serialized_obj}
-
-    return JsonResponse(context)
-
-
 @login_required
-def detail_mobile(request, fault_id):
-    template = loader.get_template('cti/detail_mobile.html')
-    try:
-        fault = Fault.objects.get(pk=fault_id)
-        context = {'fault': fault.get_fields() }
-    except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
-
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
-def add_fault_mobile(request):
-    template = loader.get_template('cti/add_fault_mobile.html')
-    context = {'add_fault_status': "false"}
+def add_fault(request):
+    result = {'add_fault_status': False}
 
     if request.method == "POST":
         form = FaultForm(request.POST)
@@ -106,17 +84,14 @@ def add_fault_mobile(request):
             error = form.save(commit=False)
             error.save()
 
-            context = {'add_fault_status': "true"}
+            result['add_fault_status'] = True
 
-            return HttpResponse(template.render(context, request))
-
-    return HttpResponse(template.render(context, request))
+    return JsonResponse(result)
 
 
 @login_required
-def edit_fault_mobile(request, fault_id):
-    template = loader.get_template('cti/edit_fault_mobile.html')
-    context = {'edit_fault_status': "false"}
+def edit_fault(request, fault_id):
+    result = {'edit_fault_status': False}
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -127,20 +102,17 @@ def edit_fault_mobile(request, fault_id):
                 fault = form.save(commit=False)
                 fault.save()
 
-                context = {'edit_fault_status': "true"}
+                result['edit_fault_status'] = True
 
-                return HttpResponse(template.render(context, request))
-
-        return HttpResponse(template.render(context, request))
+        return JsonResponse(result)
 
     except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
+        raise Http404("fault does not exist")
 
 
 @login_required
-def delete_fault_mobile(request, fault_id):
-    template = loader.get_template('cti/delete_fault_mobile.html')
-    context = {'delete_fault_status': "false"}
+def delete_fault(request, fault_id):
+    result = {'delete_fault_status': False}
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -149,14 +121,24 @@ def delete_fault_mobile(request, fault_id):
             fault.is_visible = False
             fault.save()
 
-            context = {'delete_fault_status': "true"}
+            result['delete_fault_status'] = True
 
-            return HttpResponse(template.render(context, request))
-
-        return HttpResponse(template.render(context, request))
+        return JsonResponse(result)
 
     except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
+        raise Http404("fault does not exist")
+
+
+@login_required
+def detail(request, fault_id):
+    try:
+        fault = Fault.objects.filter(pk=fault_id)
+        result = {'fault': serializers.serialize('json', fault)}
+
+        return JsonResponse(result)
+
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
 
 
 @login_required
@@ -180,3 +162,12 @@ def assign_to_me_mobile(request, fault_id):
 
     except Fault.DoesNotExist:
         raise Http404("Fault does not exist")
+
+
+def test(request):
+    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+
+    serialized_obj = serializers.serialize('json', faults)
+    context = {'faults': serialized_obj}
+
+    return JsonResponse(context)

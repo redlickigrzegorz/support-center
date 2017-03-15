@@ -24,22 +24,28 @@ urlpatterns = [
     url(r'^resolved_faults/$', views.resolved_faults, name='resolved_faults'),
     url(r'^json/resolved_faults/$', views_json.resolved_faults, name='resolved_faults_json'),
 
+    #adding fault
+    url(r'^add_fault/$', views.add_fault, name='add_fault'),
+    url(r'^json/add_fault$', views_json.add_fault, name='add_fault_json'),
 
+    #editing fault
+    url(r'^edit_fault/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
+    url(r'^json/edit_fault/(?P<fault_id>[0-9]+)/$', views_json.edit_fault, name='edit_fault_json'),
 
-    url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^add/$', views.add_fault, name='add_fault'),
-    url(r'^edit/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
+    #deleting fault
     url(r'^delete/(?P<fault_id>[0-9]+)/$', views.delete_fault, name='delete_fault'),
-    url(r'^assign_to_me/(?P<fault_id>[0-9]+)/$', views.assign_to_me, name='assign_to_me'),
+    url(r'^json/delete_fault/(?P<fault_id>[0-9]+)/$', views_json.delete_fault, name='delete_fault_json'),
 
+    #details of fault
+    url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),
+    url(r'^json/detail/(?P<fault_id>[0-9]+)/$', views_json.detail, name='detail_json'),
+
+
+
+    url(r'^assign_to_me/(?P<fault_id>[0-9]+)/$', views.assign_to_me, name='assign_to_me'),
     url(r'^change_password/$', views.change_password, name='change_password'),
     # mobile views
 
-
-    url(r'^detail_mobile/(?P<fault_id>[0-9]+)/$', views_json.detail_mobile, name='detail_mobile'),
-    url(r'^add_fault_mobile/$', views_json.add_fault_mobile, name='add_fault_mobile'),
-    url(r'^edit_fault_mobile/(?P<fault_id>[0-9]+)/$', views_json.edit_fault_mobile, name='edit_fault_mobile'),
-    url(r'^delete_fault_mobile/(?P<fault_id>[0-9]+)/$', views_json.delete_fault_mobile, name='delete_fault_mobile'),
     url(r'^assign_fault_mobile/(?P<fault_id>[0-9]+)/$', views_json.assign_to_me_mobile, name='assign_to_me_mobilei'),
 
     url(r'^test/$', views_json.test, name='test'),
