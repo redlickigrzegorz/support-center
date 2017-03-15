@@ -82,18 +82,6 @@ def resolved_faults(request):
 
 
 @login_required
-def detail(request, fault_id):
-    template = loader.get_template('cti/detail.html')
-    try:
-        fault = Fault.objects.get(pk=fault_id)
-        context = {'fault': fault }
-    except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
-
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
 def add_fault(request):
     template = loader.get_template('cti/add_fault.html')
 
@@ -107,7 +95,7 @@ def add_fault(request):
         form = FaultForm()
 
     context = {'form': form,
-               'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S") }
+               'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
     return HttpResponse(template.render(context, request))
 
@@ -127,12 +115,12 @@ def edit_fault(request, fault_id):
                 messages.success(request, "fault edited successful")
 
         context = {'form': form,
-                   'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S") }
+                   'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 
         return HttpResponse(template.render(context, request))
 
     except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
+        raise Http404("fault does not exist")
 
 
 @login_required
@@ -150,12 +138,25 @@ def delete_fault(request, fault_id):
         faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
         context = {'faults': faults,
-                   'fields': Fault().get_fields(), }
+                   'fields': Fault().get_fields()}
 
         return HttpResponse(template.render(context, request))
 
     except Fault.DoesNotExist:
-        raise Http404("Fault does not exist")
+        raise Http404("fault does not exist")
+
+
+@login_required
+def detail(request, fault_id):
+    template = loader.get_template('cti/detail.html')
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+        context = {'fault': fault}
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
