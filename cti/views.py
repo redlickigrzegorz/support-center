@@ -52,7 +52,7 @@ def index(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
     context = {'faults': faults,
-               'fields': Fault().get_fields() }
+               'fields': Fault().get_fields()}
 
     return HttpResponse(template.render(context, request))
 
@@ -60,10 +60,11 @@ def index(request):
 @login_required
 def my_faults(request):
     template = loader.get_template('cti/my_faults.html')
+
     faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
 
     context = {'faults': faults,
-               'fields': Fault().get_fields(), }
+               'fields': Fault().get_fields()}
 
     return HttpResponse(template.render(context, request))
 

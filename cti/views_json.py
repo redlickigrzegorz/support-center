@@ -56,6 +56,15 @@ def index(request):
     return JsonResponse(result)
 
 
+@login_required
+def my_faults(request):
+    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
+
+    result = {'faults': serializers.serialize('json', faults)}
+
+    return JsonResponse(result)
+
+
 def test(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
@@ -63,17 +72,6 @@ def test(request):
     context = {'faults': serialized_obj}
 
     return JsonResponse(context)
-
-
-@login_required
-def my_faults_mobile(request):
-    template = loader.get_template('cti/my_faults_mobile.html')
-    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
-
-    serialized_obj = serializers.serialize('json', faults)
-    context = {'faults': serialized_obj}
-
-    return HttpResponse(template.render(context, request))
 
 
 @login_required
