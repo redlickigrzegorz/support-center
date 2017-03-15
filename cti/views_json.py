@@ -1,14 +1,8 @@
-from django.template import loader
-from django.http import HttpResponse
 from .models import Fault
 from django.http import Http404
 from .forms import FaultForm
 from django.contrib.auth import authenticate
-from django.http import HttpResponseRedirect
 from django.contrib import auth
-from django.shortcuts import get_object_or_404, render
-from django.core.urlresolvers import reverse
-from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -49,7 +43,7 @@ def logout(request):
 
 @login_required
 def index(request):
-    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
     result = {'faults': serializers.serialize('json', faults)}
 

@@ -6,7 +6,6 @@ from .forms import FaultForm
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.contrib import auth
-from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
@@ -49,7 +48,7 @@ def logout(request):
 def index(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
     context = {'faults': faults,
                'fields': Fault().get_fields()}
@@ -135,7 +134,7 @@ def delete_fault(request, fault_id):
             fault.save()
             messages.success(request, "fault deleted successful")
 
-        faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
         context = {'faults': faults,
                    'fields': Fault().get_fields()}
@@ -174,7 +173,7 @@ def assign_to_me(request, fault_id):
         else:
             messages.warning(request, "fault is already assigned")
 
-        faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
         context = {'faults': faults,
                    'fields': Fault().get_fields(), }
