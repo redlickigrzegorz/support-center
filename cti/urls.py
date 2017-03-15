@@ -8,6 +8,11 @@ urlpatterns = [
     url(r'^$', views.login, name='login'),
     url(r'^json/login/$', views_json.login, name='login_json'),
 
+    #logout
+    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^json/logout/$', views_json.logout, name='logout_json'),
+
+
     url(r'^my_faults/$', views.my_faults, name='my_faults'),
     url(r'^logout/$', views.logout, name='logout'),
     url(r'^index/$', views.index, name='index'),
@@ -21,7 +26,7 @@ urlpatterns = [
     # mobile views
 
     url(r'^index_mobile/$', views_json.index_mobile, name='index_mobile'),
-    url(r'^logout_mobile/$', views_json.logout_mobile, name='logout_mobile'),
+
     url(r'^my_faults_mobile/$', views_json.my_faults_mobile, name='my_faults_mobile'),
     url(r'^detail_mobile/(?P<fault_id>[0-9]+)/$', views_json.detail_mobile, name='detail_mobile'),
     url(r'^add_fault_mobile/$', views_json.add_fault_mobile, name='add_fault_mobile'),

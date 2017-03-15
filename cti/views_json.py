@@ -38,6 +38,15 @@ def login(request):
     return JsonResponse(result)
 
 
+@login_required
+def logout(request):
+    auth.logout(request)
+
+    result = {'login_status': False}
+
+    return JsonResponse(result)
+
+
 def test(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0,1])
 
@@ -47,9 +56,7 @@ def test(request):
     return JsonResponse(context)
 
 
-@login_required
-def logout_mobile(request):
-    pass
+
 
 
 @login_required
