@@ -12,6 +12,7 @@ from django.http import JsonResponse
 
 def login(request):
     result = {'login_status': False,
+              'username': '',
               'error_message': ''}
 
     if request.method == "POST":
@@ -23,6 +24,7 @@ def login(request):
         if user is not None:
             if user.is_active:
                 result['login_status'] = True
+                result['username'] = username
                 auth.login(request, user)
             else:
                 result['error_message'] = 'your account has been disabled'
