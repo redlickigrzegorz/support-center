@@ -9,7 +9,7 @@
         {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
-                    <div class="col-md-offset-4 col-md-4" style="text-align: center;">
+                    <div class="col-md-offset-4 col-md-4 allert-message">
                         <div class="alert alert-{{ message.tags }}">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
                             {{ message }}
@@ -34,12 +34,12 @@
             <tbody>
                 {% for fault in faults %}
                     <tr>
-                        <td style="width: 5%;">{{ fault.id }}</td>
-                        <td style="width: 15%;">{{ fault.issuer }}</td>
-                        <td style="width: 20%;">{{ fault.date_time }}</td>
-                        <td style="width: 30%;">{{ fault.topic }}</td>
-                        <td style="width: 15%;">{{ fault.handler }}</td>
-                        <td style="width: 5%;">
+                        <td class="td-header-id">{{ fault.id }}</td>
+                        <td class="td-header-issuer">{{ fault.issuer }}</td>
+                        <td class="td-header-datetime">{{ fault.date_time }}</td>
+                        <td class="td-header-topic">{{ fault.topic }}</td>
+                        <td class="td-header-issuer">{{ fault.handler }}</td>
+                        <td class="td-header-id">
                             {% if fault.status == 0 %}
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                             {% elif fault.status == 1 %}

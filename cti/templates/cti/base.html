@@ -12,19 +12,20 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" type="text/css" href="{% static 'cti/menu.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/style.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
 
         {% include 'cti/scripts.html' %}
     </head>
-    <body style="background-color: #f7f7f7">
-        <nav class="navbar navbar-fixed-top navbar-default" style="margin-top: 50px;">
+    <body class="whole-body">
+        <nav class="navbar navbar-fixed-top navbar-default navbar-second-menu">
             <div class="container">
                 <div class="navbar-header navbar-title">
                     {% block header %}{% endblock %}
                 </div>
             </div>
         </nav>
-        <nav class="navbar navbar-fixed-top navbar-sidebar" style="margin-top: 50px;">
+        <nav class="navbar navbar-fixed-top navbar-sidebar">
             <ul class="nav">
                 <li>
                     <a href="{% url 'cti:index' %}">
@@ -108,7 +109,7 @@
                 </form>
             </div>
         </nav>
-        <div class="container-fluid" style="margin-top: 100px; margin-left: 200px;">
+        <div class="container-fluid container-body">
             <div class="navbar navbar-body">
                 {% include 'cti/contact_modal.html' %}
                 <br>
@@ -117,8 +118,8 @@
             </div>
         </div>
         <footer class="footer navbar-fixed-bottom">
-            <div class="container" style="width:100%;">
-                <span class="text-muted" style="float:right;">© copyright by Grzegorz Redlicki</span>
+            <div class="container footer-container">
+                <span class="text-muted footer">© copyright by Grzegorz Redlicki</span>
             </div>
         </footer>
     </body>

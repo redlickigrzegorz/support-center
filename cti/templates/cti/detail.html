@@ -15,69 +15,69 @@
                             {% csrf_token %}
                             {% if request.user.is_superuser %}
                                 <div class="form-group">
-                                    <div style="width: 20%; margin: 0 auto; margin-left: 10%; float: left;">
+                                    <div class="short-div">
                                         <label>priority</label>
-                                        <input type="text" id="priority" maxlength="30" name="priority" class="form-control" placeholder="priority" disabled value="{{ fault.priority }}" style="text-align: left;">
+                                        <input type="text" id="priority" maxlength="30" name="priority" class="form-control form-cell" placeholder="priority" disabled value="{{ fault.priority }}" >
                                     </div>
                                 </div>
                             {% else %}
                                 <div class="form-group">
-                                    <div style="width: 20%; margin: 0 auto; margin-left: 10%; float: left;">
-                                        <input type="hidden" id="priority" maxlength="30" name="priority" class="form-control" placeholder="priority" disabled value="{{ fault.priority }}" style="text-align: left;">
+                                    <div class="short-div">
+                                        <input type="hidden" id="priority" maxlength="30" name="priority" class="form-control form-cell" placeholder="priority" disabled value="{{ fault.priority }}">
                                     </div>
                                 </div>
                             {% endif %}
                             <div class="form-group">
-                                <div style="width: 25%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="hidden" id="issuer" maxlength="30" name="issuer" class="form-control" placeholder="issuer" disabled value="{{ fault.issuer }}" style="text-align: left;" >
+                                <div class="short-div">
+                                    <input type="hidden" id="issuer" maxlength="30" name="issuer" class="form-control form-cell" placeholder="issuer" disabled value="{{ fault.issuer }}" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="hidden" id="date_time" maxlength="30" name="date_time" class="form-control" placeholder="date time" disabled value="{{ fault.date_time }}" style="text-align: left;">
+                                <div class="normal-div">
+                                    <input type="hidden" id="date_time" maxlength="30" name="date_time" class="form-control form-cell" placeholder="date time" disabled value="{{ fault.date_time }}" >
                                 </div>
                             </div>
                             {% if request.user.is_superuser %}
                                 <div class="form-group">
-                                    <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
-                                        <input type="text" id="phone_number" maxlength="30" name="phone_number" class="form-control" placeholder="phone number" disabled value="{{ fault.phone_number }}" style="text-align: left;">
+                                    <div class="normal-div">
+                                        <input type="text" id="phone_number" maxlength="30" name="phone_number" class="form-control form-cell" placeholder="phone number" disabled value="{{ fault.phone_number }}" >
                                     </div>
                                 </div>
                             {% else %}
                                 <div class="form-group">
-                                    <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
-                                        <input type="hidden" id="phone_number" maxlength="30" name="phone_number" class="form-control" placeholder="phone number" disabled value="{{ fault.phone_number }}" style="text-align: left;">
+                                    <div class="normal-div">
+                                        <input type="hidden" id="phone_number" maxlength="30" name="phone_number" class="form-control form-cell" placeholder="phone number" disabled value="{{ fault.phone_number }}" >
                                     </div>
                                 </div>
                             {% endif %}
                             <div class="form-group">
-                                <div style="width: 50%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="text" id="object_number" maxlength="30" name="object_number" class="form-control" placeholder="object number" disabled value="{{ fault.object_number }}" style="text-align: left;">
+                                <div class="normal-div">
+                                    <input type="text" id="object_number" maxlength="30" name="object_number" class="form-control form-cell" placeholder="object number" disabled value="{{ fault.object_number }}" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="text" id="topic" maxlength="30" name="topic" class="form-control" placeholder="topic" disabled value="{{ fault.topic }}" style="text-align: left;">
+                                <div class="long-div">
+                                    <input type="text" id="topic" maxlength="30" name="topic" class="form-control form-cell" placeholder="topic" disabled value="{{ fault.topic }}" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <textarea id="description" name="description" class="form-control" placeholder="description" disabled style="height: 100px; text-align: left;">{{ fault.description }}</textarea>
+                                <div class="long-div">
+                                    <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" disabled >{{ fault.description }}</textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="hidden" id="status" maxlength="30" name="status" class="form-control" placeholder="status" disabled value="{{ fault.status }}" style="text-align: left;">
+                                <div class="long-div">
+                                    <input type="hidden" id="status" maxlength="30" name="status" class="form-control form-cell" placeholder="status" disabled value="{{ fault.status }}" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="text" id="handler" maxlength="30" name="handler" class="form-control" placeholder="handler" disabled value="{{ fault.handler }}" style="text-align: left;">
+                                <div class="long-div">
+                                    <input type="text" id="handler" maxlength="30" name="handler" class="form-control form-cell" placeholder="handler" disabled value="{{ fault.handler }}" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div style="width: 80%; margin: 0 auto; margin-left: 10%; float: left;">
-                                    <input type="hidden" id="is_visible" maxlength="30" name="is_visible" class="form-control" placeholder="is visible" disabled value="1" style="text-align: left;">
+                                <div class="long-div">
+                                    <input type="hidden" id="is_visible" maxlength="30" name="is_visible" class="form-control form-cell" placeholder="is visible" disabled value="1" >
                                 </div>
                             </div>
                         </form>

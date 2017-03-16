@@ -1,0 +1,65 @@
+.allert-message {
+    text-align: center;
+}
+
+.form-cell {
+    text-align: left;
+}
+
+.form-description-cell {
+    height: 100px;
+    text-align: left;
+}
+
+.short-div {
+    width: 25%;
+    margin: 0 auto;
+    margin-left: 10%;
+    float: left;
+}
+
+.normal-div {
+    width: 50%;
+    margin: 0 auto;
+    margin-left: 10%;
+    float: left;
+}
+
+.long-div {
+    width: 80%;
+    margin: 0 auto;
+    margin-left: 10%;
+    float: left;
+}
+
+.button-form {
+    width: 30%;
+    float: right;
+    margin: 0 auto;
+    margin-right: 10%;
+    color: #969594;
+}
+
+.modal-header {
+    color: #969594;
+}
+
+.modal-body {
+    color: #969594;
+}
+
+.td-header-id {
+    width: 5%;
+}
+
+.td-header-issuer {
+    width: 15%;
+}
+
+.td-header-datetime {
+    width: 20%;
+}
+
+.td-header-topic {
+    width: 30%;
+}

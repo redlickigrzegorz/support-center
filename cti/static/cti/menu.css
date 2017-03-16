@@ -11,6 +11,14 @@
     width: 185px;
 
 }
+
+.whole-body {
+    background-color: #f7f7f7;
+}
+.navbar-second-menu {
+    margin-top: 50px;
+}
+
 .navbar-title {
     color: #969594;
     font-size: 20px;
@@ -96,6 +104,7 @@
     width: 200px;
     height: 100%;
     padding: 8px 0;
+    margin-top: 50px;
     border-right: 1px solid #ddd;
     background: #ffffff;
 }
@@ -139,4 +148,17 @@
     -webkit-border-radius: 0 4px 4px 0;
     -moz-border-radius: 0 4px 4px 0;
     border-radius: 0 4px 4px 0;
+}
+
+.container-body {
+    margin-top: 100px;
+    margin-left: 200px;
+}
+
+.footer-container {
+    width: 100%;
+}
+
+.footer {
+    float:right;
 }

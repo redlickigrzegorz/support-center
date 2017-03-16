@@ -54,6 +54,9 @@
     font-weight: bolder;
     display: block;
 }
+.login-error {
+    color: red;
+}
 .profile-img
 {
     width: 96px;
