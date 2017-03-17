@@ -13,6 +13,14 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 
 
+def test(request):
+    template = loader.get_template('cti/test.html')
+
+    context = {'fields': Fault().get_fields()}
+
+    return HttpResponse(template.render(context, request))
+
+
 def login(request):
     template = loader.get_template('cti/login.html')
 

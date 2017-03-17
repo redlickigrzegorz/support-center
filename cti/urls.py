@@ -47,4 +47,7 @@ urlpatterns = [
     # changing password
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^json/change_password/$', views_json.change_password, name='change_password_json'),
+
+    # test
+    url(r'^test/$', views.test, name='test'),
 ]

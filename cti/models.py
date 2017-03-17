@@ -55,13 +55,13 @@ class Fault(models.Model):
     def get_fields(self):
         all_fields = []
 
-        for field in Fault._meta.fields:
+        for field in self._meta.fields:
             all_fields.append(field)
 
-        return [(field.name, field.value_to_string(self)) for field in all_fields]
+        return [field.name for field in all_fields]
 
     def __str__(self):
-        return self.topic
+        return '{} - {} - {}'.format(self.id, self.date_time, self.topic)
 
 
 class User(AbstractUser):
