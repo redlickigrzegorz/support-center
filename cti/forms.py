@@ -1,6 +1,5 @@
 from django import forms
 from .models import Fault
-from datetime import datetime
 from django.core.validators import MaxValueValidator
 
 
@@ -26,9 +25,6 @@ class FaultForm(forms.ModelForm):
                                     error_message=('allowed phone number format: +999999999 '
                                                    '(9-15 digits with possible plus)'))
 
-    # date time
-    date_time = forms.DateTimeField(initial=datetime.now().strftime("%Y-%m-%d %H:%M:%S"), required=False)
-
     # status
     status_list = (
         (0, 'trivial'),
@@ -50,5 +46,5 @@ class FaultForm(forms.ModelForm):
 
     class Meta:
         model = Fault
-        fields = ['issuer', 'phone_number', 'date_time', 'topic', 'description', 'object_number', 'status',
+        fields = ['issuer', 'phone_number', 'topic', 'description', 'object_number', 'status',
                   'handler', 'priority']

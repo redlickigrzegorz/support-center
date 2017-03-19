@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MaxValueValidator
 
@@ -30,8 +29,11 @@ class Fault(models.Model):
                                                 '(9-15 digits with possible plus)')
     phone_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
 
-    # date time
-    date_time = models.DateTimeField(default=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    # created at
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # updated at
+    updated_at = models.DateTimeField(auto_now=True)
 
     # status
     status_list = (
@@ -61,7 +63,7 @@ class Fault(models.Model):
         return [field.name for field in all_fields]
 
     def __str__(self):
-        return '{} - {} - {}'.format(self.id, self.date_time, self.topic)
+        return '{} - {} - {}'.format(self.id, self.created_at, self.topic)
 
 
 class User(AbstractUser):

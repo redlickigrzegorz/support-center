@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.urlresolvers import reverse
-from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -95,16 +94,15 @@ def add_fault(request):
     if request.method == "POST":
         form = FaultForm(request.POST)
         if form.is_valid():
-            error = form.save(commit=False)
-            error.save()
+            fault = form.save(commit=False)
+            fault.save()
             messages.success(request, "fault added successful")
         else:
             messages.warning(request, "fault not added {}".format(form.errors))
     else:
         form = FaultForm()
 
-    context = {'form': form,
-               'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+    context = {'form': form}
 
     return HttpResponse(template.render(context, request))
 
@@ -123,8 +121,7 @@ def edit_fault(request, fault_id):
                 fault.save()
                 messages.success(request, "fault edited successful")
 
-        context = {'form': form,
-                   'datetime': datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+        context = {'form': form}
 
         return HttpResponse(template.render(context, request))
 
