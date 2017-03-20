@@ -1,6 +1,5 @@
 from django import forms
 from .models import Fault
-from django.core.validators import MaxValueValidator
 
 
 class FaultForm(forms.ModelForm):
@@ -8,10 +7,6 @@ class FaultForm(forms.ModelForm):
     issuer = forms.RegexField(regex=r'^\d{6}$',
                               error_messages={'required': 'this field is required',
                                               'invalid': 'allowed user format: 999999 (6 digits)'})
-
-    # handler
-    handler = forms.RegexField(regex=r'^\d{6}$', required=False,
-                               error_messages={'invalid': 'allowed user format: 999999 (6 digits)'})
 
     # object number
     object_number = forms.RegexField(regex=r'^\d{10}$',
@@ -34,26 +29,6 @@ class FaultForm(forms.ModelForm):
                                                     'invalid': 'allowed phone number format: +999999999 '
                                                                '(9-15 digits with possible plus)'})
 
-    # status
-    status_list = (
-        (0, 'trivial'),
-        (1, 'standard'),
-        (2, 'urgent'),
-    )
-    status = forms.ChoiceField(validators=[MaxValueValidator(2)], choices=status_list, initial=0, required=False)
-
-    # priority
-    priority_list = (
-        (0, 'not started'),
-        (1, 'queued'),
-        (2, 'completed'),
-    )
-    priority = forms.ChoiceField(validators=[MaxValueValidator(2)], choices=priority_list, initial=0, required=False)
-
-    # is visible
-    is_visible = forms.BooleanField(initial=True, required=False)
-
     class Meta:
         model = Fault
-        fields = ['issuer', 'handler', 'object_number', 'topic', 'description',
-                  'phone_number', 'status', 'priority', 'is_visible']
+        fields = ['issuer', 'handler', 'object_number', 'topic', 'description', 'phone_number']
