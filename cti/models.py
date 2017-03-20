@@ -4,13 +4,14 @@ from django.core.validators import RegexValidator, MaxValueValidator
 
 
 class Fault(models.Model):
-    user_regex = RegexValidator(regex=r'^\d{6}$', message='allowed user format: 999999 (6 digits)')
-
     # issuer
-    issuer = models.CharField(max_length=6, validators=[user_regex])
+    issuer_regex = RegexValidator(regex=r'^\d{6}$', message='allowed user format: 999999 (6 digits)')
+    issuer = models.CharField(max_length=6, validators=[issuer_regex])
 
     # handler
-    handler = models.CharField(max_length=6, validators=[user_regex], blank=True)
+    handler_regex = RegexValidator(regex=r'^0|\d{6}$', message='allowed user format: 999999 (6 digits) '
+                                                               'or 0 if nobody is handler')
+    handler = models.CharField(max_length=6, validators=[handler_regex], default='0')
 
     # object number
     object_number_regex = RegexValidator(regex=r'^\d{10}$',
@@ -27,7 +28,7 @@ class Fault(models.Model):
     phone_number_regex = RegexValidator(regex=r'^\+?\d{9,15}$',
                                         message='allowed phone number format: +999999999 '
                                                 '(9-15 digits with possible plus)')
-    phone_number = models.CharField(max_length=16, validators=[phone_number_regex], blank=True)
+    phone_number = models.CharField(max_length=16, validators=[phone_number_regex])
 
     # created at
     created_at = models.DateTimeField(auto_now_add=True)

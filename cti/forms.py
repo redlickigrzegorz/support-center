@@ -31,4 +31,4 @@ class FaultForm(forms.ModelForm):
 
     class Meta:
         model = Fault
-        fields = ['issuer', 'handler', 'object_number', 'topic', 'description', 'phone_number']
+        fields = ['issuer', 'object_number', 'topic', 'description', 'phone_number']
