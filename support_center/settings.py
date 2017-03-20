@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-deployment = False
+deployment = True
 
 if deployment:
     DATABASES = {
