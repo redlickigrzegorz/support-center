@@ -93,8 +93,10 @@ def add_fault(request):
 
     if request.method == "POST":
         form = FaultForm(request.POST)
+
         if form.is_valid():
             fault = form.save(commit=False)
+            fault.issuer = request.user
             fault.save()
             messages.success(request, "fault added successful")
         else:

@@ -4,11 +4,6 @@ from django.core.validators import MaxValueValidator
 
 
 class FaultForm(forms.ModelForm):
-    # issuer
-    issuer = forms.RegexField(regex=r'^\d{6}$',
-                              error_messages={'required': 'this field is required',
-                                              'invalid': 'allowed user format: 999999 (6 digits)'})
-
     # object number
     object_number = forms.RegexField(regex=r'^\d{10}$',
                                      error_messages={'required': 'this field is required',
@@ -32,7 +27,7 @@ class FaultForm(forms.ModelForm):
 
     class Meta:
         model = Fault
-        fields = ['issuer', 'object_number', 'topic', 'description', 'phone_number']
+        fields = ['object_number', 'topic', 'description', 'phone_number']
 
 
 class AdminFaultForm(forms.ModelForm):

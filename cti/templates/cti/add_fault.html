@@ -25,11 +25,6 @@
                         <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="form-group">
-                                <div class="short-div">
-                                    <input type="hidden" id="issuer" maxlength="30" name="issuer" class="form-control form-cell" placeholder="issuer" value="{{ request.user }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <div class="normal-div">
                                     <input type="text" id="phone_number" maxlength="30" name="phone_number" class="form-control form-cell" placeholder="phone number">
                                 </div>
