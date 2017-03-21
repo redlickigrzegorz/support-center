@@ -18,82 +18,60 @@
 
         {% include 'cti/scripts.html' %}
     </head>
-    <body class="whole-body">
-        <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">
-                        <img class="politechnika_logo" src="{% static 'resources/logo_mobile.png' %}">
-                    </a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <div class="col-sm-5 col-md-6">
-                        <form class="navbar-form" role="search" data-dpmaxz-eid="1">
+    <body>
+        <nav class="navbar navbar-default" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="navbar-collapse in" id="bs-example-navbar-collapse-1" style="height: auto;">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link</a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="col-sm-3 col-md-3">
+                    <form class="navbar-form" role="search" data-dpmaxz-eid="1">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q" data-dpmaxz-eid="2">
+                            <input type="text" class="form-control" placeholder="Cerca" name="q" data-dpmaxz-eid="2">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit" data-dpmaxz-eid="3"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
                         </div>
-                        </form>
-                    </div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="{% url 'cti:index' %}">
-                                <span class="glyphicon glyphicon-home"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'cti:add_fault' %}">
-                                <span class="glyphicon glyphicon-plus"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'cti:my_faults' %}">
-                                <span class="glyphicon glyphicon-th-list"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'cti:resolved_faults' %}">
-                                <span class="glyphicon glyphicon-check"></span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="" data-toggle="modal" data-target="#contact-modal">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <span class="glyphicon glyphicon-user"></span>
-                                {{ request.user }}
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{% url 'cti:change_password' %}">
-                                        <span class="glyphicon glyphicon-wrench"></span>
-                                        change password
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                                <li>
-                                    <a href="{% url 'cti:logout' %}">
-                                        <span class="glyphicon glyphicon-off"></span>
-                                        log out
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    </form>
                 </div>
-            </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
         </nav>
         <div class="container-fluid container-body">
             <div class="navbar navbar-body">
