@@ -19,60 +19,95 @@
         {% include 'cti/scripts.html' %}
     </head>
     <body>
-        <nav class="navbar navbar-default" role="navigation">
-        <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Brand</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="navbar-collapse in" id="bs-example-navbar-collapse-1" style="height: auto;">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Link</a></li>
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="col-sm-3 col-md-3">
-                    <form class="navbar-form" role="search" data-dpmaxz-eid="1">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Cerca" name="q" data-dpmaxz-eid="2">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit" data-dpmaxz-eid="3"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">CPT</a>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">Link</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
+                <div id="navbar" class="navbar-collapse collapse">
+                    <div class="col-sm-5 col-md-5">
+                        <form class="navbar-form" role="search" data-dpmaxz-eid="1">
+                            <div class="input-group" style="width: 100%;">
+                                <input type="text" class="form-control" placeholder="search" name="q" data-dpmaxz-eid="2">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit" data-dpmaxz-eid="3"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="{% url 'cti:index' %}" title="home">
+                                <span class="glyphicon glyphicon-home"></span>
+                                 <span class="navbar-label">home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'cti:add_fault' %}" title="add fault">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span class="navbar-label">add fault</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'cti:my_faults' %}" title="my faults">
+                                <span class="glyphicon glyphicon-th-list"></span>
+                                 <span class="navbar-label">my faults</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'cti:resolved_faults' %}" title="resolved faults">
+                                <span class="glyphicon glyphicon-check"></span>
+                                 <span class="navbar-label">resolved faults</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" data-toggle="modal" data-target="#contact-modal" title="contact">
+                                <span class="glyphicon glyphicon-earphone"></span>
+                                 <span class="navbar-label">contact</span>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"></span>
+                                <span class="navbar-dropdown-label">{{ request.user }}</span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="{% url 'cti:change_password' %}">
+                                        <span class="glyphicon glyphicon-wrench"></span>
+                                        <span class="navbar-dropdown-label">change password</span>
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="{% url 'cti:logout' %}">
+                                        <span class="glyphicon glyphicon-off"></span>
+                                        <span class="navbar-dropdown-label">log out</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Navbar example</h1>
+                <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+                <p>To see the difference between static and fixed top navbars, just scroll.</p>
+                <p>
+                    <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+                </p>
+            </div>
+        </div>
         <div class="container-fluid container-body">
             <div class="navbar navbar-body">
                 {% include 'cti/contact_modal.html' %}

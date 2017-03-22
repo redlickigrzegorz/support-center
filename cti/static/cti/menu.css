@@ -66,4 +66,18 @@
     .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
         color: #333;
     }
+
+    .navbar-default .navbar-nav > li > a > .navbar-label {
+        display: inline;
+    }
+}
+
+.navbar-default .navbar-nav > li > a > .navbar-label {
+	display: none;
+}
+
+@media screen and (max-width: 767px) {
+    .navbar-default .navbar-nav > li > a > .navbar-label {
+        display: inline;
+	}
 }
