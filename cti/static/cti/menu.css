@@ -101,3 +101,11 @@
         display: inline;
 	}
 }
+
+.footer-container {
+    width: 100%;
+}
+
+.footer {
+    float:right;
+}

@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
         <link rel="stylesheet" type="text/css" href="{% static 'cti/menu.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/body.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/style.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
 
@@ -103,19 +104,17 @@
         </nav>
         <div class="container">
             <div class="jumbotron">
-                <h1>Navbar example</h1>
-                <p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-                <p>To see the difference between static and fixed top navbars, just scroll.</p>
-                <p>
-                    <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-                </p>
-            </div>
-        </div>
-        <div class="container-fluid container-body">
-            <div class="navbar navbar-body">
-                {% include 'cti/contact_modal.html' %}
-                {% block body %}
-                {% endblock %}
+                <div class="body-header">
+                    <span class="body-brand">
+                        {% block header %}
+                        {% endblock %}
+                    </span>
+                </div>
+                <div class="body-container">
+                    {% include 'cti/contact_modal.html' %}
+                    {% block body %}
+                    {% endblock %}
+                </div>
             </div>
         </div>
         <footer class="footer navbar-fixed-bottom">
