@@ -13,6 +13,96 @@
     line-height: 50px;
 }
 
+.panel-row {
+    margin: 5px;
+}
+
+.hr-divider {
+   margin-top: 0;
+}
+
+.hr-top-divider {
+    margin-bottom: 5px;
+}
+
+.hr-bottom-divider {
+    margin-top: 5px;
+}
+
+.panel-body {
+    float: none;
+    margin: 0 auto;
+}
+
+.form-short-div {
+    width: 25%;
+    margin: 0 auto;
+    float: left;
+}
+
+.form-normal-div {
+    width: 50%;
+    margin: 0 auto;
+    float: left;
+}
+
+.form-long-div {
+    width: 100%;
+    margin: 0 auto;
+    float: left;
+}
+
+.form-button {
+    width: 25%;
+    margin: 0 auto;
+    float: right;
+    color: #808080;
+}
+
+.header-div {
+    font-weight: bolder;
+}
+
+.starting-div {
+    text-align: start;
+}
+
+.ending-div {
+    text-align: end;
+}
+
+.status-div {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 20px;
+}
+
+.allert-message {
+    text-align: center;
+}
+
+.form-cell {
+    text-align: left;
+}
+
+.form-description-cell {
+    height: 100px;
+    text-align: left;
+}
+
+.modal-header {
+    color: #969594;
+}
+
+.modal-body {
+    color: #969594;
+}
+
+.td-header-id,
+.td-header-status {
+    width: 5%;
+}
+
 @media (max-width: 767px) {
     .jumbotron {
         padding-top: 50px;
