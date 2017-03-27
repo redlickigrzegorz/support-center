@@ -104,7 +104,8 @@ def add_fault(request):
     else:
         form = FaultForm()
 
-    context = {'form': form}
+    context = {'form': form,
+               'header': 'new fault'}
 
     return HttpResponse(template.render(context, request))
 

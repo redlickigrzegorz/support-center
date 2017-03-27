@@ -18,82 +18,35 @@
             {% endfor %}
         </ul>
     {% endif %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-offset-4 col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {% if request.user.is_superuser %}
-                                <div class="form-group">
-                                    <div class="short-div">
-                                        <label>priority</label>
-                                        <input type="text" id="priority" maxlength="30" name="priority" class="form-control form-cell" placeholder="priority" value="{{ form.priority.value }}" >
-                                    </div>
-                                </div>
-                            {% else %}
-                                <div class="form-group">
-                                    <div class="short-div">
-                                        <input type="hidden" id="priority" maxlength="30" name="priority" class="form-control form-cell" placeholder="priority" value="{{ form.priority.value }}" >
-                                    </div>
-                                </div>
-                            {% endif %}
-                            {% if request.user.is_superuser %}
-                                <div class="form-group">
-                                    <div class="short-div">
-                                        <label>status</label>
-                                        <input type="text" id="status" maxlength="30" name="status" class="form-control form-cell" placeholder="status" value="{{ form.status.value }}" >
-                                    </div>
-                                </div>
-                            {% else %}
-                                 <div class="form-group">
-                                    <div class="short-div">
-                                        <input type="hidden" id="status" maxlength="30" name="status" class="form-control form-cell" placeholder="status" value="{{ form.status.value }}" >
-                                    </div>
-                                </div>
-                            {% endif %}
-                            <div class="form-group">
-                                <div class="short-div">
-                                    <input type="hidden" id="issuer" maxlength="30" name="issuer" class="form-control form-cell" placeholder="issuer" value="{{ form.issuer.value }}"  >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="normal-div">
-                                    <input type="text" id="phone_number" maxlength="30" name="phone_number" class="form-control form-cell" placeholder="phone number" value="{{ form.phone_number.value }}" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="normal-div">
-                                    <input type="text" id="object_number" maxlength="30" name="object_number" class="form-control form-cell" placeholder="object number" value="{{ form.object_number.value }}" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="long-div">
-                                    <input type="text" id="topic" maxlength="30" name="topic" class="form-control form-cell" placeholder="topic" value="{{ form.topic.value }}" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="long-div">
-                                    <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" >{{ form.description.value }}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="long-div">
-                                    <input type="hidden" id="handler" maxlength="30" name="handler" class="form-control form-cell" placeholder="handler" value="{{ form.handler.value }}" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="long-div">
-                                    <input type="hidden" id="is_visible" maxlength="30" name="is_visible" class="form-control form-cell" placeholder="is visible" value="1" >
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-default button-form">edit</button>
-                            </div>
-                        </form>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div clas="col-md-6" style="width: 50%; margin: auto">
+                <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="normal-div">
+                            <input type="text" id="phone_number" name="phone_number" class="form-control form-cell" placeholder="phone number" value="{{ form.phone_number.value }}">
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <div class="normal-div">
+                            <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" value="{{ form.object_number.value }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="long-div">
+                            <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" value="{{ form.topic.value }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="long-div">
+                            <textarea id="description" name="description" class="form-control" placeholder="description" rows="7">{{ form.description.value }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default button-form">edit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
