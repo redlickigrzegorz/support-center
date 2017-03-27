@@ -38,19 +38,19 @@ class Fault(models.Model):
 
     # status
     status_list = (
-        (0, 'trivial'),
-        (1, 'standard'),
-        (2, 'urgent'),
+        (0, 'not started'),
+        (1, 'queued'),
+        (2, 'completed'),
     )
     status = models.IntegerField(validators=[MaxValueValidator(2)], choices=status_list, default=0)
 
     # priority
     priority_list = (
-        (0, 'not started'),
-        (1, 'queued'),
-        (2, 'completed'),
+        (0, 'trivial'),
+        (1, 'standard'),
+        (2, 'urgent'),
     )
-    priority = models.IntegerField(validators=[MaxValueValidator(2)], choices=priority_list, default=0)
+    priority = models.IntegerField(validators=[MaxValueValidator(2)], choices=priority_list, default=1)
 
     # is visible
     is_visible = models.BooleanField(default=True)

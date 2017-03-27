@@ -17,6 +17,15 @@
     margin: 5px;
 }
 
+.row-button {
+    color: #000000;
+    font-size: 15px;
+}
+
+.row-button:hover {
+    color: #000000;
+}
+
 .hr-divider {
    margin-top: 0;
 }

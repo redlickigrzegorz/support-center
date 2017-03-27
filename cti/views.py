@@ -161,7 +161,8 @@ def detail(request, fault_id):
 
     try:
         fault = Fault.objects.get(pk=fault_id)
-        context = {'fault': fault}
+        context = {'fault': fault,
+                   'header': 'fault\'s details'}
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
