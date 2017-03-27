@@ -48,18 +48,7 @@
     color: #969594;
 }
 
-.td-header-id {
+.td-header-id,
+.td-header-status {
     width: 5%;
-}
-
-.td-header-issuer {
-    width: 15%;
-}
-
-.td-header-datetime {
-    width: 20%;
-}
-
-.td-header-topic {
-    width: 30%;
 }

@@ -58,19 +58,19 @@ def index(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
     context = {'faults': faults,
-               'fields': Fault().get_fields()}
+               'header': 'all faults'}
 
     return HttpResponse(template.render(context, request))
 
 
 @login_required
 def my_faults(request):
-    template = loader.get_template('cti/my_faults.html')
+    template = loader.get_template('cti/index.html')
 
     faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
 
     context = {'faults': faults,
-               'fields': Fault().get_fields()}
+               'header': 'my faults'}
 
     return HttpResponse(template.render(context, request))
 
@@ -82,7 +82,7 @@ def resolved_faults(request):
     faults = Fault.objects.filter(is_visible=True, status=2)
 
     context = {'faults': faults,
-               'fields': Fault().get_fields()}
+               'header': 'resolved faults'}
 
     return HttpResponse(template.render(context, request))
 

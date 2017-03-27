@@ -2,70 +2,59 @@
 
 {% block title %}faults{% endblock %}
 
-{% block header %}list of faults{% endblock %}
+{% block header %}{{ header }}{% endblock %}
 
 {% block body %}
-    <div class="table-responsive">
-        {% if messages %}
-            <ul class="messages">
-                {% for message in messages %}
-                    <div class="col-md-offset-4 col-md-4 allert-message">
-                        <div class="alert alert-{{ message.tags }}">
-                            <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
-                            {{ message }}
-                        </div>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="col-md-offset-4 col-md-4 allert-message">
+                    <div class="alert alert-{{ message.tags }}">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        {{ message }}
                     </div>
-                {% endfor %}
-            </ul>
-        {% endif %}
-         <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>id</th>
-                    <th>issuer</th>
-                    <th>date time</th>
-                    <th>topic</th>
-                    <th>handler</th>
-                    <th>status</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for fault in faults %}
-                    <tr>
-                        <td class="td-header-id">{{ fault.id }}</td>
-                        <td class="td-header-issuer">{{ fault.issuer }}</td>
-                        <td class="td-header-datetime">{{ fault.created_at }}</td>
-                        <td class="td-header-topic">{{ fault.topic }}</td>
-                        <td class="td-header-issuer">{{ fault.handler }}</td>
-                        <td class="td-header-id">
-                            {% if fault.status == 0 %}
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                            {% elif fault.status == 1 %}
-                                <span class="glyphicon glyphicon-hourglass" aria-hidden="true">  </span>
-                            {% elif fault.status == 2 %}
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'cti:detail' fault.id %}" class="btn btn-default" role="button">details</a>
-                        </td>
-                        {% if request.user.is_superuser %}
-                            <td>
-                                <a href="{% url 'cti:edit_fault' fault.id %}" class="btn btn-default" role="button">edit</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'cti:assign_to_me' fault.id %}" class="btn btn-default" role="button">assign to me</a>
-                            </td>
-                            <td>
-                                <a href="{% url 'cti:delete_fault' fault.id %}" class="btn btn-default" role="button">delete</a>
-                            </td>
-                        {% endif %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% for fault in faults %}
+        <div class="row" style="border: 1px solid lightgrey;">
+            <div class="col-xs-2 col-sm-2 col-md-2" style="text-align: center; margin-top: 50px; font-size: 20px;">
+                {% if fault.status == 0 %}
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                {% elif fault.status == 1 %}
+                    <span class="glyphicon glyphicon-hourglass" aria-hidden="true">  </span>
+                {% elif fault.status == 2 %}
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+                {% endif %}
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-10">
+                <div class="row" style="margin-top: 5px;">
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: start; font-weight: bolder;">
+                        {{ fault.topic }}
+                    </div>
+                    <div class="col-sm-6 col-md-6" style="text-align: end;">
+                        {{ fault.created_at }}
+                    </div>
+                </div>
+                <hr style="margin-top: 5px;">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12" style="text-align: start;">
+                        {{ fault.description }}
+                    </div>
+                </div>
+                <hr style="margin-bottom: 5px;">
+                <div class="row" style="margin-bottom: 5px;">
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: start;">
+
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6" style="text-align: end;">
+                        created by {{ fault.issuer }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    {% endfor %}
 
 {% endblock %}
