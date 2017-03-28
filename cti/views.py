@@ -16,7 +16,8 @@ from .backends import InvbookBackend
 def test(request):
     template = loader.get_template('cti/test.html')
 
-    context = InvbookBackend.get_object_information()
+    invbook = InvbookBackend()
+    context = invbook.get_object_information()
 
     return HttpResponse(template.render(context, request))
 
