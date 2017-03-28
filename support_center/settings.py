@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
-deployment = False
+deployment = True
 
 if deployment:
     DATABASES = {
@@ -100,6 +100,17 @@ if deployment:
             'USER': 'sql7144346',
             'PASSWORD': 'gaTmKQXHxm',
             'HOST': 'sql7.freemysqlhosting.net',
+            'PORT': '3306',
+            'OPTIONS': {
+                'init_command': 'SET default_storage_engine=INNODB',
+            }
+        },
+        'invbook': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'invbook',
+            'USER': 'student',
+            'PASSWORD': 'student',
+            'HOST': '10.105.10.194',
             'PORT': '3306',
             'OPTIONS': {
                 'init_command': 'SET default_storage_engine=INNODB',

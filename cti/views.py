@@ -10,12 +10,18 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.db import connections
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
 
-    context = {'fields': Fault().get_fields()}
+    c = connections['invbook'].cursor()
+    query = 'SELECT * FROM invbook.b010t4'
+    c.execute(query)
+    rows = c.fetchall()
+
+    context = {'fields': rows}
 
     return HttpResponse(template.render(context, request))
 
