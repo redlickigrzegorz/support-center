@@ -91,32 +91,48 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 deployment = True
+migration = False
 
 if deployment:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'sql7144346',
-            'USER': 'sql7144346',
-            'PASSWORD': 'gaTmKQXHxm',
-            'HOST': 'sql7.freemysqlhosting.net',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB',
-            }
-        },
-        'invbook': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'invbook',
-            'USER': 'student',
-            'PASSWORD': 'student',
-            'HOST': '10.105.10.194',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': 'SET default_storage_engine=INNODB',
+    if migration:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'sql7144346',
+                'USER': 'sql7144346',
+                'PASSWORD': 'gaTmKQXHxm',
+                'HOST': 'sql7.freemysqlhosting.net',
+                'PORT': '3306',
+                'OPTIONS': {
+                    'init_command': 'SET default_storage_engine=INNODB',
+                }
             }
         }
-    }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'sql7144346',
+                'USER': 'sql7144346',
+                'PASSWORD': 'gaTmKQXHxm',
+                'HOST': 'sql7.freemysqlhosting.net',
+                'PORT': '3306',
+                'OPTIONS': {
+                    'init_command': 'SET default_storage_engine=INNODB',
+                }
+            },
+            'invbook': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': 'invbook',
+                'USER': 'student',
+                'PASSWORD': 'student',
+                'HOST': '10.105.10.194',
+                'PORT': '3306',
+                'OPTIONS': {
+                    'init_command': 'SET default_storage_engine=INNODB',
+                }
+            }
+        }
 else:
     DATABASES = {
         'default': {
