@@ -3,6 +3,8 @@ from cti.models import User
 from ldap3 import Server, Connection, SUBTREE
 from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
     LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD
+from django.db import connections
+from .models import Object
 
 
 class LDAPBackend(object):
@@ -70,5 +72,54 @@ class LDAPBackend(object):
 
 
 class InvbookBackend(object):
+
     def __init__(self):
-        pass
+        self.connection = None
+        self.tables = []
+
+    def get_object_information(self):
+        tables = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b020']
+        rows = []
+
+        context = {}
+
+        c = connections['invbook'].cursor()
+
+        for table in tables:
+            query = 'SELECT ' \
+                    'nr_fabryczny_przychodu AS object_number ,' \
+                    'nazwa_przedmiotu AS name ,' \
+                    'data_przychodu AS date ,' \
+                    'pomieszczenie AS room ,' \
+                    'ilosc_przychod AS status , ' \
+                    'cena_jednostkowa AS price , ' \
+                    'uwagi AS comments ' \
+                    'FROM invbook.{} WHERE nr_fabryczny_przychodu={}'.format(table, '1000019856')
+
+            if c.execute(query):
+                data = c.fetchone()
+
+                try:
+                    Object.objects.get(object_number=data[0])
+                except Object.DoesNotExist:
+                    dupa = Object(object_number=data[0])
+
+                    dupa.object_name = data[1]
+                    dupa.created_at = data[2]
+                    dupa.room = data[3]
+                    dupa.status = data[4]
+                    dupa.price = data[5]
+                    dupa.comments = data[6]
+
+                    dupa.save()
+                rows.append(data)
+
+                context = {'object_number': data[0],
+                           'object_name': data[1],
+                           'created_at': data[2],
+                           'room': data[3],
+                           'status': data[4],
+                           'price': data[5],
+                           'comments': data[6]}
+
+        return context

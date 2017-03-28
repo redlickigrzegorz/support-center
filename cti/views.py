@@ -10,54 +10,13 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.db import connections
-from cti.models import Object
+from .backends import InvbookBackend
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
 
-    tables = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b020']
-    rows = []
-
-    c = connections['invbook'].cursor()
-
-    for table in tables:
-        query = 'SELECT ' \
-                'nr_fabryczny_przychodu AS object_number ,' \
-                'nazwa_przedmiotu AS name ,' \
-                'data_przychodu AS date ,' \
-                'pomieszczenie AS room ,' \
-                'ilosc_przychod AS status , ' \
-                'cena_jednostkowa AS price , ' \
-                'uwagi AS comments ' \
-                'FROM invbook.{} WHERE nr_fabryczny_przychodu={}'.format(table, '1000019856')
-
-        if c.execute(query):
-            data = c.fetchone()
-
-            try:
-                Object.objects.get(object_number=data[0])
-            except Object.DoesNotExist:
-                dupa = Object(object_number=data[0])
-
-                dupa.object_name = data[1]
-                dupa.created_at = data[2]
-                dupa.room = data[3]
-                dupa.status = data[4]
-                dupa.price = data[5]
-                dupa.comments = data[6]
-
-                dupa.save()
-            rows.append(data)
-
-            context = {'object_number': data[0],
-                       'object_name': data[1],
-                       'created_at': data[2],
-                       'room': data[3],
-                       'status': data[4],
-                       'price': data[5],
-                       'comments': data[6] }
+    context = InvbookBackend.get_object_information()
 
     return HttpResponse(template.render(context, request))
 
