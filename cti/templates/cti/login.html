@@ -9,40 +9,28 @@
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <div class="col-sm-10 col-md-6 col-sm-offset-1 col-md-offset-3">
-                    <div class="account-wall">
-                        {% if error_message %}
-                            <h1 class="text-center login-title login-error">{{ error_message }}</h1>
-                        {% else %}
-                            <h1 class="text-center login-title">please, sign in</h1>
-                        {% endif %}
-                        <div class="row">
-                            <div class="col-xs-2 col-sm-2 col-md-2">
-                                <img class="cpt_logo" src="{% static 'resources/cpt_logo.png' %}">
-                            </div>
-                            <div class="col-xs-10 col-sm-10 col-md-10">
-                                <form class="form-signin" role="form" action="{% url 'cti:login' %}" method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                        <input type="text" id="id_username" maxlength="30" name="username" class="form-control" placeholder="username or email" required autofocus>
-                                    </div>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                                        <input type="password" id="id_password" maxlength="30" name="password" class="form-control" placeholder="password" required>
-                                    </div>
-                                    <button class="btn btn-lg btn-default btn-block" type="submit">
-                                        sign in</button>
-                                    <label class="checkbox pull-left">
-                                        <input type="checkbox" value="remember-me">
-                                        remember me
-                                    </label>
-                                    <a href="#" class="pull-right need-help">need help? </a><span class="clearfix"></span>
-                                </form>
-                            </div>
+            <div class="account-wall col-xs-8 col-sm-6 col-md-4">
+                <div class="row">
+                    {% if error_message %}
+                        <h1 class="text-center login-title login-error">{{ error_message }}</h1>
+                    {% else %}
+                        <h1 class="text-center login-title">please, sign in</h1>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <form class="form-signin" role="form" action="{% url 'cti:login' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input type="text" id="id_username" maxlength="30" name="username" class="form-control" placeholder="username or email" required autofocus>
                         </div>
-                    </div>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input type="password" id="id_password" maxlength="30" name="password" class="form-control" placeholder="password" required>
+                        </div>
+                        <button class="btn btn-lg btn-default btn-block" type="submit">
+                            sign in</button>
+                    </form>
                 </div>
             </div>
         </div>
