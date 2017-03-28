@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.db import connections
+from cti.models import Object
 
 
 def test(request):
@@ -34,7 +35,22 @@ def test(request):
 
         if c.execute(query):
             data = c.fetchone()
-            rows.append(data[0])
+
+            try:
+                return Object.objects.get(object_number=data[0])
+            except User.DoesNotExist:
+                object = Object(object_number=data[0])
+
+                object.object_name = data[1]
+                object.created_at = data[2]
+                object.room = data[3]
+                object.status = data[4]
+                object.price = data[5]
+                object.comments = data[6]
+
+                object.save()
+            rows.append(data)
+            break
 
     context = {'fields': rows}
 
