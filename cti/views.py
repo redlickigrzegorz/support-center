@@ -16,10 +16,25 @@ from django.db import connections
 def test(request):
     template = loader.get_template('cti/test.html')
 
+    tables = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b020']
+    rows = []
+
     c = connections['invbook'].cursor()
-    query = 'SELECT * FROM invbook.b010t4'
-    c.execute(query)
-    rows = c.fetchall()
+
+    for table in tables:
+        query = 'SELECT ' \
+                'nr_fabryczny_przychodu AS object_number ,' \
+                'nazwa_przedmiotu AS name ,' \
+                'data_przychodu AS date ,' \
+                'pomieszczenie AS room ,' \
+                'ilosc_przychod AS status , ' \
+                'cena_jednostkowa AS price , ' \
+                'uwagi AS comments ' \
+                'FROM invbook.{} WHERE nr_fabryczny_przychodu={}'.format(table, '1000019856')
+
+        if c.execute(query):
+            data = c.fetchone()
+            rows.append(data[0])
 
     context = {'fields': rows}
 

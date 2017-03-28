@@ -21,7 +21,7 @@ class LDAPBackend(object):
         if self.make_connection():
             self.get_user_data(username, password)
 
-            return self.get_or_create_user(username)
+            return self.get_or_create_user(username, password)
 
         return None
 
@@ -50,11 +50,11 @@ class LDAPBackend(object):
             if self.connection.rebind(user=user_data, password=password):
                 self.user_data = user_data
 
-    def get_or_create_user(self, username):
+    def get_or_create_user(self, username, password):
         try:
             return User.objects.get(username=username)
         except User.DoesNotExist:
-            user = User(username=username)
+            user = User(username=username, password=password)
 
             pattern = r"cn=(\w+)\s+(\w+)\s+(\d+)"
             match = re.search(pattern, self.user_data)

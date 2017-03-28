@@ -67,5 +67,34 @@ class Fault(models.Model):
         return '{} - {} - {}'.format(self.id, self.created_at, self.topic)
 
 
+class Object(models.Model):
+    # object number
+    object_number_regex = RegexValidator(regex=r'^\d{10}$',
+                                         message='allowed object number format: 9999999999 (10 digits)')
+    object_number = models.CharField(max_length=10, validators=[object_number_regex])
+
+    # object name
+    object_name = models.CharField(max_length=50, blank=True)
+
+    # date
+    created_at = models.DateField(blank=True)
+
+    # room
+    room = models.CharField(max_length=10, blank=True)
+
+    # status
+    status_list = (
+        (0, 'missing'),
+        (1, 'located'),
+    )
+    status = models.IntegerField(validators=[MaxValueValidator(1)], choices=status_list, default=1)
+
+    # price
+    price = models.DecimalField(blank=True)
+
+    # comments
+    comments = models.CharField(max_length=200, blank=True)
+
+
 class User(AbstractUser):
     pass
