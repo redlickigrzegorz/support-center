@@ -64,7 +64,7 @@ class Fault(models.Model):
         return [field.name for field in all_fields]
 
     def __str__(self):
-        return '{} - {} - {}'.format(self.id, self.created_at, self.topic)
+        return '{} - {}'.format(self.created_at, self.topic)
 
 
 class Object(models.Model):
@@ -94,6 +94,17 @@ class Object(models.Model):
 
     # comments
     comments = models.CharField(max_length=200, blank=True)
+
+    def get_fields(self):
+        all_fields = []
+
+        for field in self._meta.fields:
+            all_fields.append(field)
+
+        return [field.name for field in all_fields]
+
+    def __str__(self):
+        return '{} - {} - {}'.format(self.created_at, self.object_number, self.object_name)
 
 
 class User(AbstractUser):
