@@ -67,3 +67,8 @@ class LDAPBackend(object):
             user.save()
 
             return user
+
+
+class InvbookBackend(object):
+    def __init__(self):
+        pass
