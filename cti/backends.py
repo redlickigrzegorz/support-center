@@ -19,9 +19,8 @@ class LDAPBackend(object):
             username = match.group(1)
 
         if self.make_connection():
-            self.get_user_data(username, password)
-
-            return self.get_or_create_user(username, password)
+            if self.get_user_data(username, password):
+                return self.get_or_create_user(username)
 
         return None
 
@@ -45,16 +44,15 @@ class LDAPBackend(object):
         if self.connection.search(search_base=LDAP_AUTH_SEARCH_BASE,
                                   search_filter=user_search_filter,
                                   search_scope=SUBTREE):
-            user_data = self.connection.response[0]['dn']
+            self.user_data = self.connection.response[0]['dn']
 
-            if self.connection.rebind(user=user_data, password=password):
-                self.user_data = user_data
+        return True if self.connection.rebind(user=self.user_data, password=password) else False
 
-    def get_or_create_user(self, username, password):
+    def get_or_create_user(self, username):
         try:
             return User.objects.get(username=username)
         except User.DoesNotExist:
-            user = User(username=username, password=password)
+            user = User(username=username)
 
             pattern = r"cn=(\w+)\s+(\w+)\s+(\d+)"
             match = re.search(pattern, self.user_data)
