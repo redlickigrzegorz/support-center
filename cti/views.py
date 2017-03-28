@@ -37,22 +37,27 @@ def test(request):
             data = c.fetchone()
 
             try:
-                return Object.objects.get(object_number=data[0])
-            except User.DoesNotExist:
-                object = Object(object_number=data[0])
+                Object.objects.get(object_number=data[0])
+            except Object.DoesNotExist:
+                dupa = Object(object_number=data[0])
 
-                object.object_name = data[1]
-                object.created_at = data[2]
-                object.room = data[3]
-                object.status = data[4]
-                object.price = data[5]
-                object.comments = data[6]
+                dupa.object_name = data[1]
+                dupa.created_at = data[2]
+                dupa.room = data[3]
+                dupa.status = data[4]
+                dupa.price = data[5]
+                dupa.comments = data[6]
 
-                object.save()
+                dupa.save()
             rows.append(data)
-            break
 
-    context = {'fields': rows}
+            context = {'object_number': data[0],
+                       'object_name': data[1],
+                       'created_at': data[2],
+                       'room': data[3],
+                       'status': data[4],
+                       'price': data[5],
+                       'comments': data[6] }
 
     return HttpResponse(template.render(context, request))
 
