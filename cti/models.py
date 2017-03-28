@@ -90,7 +90,7 @@ class Object(models.Model):
     status = models.IntegerField(validators=[MaxValueValidator(1)], choices=status_list, default=1)
 
     # price
-    price = models.DecimalField(blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
 
     # comments
     comments = models.CharField(max_length=200, blank=True)
