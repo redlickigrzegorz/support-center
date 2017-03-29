@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
+from .backends import InvbookBackend
 
 
 def login(request):
@@ -77,8 +78,11 @@ def add_fault(request):
     if request.method == "POST":
         form = FaultForm(request.POST)
         if form.is_valid():
-            error = form.save(commit=False)
-            error.save()
+            fault = form.save(commit=False)
+            fault.save()
+
+            invbook = InvbookBackend()
+            invbook.get_or_create_object(fault.object_number)
 
             result['add_fault_status'] = True
 

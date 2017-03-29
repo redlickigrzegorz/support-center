@@ -1,6 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
-from .models import Fault
+from .models import Fault, Object
 from django.http import Http404
 from .forms import FaultForm
 from django.contrib.auth import authenticate
@@ -11,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .backends import InvbookBackend
-from .models import Object
 
 
 def test(request):
@@ -120,11 +119,7 @@ def add_fault(request):
             fault.save()
 
             invbook = InvbookBackend()
-
-            try:
-                invbook.get_or_create_object(fault.object_number)
-            except Object.DoesNotExist:
-                messages.warning(request, "new object added")
+            invbook.get_or_create_object(fault.object_number)
 
             messages.success(request, "fault added successful")
         else:
