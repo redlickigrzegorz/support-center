@@ -118,6 +118,14 @@ def add_fault(request):
             fault = form.save(commit=False)
             fault.issuer = request.user
             fault.save()
+
+            invbook = InvbookBackend()
+
+            try:
+                invbook.get_or_create_object(fault.object_number)
+            except Object.DoesNotExist:
+                messages.warning(request, "new object added")
+
             messages.success(request, "fault added successful")
         else:
             messages.warning(request, "fault not added {}".format(form.errors))

@@ -2,9 +2,10 @@ import re
 from cti.models import User
 from ldap3 import Server, Connection, SUBTREE
 from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
-    LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD
+    LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD, INVBOOK_TABLES
 from django.db import connections
 from .models import Object
+import datetime
 
 
 class LDAPBackend(object):
@@ -75,20 +76,24 @@ class InvbookBackend(object):
 
     def __init__(self):
         self.cursor = None
-        self.tables = []
-        self.object_data = dict()
+        self.object_data = {'object_name': '',
+                            'date': datetime.datetime.now().strftime("%Y-%m-%d"),
+                            'room': '',
+                            'status': 1,
+                            'price': 0,
+                            'comments': ''}
 
     def get_or_create_object(self, object_number):
         try:
             return Object.objects.get(object_number=object_number)
         except Object.DoesNotExist:
-            if self.make_connection():
-                self.tables = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b020']
+            object = Object(object_number=object_number)
 
-                for table in self.tables:
+            if self.make_connection():
+                for table in INVBOOK_TABLES:
                     query = 'SELECT ' \
                             'nr_fabryczny_przychodu AS object_number ,' \
-                            'nazwa_przedmiotu AS name ,' \
+                            'nazwa_przedmiotu AS object_name ,' \
                             'data_przychodu AS date ,' \
                             'pomieszczenie AS room ,' \
                             'ilosc_przychod AS status , ' \
@@ -97,22 +102,20 @@ class InvbookBackend(object):
                             'FROM invbook.{} WHERE nr_fabryczny_przychodu={}'.format(table, object_number)
 
                     if self.execute_query(query):
-                        object = Object(object_number=object_number)
-
-                        object.object_name = self.object_data['object_name']
-                        object.created_at = self.object_data['created_at']
-                        object.room = self.object_data['room']
-                        object.status = self.object_data['status']
-                        object.price = self.object_data['price']
-                        object.comments = self.object_data['comments']
-
-                        object.save()
-
                         self.close_connection()
 
-                        return object
+                        break
 
-            return None
+            object.object_name = self.object_data['object_name']
+            object.created_at = self.object_data['date']
+            object.room = self.object_data['room']
+            object.status = self.object_data['status']
+            object.price = self.object_data['price']
+            object.comments = self.object_data['comments']
+
+            object.save()
+
+            return object
 
     def make_connection(self):
         try:
@@ -134,13 +137,13 @@ class InvbookBackend(object):
         if self.cursor.execute(query):
             data = self.cursor.fetchone()
 
-            self.object_data = {'object_number': data[0],
-                                'object_name': data[1],
-                                'created_at': data[2],
-                                'room': data[3],
-                                'status': data[4],
-                                'price': data[5],
-                                'comments': data[6]}
+            self.object_data['object_name'] = data[1]
+            self.object_data['date'] = data[2]
+            self.object_data['room'] = data[3]
+            self.object_data['status'] = data[4]
+            self.object_data['price'] = data[5]
+            self.object_data['comments'] = data[6]
+
             return True
         else:
             return False

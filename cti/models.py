@@ -77,7 +77,7 @@ class Object(models.Model):
     object_name = models.CharField(max_length=50, blank=True)
 
     # date
-    created_at = models.DateField(blank=True)
+    date = models.DateField(blank=True)
 
     # room
     room = models.CharField(max_length=10, blank=True)
@@ -87,7 +87,7 @@ class Object(models.Model):
         (0, 'missing'),
         (1, 'located'),
     )
-    status = models.IntegerField(validators=[MaxValueValidator(1)], choices=status_list, default=1)
+    status = models.IntegerField(validators=[MaxValueValidator(1)], choices=status_list, blank=True)
 
     # price
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
