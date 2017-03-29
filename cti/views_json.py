@@ -46,7 +46,7 @@ def logout(request):
 
 @login_required
 def index(request):
-    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-updated_at')
 
     result = {'faults': serializers.serialize('json', faults)}
 
@@ -55,7 +55,7 @@ def index(request):
 
 @login_required
 def my_faults(request):
-    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True)
+    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-updated_at')
 
     result = {'faults': serializers.serialize('json', faults)}
 
@@ -64,7 +64,7 @@ def my_faults(request):
 
 @login_required
 def resolved_faults(request):
-    faults = Fault.objects.filter(is_visible=True, status=2)
+    faults = Fault.objects.filter(is_visible=True, status=2).order_by('-updated_at')
 
     result = {'faults': serializers.serialize('json', faults)}
 
