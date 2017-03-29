@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .backends import InvbookBackend
+from django.contrib.auth import get_user_model
 
 
 def test(request):
@@ -179,8 +180,8 @@ def delete_fault(request, fault_id):
 
 
 @login_required
-def detail(request, fault_id):
-    template = loader.get_template('cti/detail.html')
+def fault_details(request, fault_id):
+    template = loader.get_template('cti/fault_details.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -188,6 +189,36 @@ def detail(request, fault_id):
                    'header': 'fault\'s details'}
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def object_details(request, object_id):
+    template = loader.get_template('cti/object_details.html')
+
+    try:
+        object = Object.objects.get(object_number=object_id)
+        context = {'object': object,
+                   'header': 'object\'s details'}
+    except Object.DoesNotExist:
+        raise Http404("object does not exist")
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def user_details(request):
+    template = loader.get_template('cti/user_details.html')
+
+    User = get_user_model()
+
+    try:
+        user = User.objects.get(username__exact=request.user)
+        context = {'user': user,
+                   'header': 'user\'s details'}
+    except User.DoesNotExist:
+        raise Http404("user does not exist")
 
     return HttpResponse(template.render(context, request))
 

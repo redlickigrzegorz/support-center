@@ -20,7 +20,7 @@
 
     {% for fault in faults %}
         <div class="panel panel-default">
-            <a href="{% url 'cti:detail' fault.id %}" class="row-button">
+            <a href="{% url 'cti:fault_details' fault.id %}" class="row-button">
                 <div class="panel-row row">
                     <div class="col-xs-2 col-sm-2 col-md-2 status-div">
                         {% if fault.status == 0 %}

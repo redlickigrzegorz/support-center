@@ -38,8 +38,16 @@ urlpatterns = [
     url(r'^json/delete_fault/(?P<fault_id>[0-9]+)/$', views_json.delete_fault, name='delete_fault_json'),
 
     # details of fault
-    url(r'^detail/(?P<fault_id>[0-9]+)/$', views.detail, name='detail'),
-    url(r'^json/detail/(?P<fault_id>[0-9]+)/$', views_json.detail, name='detail_json'),
+    url(r'^fault_details/(?P<fault_id>[0-9]+)/$', views.fault_details, name='fault_details'),
+    url(r'^json/fault_details/(?P<fault_id>[0-9]+)/$', views_json.fault_details, name='fault_details_json'),
+
+    # details of object
+    url(r'^object_details/(?P<object_id>[0-9]+)/$', views.object_details, name='object_details'),
+    url(r'^json/object_details/(?P<object_id>[0-9]+)/$', views_json.object_details, name='object_details_json'),
+
+    # details of user
+    url(r'^user_details/$', views.user_details, name='user_details'),
+    url(r'^json/user_details/$', views_json.user_details, name='user_details_json'),
 
     # assigning fault
     url(r'^assign_to_me/(?P<fault_id>[0-9]+)/$', views.assign_to_me, name='assign_to_me'),

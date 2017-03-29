@@ -1,4 +1,4 @@
-from .models import Fault
+from .models import Fault, Object
 from django.http import Http404
 from .forms import FaultForm
 from django.contrib.auth import authenticate
@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
 from .backends import InvbookBackend
+from django.contrib.auth import get_user_model
 
 
 def login(request):
@@ -130,7 +131,7 @@ def delete_fault(request, fault_id):
 
 
 @login_required
-def detail(request, fault_id):
+def fault_details(request, fault_id):
     try:
         fault = Fault.objects.filter(pk=fault_id)
         result = {'fault': serializers.serialize('json', fault)}
@@ -139,6 +140,32 @@ def detail(request, fault_id):
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
+
+
+@login_required
+def object_details(request, object_id):
+    try:
+        object = Object.objects.filter(object_number=object_id)
+        result = {'object': serializers.serialize('json', object)}
+
+        return JsonResponse(result)
+
+    except Object.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+def user_details(request):
+    User = get_user_model()
+
+    try:
+        user = User.objects.filter(username__exact=request.user)
+        result = {'user': serializers.serialize('json', user)}
+
+        return JsonResponse(result)
+
+    except User.DoesNotExist:
+        raise Http404("user does not exist")
 
 
 @login_required

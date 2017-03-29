@@ -31,11 +31,11 @@
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
                             <b>status:</b>
-                            {% if fault.priority == 0 %}
+                            {% if fault.status == 0 %}
                                 not started
-                            {% elif fault.priority == 1 %}
+                            {% elif fault.status == 1 %}
                                 queued
-                            {% elif fault.priority == 2 %}
+                            {% elif fault.status == 2 %}
                                 completed
                             {% endif %}
                         </div>
@@ -62,11 +62,13 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="panel-row row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                            <b>object number:</b> {{ fault.object_number }}
+                    <a href="{% url 'cti:object_details' fault.object_number %}" class="row-button">
+                        <div class="panel-row row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
+                                <b>object number:</b> {{ fault.object_number }}
+                            </div>
                         </div>
-                    </div>
+                    </a>
                     <hr class="hr-bottom-divider">
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
