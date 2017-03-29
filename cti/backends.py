@@ -107,7 +107,7 @@ class InvbookBackend(object):
                         break
 
             object.object_name = self.object_data['object_name']
-            object.created_at = self.object_data['date']
+            object.date = self.object_data['date']
             object.room = self.object_data['room']
             object.status = self.object_data['status']
             object.price = self.object_data['price']
