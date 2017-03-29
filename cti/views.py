@@ -11,13 +11,31 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .backends import InvbookBackend
+from .models import Object
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
 
     invbook = InvbookBackend()
-    context = invbook.get_object_information()
+    try:
+        tmp = invbook.get_or_create_object('1000019856')
+
+        context = {'object_number': tmp.object_number,
+                   'object_name': tmp.object_name,
+                   'created_at': tmp.created_at,
+                   'room': tmp.room,
+                   'status': tmp.status,
+                   'price': tmp.price,
+                   'comments': tmp.comments}
+    except Object.DoesNotExist:
+        context = {'object_number': 'dupa',
+                   'object_name': 'dupa',
+                   'created_at': 'dupa',
+                   'room': 'dupa',
+                   'status': 'dupa',
+                   'price': 'dupa',
+                   'comments': 'dupa'}
 
     return HttpResponse(template.render(context, request))
 

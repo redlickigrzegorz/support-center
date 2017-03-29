@@ -74,52 +74,79 @@ class LDAPBackend(object):
 class InvbookBackend(object):
 
     def __init__(self):
-        self.connection = None
+        self.cursor = None
         self.tables = []
+        self.object_data = dict()
 
-    def get_object_information(self):
-        tables = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b020']
-        rows = []
+    def get_or_create_object(self, object_number):
+        try:
+            return Object.objects.get(object_number=object_number)
+        except Object.DoesNotExist:
+            if self.make_connection():
+                self.tables = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b020']
 
-        context = {}
+                for table in self.tables:
+                    query = 'SELECT ' \
+                            'nr_fabryczny_przychodu AS object_number ,' \
+                            'nazwa_przedmiotu AS name ,' \
+                            'data_przychodu AS date ,' \
+                            'pomieszczenie AS room ,' \
+                            'ilosc_przychod AS status , ' \
+                            'cena_jednostkowa AS price , ' \
+                            'uwagi AS comments ' \
+                            'FROM invbook.{} WHERE nr_fabryczny_przychodu={}'.format(table, object_number)
 
-        c = connections['invbook'].cursor()
+                    if self.execute_query(query):
+                        object = Object(object_number=object_number)
 
-        for table in tables:
-            query = 'SELECT ' \
-                    'nr_fabryczny_przychodu AS object_number ,' \
-                    'nazwa_przedmiotu AS name ,' \
-                    'data_przychodu AS date ,' \
-                    'pomieszczenie AS room ,' \
-                    'ilosc_przychod AS status , ' \
-                    'cena_jednostkowa AS price , ' \
-                    'uwagi AS comments ' \
-                    'FROM invbook.{} WHERE nr_fabryczny_przychodu={}'.format(table, '1000019856')
+                        object.object_name = self.object_data['object_name']
+                        object.created_at = self.object_data['created_at']
+                        object.room = self.object_data['room']
+                        object.status = self.object_data['status']
+                        object.price = self.object_data['price']
+                        object.comments = self.object_data['comments']
 
-            if c.execute(query):
-                data = c.fetchone()
+                        object.save()
 
-                try:
-                    Object.objects.get(object_number=data[0])
-                except Object.DoesNotExist:
-                    dupa = Object(object_number=data[0])
+                        self.close_connection()
 
-                    dupa.object_name = data[1]
-                    dupa.created_at = data[2]
-                    dupa.room = data[3]
-                    dupa.status = data[4]
-                    dupa.price = data[5]
-                    dupa.comments = data[6]
+                        return object
 
-                    dupa.save()
-                rows.append(data)
+            return None
 
-                context = {'object_number': data[0],
-                           'object_name': data[1],
-                           'created_at': data[2],
-                           'room': data[3],
-                           'status': data[4],
-                           'price': data[5],
-                           'comments': data[6]}
+    def make_connection(self):
+        try:
+            self.cursor = connections['invbook'].cursor()
 
-        return context
+            return True
+        except ConnectionError:
+            return False
+
+    def close_connection(self):
+        try:
+            self.cursor.close()
+
+            return True
+        except ConnectionError:
+            return False
+
+    def execute_query(self, query):
+        if self.cursor.execute(query):
+            data = self.cursor.fetchone()
+
+            self.object_data = {'object_number': data[0],
+                                'object_name': data[1],
+                                'created_at': data[2],
+                                'room': data[3],
+                                'status': data[4],
+                                'price': data[5],
+                                'comments': data[6]}
+            return True
+        else:
+            return False
+
+    def get_object(self, object):
+        try:
+            return Object.objects.get(pk=object)
+        except Object.DoesNotExist:
+            return None
