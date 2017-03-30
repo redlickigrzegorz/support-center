@@ -11,7 +11,7 @@ from django.contrib import messages
 @login_required
 @staff_member_required
 def edit_fault(request, fault_id):
-    template = loader.get_template('cti/edit_fault.html')
+    template = loader.get_template('cti/admin_edit_fault.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)

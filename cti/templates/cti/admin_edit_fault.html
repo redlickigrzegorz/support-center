@@ -1,0 +1,52 @@
+{% extends 'cti/base.html' %}
+
+{% block title %}edit{% endblock %}
+
+{% block header %}editing fault{% endblock %}
+
+{% block body %}
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <div class="col-md-offset-4 col-md-4 allert-message">
+                    <div class="alert alert-{{ message.tags }}">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+                        {{ message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <div class="panel panel-default">
+        <div class="panel-body col-xs-10 col-sm-8 col-md-6">
+            <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="form-normal-div">
+                        <input type="text" id="phone_number" name="phone_number" class="form-control form-cell" placeholder="phone number" value="{{ form.phone_number.value }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-normal-div">
+                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" value="{{ form.object_number.value }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-long-div">
+                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" value="{{ form.topic.value }}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-long-div">
+                        <textarea id="description" name="description" class="form-control" placeholder="description" rows="7">{{ form.description.value }}</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default form-button">edit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

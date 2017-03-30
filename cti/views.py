@@ -108,6 +108,18 @@ def resolved_faults(request):
 
 
 @login_required
+def sorted_faults(request, order_by):
+    template = loader.get_template('cti/index.html')
+
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by(order_by)
+
+    context = {'faults': faults,
+               'header': 'sorted faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
 def add_fault(request):
     template = loader.get_template('cti/add_fault.html')
 

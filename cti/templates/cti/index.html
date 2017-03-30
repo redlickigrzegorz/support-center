@@ -17,7 +17,35 @@
             {% endfor %}
         </ul>
     {% endif %}
-
+    <div class="panel-row row">
+        <div class="ending-div">
+            sort by:
+            <a href="{% url 'cti:sorted_faults' 'topic' %}" class="row-button">
+                topic
+            </a>
+            <a href="{% url 'cti:sorted_faults' '-topic' %}" class="row-button">
+                -topic
+            </a>
+            <a href="{% url 'cti:sorted_faults' 'created_at' %}" class="row-button">
+                date
+            </a>
+            <a href="{% url 'cti:sorted_faults' '-created_at' %}" class="row-button">
+                -date
+            </a>
+            <a href="{% url 'cti:sorted_faults' 'status' %}" class="row-button">
+                status
+            </a>
+            <a href="{% url 'cti:sorted_faults' '-status' %}" class="row-button">
+                -status
+            </a>
+            <a href="{% url 'cti:sorted_faults' 'priority' %}" class="row-button">
+                priority
+            </a>
+            <a href="{% url 'cti:sorted_faults' '-priority' %}" class="row-button">
+                -priority
+            </a>
+        </div>
+    </div>
     {% for fault in faults %}
         <div class="panel panel-default">
             <a href="{% url 'cti:fault_details' fault.id %}" class="row-button">
