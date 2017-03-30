@@ -57,18 +57,20 @@ def login(request):
 
                 return HttpResponseRedirect(reverse('cti:index'))
             else:
-                context['error_message'] = 'your account has been disabled'
+                messages.warning(request, 'your account has been disabled')
         else:
-            context['error_message'] = 'invalid login'
+            messages.error(request, 'invalid login')
 
     return HttpResponse(template.render(context, request))
 
 
-@login_required
 def logout(request):
+    template = loader.get_template('cti/logout.html')
+
+    context = {'error_message': ''}
     auth.logout(request)
 
-    return HttpResponseRedirect(reverse('cti:login'))
+    return HttpResponse(template.render(context, request))
 
 
 @login_required

@@ -9,29 +9,53 @@
     </head>
     <body>
         <div class="container">
-            <div class="account-wall col-xs-8 col-sm-6 col-md-4">
-                <div class="row">
-                    {% if error_message %}
-                        <h1 class="text-center login-title login-error">{{ error_message }}</h1>
-                    {% else %}
-                        <h1 class="text-center login-title">please, sign in</h1>
-                    {% endif %}
+            <div class="row">
+                <div class="application-div">
+                    <hr>
+                    <h1 class="application-name">SUPPORT CENTER</h1>
+                    <hr>
                 </div>
-                <div class="row">
-                    <form class="form-signin" role="form" action="{% url 'cti:login' %}" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" id="id_username" maxlength="30" name="username" class="form-control" placeholder="username or email" required autofocus>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="password" id="id_password" maxlength="30" name="password" class="form-control" placeholder="password" required>
-                        </div>
-                        <button class="btn btn-lg btn-default btn-block" type="submit">
-                            sign in</button>
-                    </form>
+            </div>
+            <div class="row">
+                <div class="account-wall col-xs-8 col-sm-6 col-md-4">
+                    <div class="row">
+                        <h1 class="login-title">please, sign in</h1>
+                    </div>
+                    <div class="row">
+                        {% if messages %}
+                            <div class="messages">
+                                {% for message in messages %}
+                                    <div class="alert-message">
+                                        <div class="alert alert-{{ message.tags }}">
+                                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                            {{ message }}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <form class="form-signin" role="form" action="{% url 'cti:login' %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input type="text" id="id_username" maxlength="30" name="username" class="form-control" placeholder="username or email" required autofocus>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                <input type="password" id="id_password" maxlength="30" name="password" class="form-control" placeholder="password" required>
+                            </div>
+                            <button class="btn btn-lg btn-default btn-block" type="submit">
+                                sign in</button>
+                        </form>
+                    </div>
                 </div>
+            </div>
+            <hr>
+            <div class="row logo-row">
+                <img class="logo" src="{% static 'resources/logo_pl.png' %}">
+                <img class="logo" src="{% static 'resources/logo_cti.png' %}">
             </div>
         </div>
     </body>

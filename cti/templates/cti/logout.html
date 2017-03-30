@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pl">
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/login.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="application-div">
+                    <hr>
+                    <h1 class="application-name">SUPPORT CENTER</h1>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="application-div">
+                    I hope you will not have to come back here anymore :)
+                </div>
+            </div>
+            <div class="row">
+                <div class="application-div">
+                    <a href="{% url 'cti:login' %}" class="row-button">
+                        login again
+                    </a>
+                </div>
+            </div>
+            <hr>
+            <div class="row logo-row">
+                <img class="logo" src="{% static 'resources/logo_pl.png' %}">
+                <img class="logo" src="{% static 'resources/logo_cti.png' %}">
+            </div>
+        </div>
+    </body>
+</html>

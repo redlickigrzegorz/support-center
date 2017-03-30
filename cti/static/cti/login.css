@@ -2,6 +2,19 @@ body {
     background-color: #781e19;
 }
 
+.messages {
+    margin: 0 auto;
+    padding: 0;
+}
+
+.alert-error {
+    text-align: center;
+    padding-bottom: 0;
+    margin: 0 auto;
+    font-size: 16px;
+    color: #ff0000;
+}
+
 .form-signin
 {
     max-width: 330px;
@@ -45,9 +58,7 @@ body {
 .account-wall
 {
     float: none;
-    margin-top: 100px;
-    margin-right: auto;
-    margin-left: auto;
+    margin: 0 auto;
     background-color: #ffffff;
     -moz-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 10px 10px rgba(0, 0, 0, 0.3);
@@ -59,9 +70,20 @@ body {
     font-size: 25px;
     font-weight: bolder;
     display: block;
+    text-align: center;
 }
-.login-error {
-    color: red;
+.application-div {
+    text-align: center;
+    font-weight: bolder;
+    color: #ffffff;
+    font-size: 20px;
+}
+.application-name {
+    color: #ffffff;
+    font-size: 35px;
+    font-weight: bolder;
+    display: block;
+    text-align: center;
 }
 .profile-img
 {
@@ -92,4 +114,19 @@ body {
 .btn-default:hover {
     background: #691e19;
     color: #ffffff;
+}
+
+.row-button {
+    text-align: center;
+    font-weight: bolder;
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.row-button:hover {
+    text-align: center;
+    font-weight: bolder;
+    color: #ffffff;
+    font-size: 20px;
+    text-decoration: none;
 }
