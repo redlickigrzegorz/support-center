@@ -34,7 +34,7 @@ AUTH_USER_MODEL = "cti.User"
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    #'cti.backends.LDAPBackend',
+    'cti.backends.LDAPBackend',
 )
 
 LDAP_AUTH_URL = "ldap://10.105.10.97"
