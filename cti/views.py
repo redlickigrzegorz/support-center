@@ -86,7 +86,7 @@ def index(request):
 def my_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-updated_at')
+    faults = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-updated_at')
 
     context = {'faults': faults,
                'header': 'my faults'}
