@@ -43,8 +43,6 @@ def test(request):
 def login(request):
     template = loader.get_template('cti/login.html')
 
-    context = {'error_message': ''}
-
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
@@ -59,18 +57,17 @@ def login(request):
             else:
                 messages.warning(request, 'your account has been disabled')
         else:
-            messages.error(request, 'invalid login')
+            messages.error(request, 'invalid login or password')
 
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(request=request))
 
 
 def logout(request):
     template = loader.get_template('cti/logout.html')
 
-    context = {'error_message': ''}
     auth.logout(request)
 
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(request=request))
 
 
 @login_required
