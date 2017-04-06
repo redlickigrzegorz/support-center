@@ -2,31 +2,27 @@
 <html lang="pl">
     <head>
         {% load static %}
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
         <link rel="stylesheet" type="text/css" href="{% static 'cti/login.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
+
+        <link rel="shortcut icon" type="image/png" href="{% static 'resources/favicon.ico' %}"/>
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <div class="application-div">
-                    <hr>
-                    <h1 class="application-name">SUPPORT CENTER</h1>
-                    <hr>
-                </div>
+            <div class="row brand-row">
+                <hr><span>SUPPORT CENTER</span><hr>
             </div>
-            <div class="row">
-                <div class="application-div">
-                    I hope you will not have to come back here anymore :)
-                </div>
+            <div class="row content-row">
+                <span>I hope you will not have to come back here anymore :)</span>
             </div>
-            <div class="row">
-                <div class="application-div">
-                    <a href="{% url 'cti:login' %}" class="row-button">
-                        login again
-                    </a>
-                </div>
+            <div class="row content-row">
+                <a href="{% url 'cti:login' %}" class="button">
+                    <span>login again</span>
+                </a>
             </div>
             <div class="row logo-row">
                 <hr>
