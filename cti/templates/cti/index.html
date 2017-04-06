@@ -46,6 +46,13 @@
             </a>
         </div>
     </div>
+<div ng-app="">
+
+<p>Input something in the input box:</p>
+<p>Name: <input type="text" ng-model="name"></p>
+<p ng-bind="name"></p>
+
+</div>
     {% for fault in faults %}
         <div class="panel panel-default">
             <a href="{% url 'cti:fault_details' fault.id %}" class="row-button">
