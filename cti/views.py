@@ -74,7 +74,7 @@ def logout(request):
 def index(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-updated_at')
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
     context = {'faults': faults,
                'header': 'all faults'}
@@ -86,7 +86,7 @@ def index(request):
 def my_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-updated_at')
+    faults = Fault.objects.filter(is_visible=True, issuer=request.user.get_username())
 
     context = {'faults': faults,
                'header': 'my faults'}
@@ -98,7 +98,7 @@ def my_faults(request):
 def resolved_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status=2).order_by('-updated_at')
+    faults = Fault.objects.filter(is_visible=True, status=2)
 
     context = {'faults': faults,
                'header': 'resolved faults'}

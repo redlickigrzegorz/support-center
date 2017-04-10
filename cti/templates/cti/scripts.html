@@ -3,6 +3,8 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -21,4 +23,27 @@
             $(".trigger").html("<input id='id_date_time' name='date_time' type='text' value='" + $("#datepicker").val() + "' required='' data-dpmaxz-eid='2'>");
         });
     });
+    $(function(){
+        $("#myDummyTable").tablesorter({widgets: ['zebra']});
+    });
+
+    function myFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+    }
+
 </script>
