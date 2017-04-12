@@ -119,8 +119,8 @@
 }
 
 .dropbtn {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #ffffff;
+    color: #000000;
     padding: 16px;
     font-size: 16px;
     border: none;
@@ -128,12 +128,13 @@
 }
 
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
+    background-color: #ffffff;
 }
 
 .dropdown {
     position: relative;
     display: inline-block;
+    text-align: start;
 }
 
 .dropdown-content {
@@ -156,3 +157,7 @@
 .dropdown a:hover {background-color: #f1f1f1}
 
 .show {display:block;}
+
+.sorting-row {
+    text-align: end;
+}
