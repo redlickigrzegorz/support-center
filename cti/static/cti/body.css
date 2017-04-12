@@ -90,6 +90,26 @@
     text-align: center;
 }
 
+.alert {
+    border: 0;
+}
+
+.alert-error {
+    background-color: #ffffff;
+    color: #ff0000;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.alert-warning {
+    background-color: #ffffff;
+    color: #ffff00;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .form-cell {
     text-align: left;
 }
@@ -118,7 +138,7 @@
     }
 }
 
-.dropbtn {
+.dropdown-button {
     background-color: #ffffff;
     color: #000000;
     padding: 16px;
@@ -127,7 +147,7 @@
     cursor: pointer;
 }
 
-.dropbtn:hover, .dropbtn:focus {
+.dropdown-button:hover, .dropdown-button:focus {
     background-color: #ffffff;
 }
 
@@ -158,6 +178,6 @@
 
 .show {display:block;}
 
-.sorting-row {
+.dropdown-row {
     text-align: end;
 }
