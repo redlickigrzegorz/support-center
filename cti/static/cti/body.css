@@ -26,6 +26,14 @@ body {
     margin: 0 auto;
 }
 
+.alert-success {
+    background-color: #ffffff;
+    color: #008000;
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+}
+
 .body-header {
     color: #000000;
     font-size: 20px;
@@ -125,80 +133,4 @@ body {
     .jumbotron {
         padding-top: 50px;
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.td-header-id,
-.td-header-status {
-    width: 5%;
-}
-
-.panel-body {
-    float: none;
-    margin: 0 auto;
-}
-
-.form-short-div {
-    width: 25%;
-    margin: 0 auto;
-    float: left;
-}
-
-.form-normal-div {
-    width: 50%;
-    margin: 0 auto;
-    float: left;
-}
-
-.form-long-div {
-    width: 100%;
-    margin: 0 auto;
-    float: left;
-}
-
-.form-button {
-    width: 25%;
-    margin: 0 auto;
-    float: right;
-    color: #808080;
-}
-
-.allert-message {
-    text-align: center;
-}
-
-
-.form-cell {
-    text-align: left;
-}
-
-.form-description-cell {
-    height: 100px;
-    text-align: left;
-}
-
-.modal-header {
-    color: #969594;
-}
-
-.modal-body {
-    color: #969594;
 }
