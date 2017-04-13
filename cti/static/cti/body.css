@@ -59,7 +59,7 @@ body {
 .button,
 .button:hover,
 .button:focus {
-    color: #808080;
+    color: #000000;
     font-size: 15px;
     text-decoration: none;
 }
