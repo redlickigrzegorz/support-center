@@ -135,7 +135,9 @@ def add_fault(request):
 
             messages.success(request, "fault added successful")
         else:
-            messages.warning(request, "fault not added {}".format(form.errors))
+            for field in form:
+                for error in field.errors:
+                    messages.warning(request, "{} - {}".format(field.name, error))
     else:
         form = FaultForm()
 

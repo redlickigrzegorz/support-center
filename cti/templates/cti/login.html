@@ -22,12 +22,14 @@
                 </div>
                 <div class="row message-row">
                     {% if messages %}
+                        <div class="alert">
                         {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">
+                            <div class="alert-{{ message.tags }}">
                                 <span class="glyphicon glyphicon-remove"></span>
                                 <span>{{ message }}</span>
                             </div>
                         {% endfor %}
+                        </div>
                     {% endif %}
                 </div>
                 <div class="row form-row">

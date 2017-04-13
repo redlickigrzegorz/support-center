@@ -7,7 +7,12 @@ body {
     margin: 0 auto;
 }
 
+.alert {
+    margin: 0 auto;
+}
+
 .alert-error {
+    background-color: #ffffff;
     color: #ff0000;
     font-size: 16px;
     text-align: center;
@@ -16,10 +21,19 @@ body {
 }
 
 .alert-warning {
-    color: #ffff00;
+    background-color: #ffffff;
+    color: #ffa500;
     font-size: 16px;
     text-align: center;
     padding-bottom: 0;
+    margin: 0 auto;
+}
+
+.alert-success {
+    background-color: #ffffff;
+    color: #008000;
+    font-size: 16px;
+    text-align: center;
     margin: 0 auto;
 }
 
