@@ -21,26 +21,26 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <div class="form-normal-div">
-                        <input type="text" id="phone_number" name="phone_number" class="form-control form-cell" placeholder="phone number" value="{{ form.phone_number.value }}">
+                        <input type="text" id="phone_number" name="phone_number" class="form-control form-cell" placeholder="phone number" {% if form.phone_number.value != None %} value="{{ form.phone_number.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-normal-div">
-                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" value="{{ form.object_number.value }}">
+                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" {% if form.object_number.value != None %} value="{{ form.object_number.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" value="{{ form.topic.value }}">
+                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" {% if form.topic.value != None %} value="{{ form.topic.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7">{{ form.description.value }}</textarea>
+                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7">{% if form.description.value != None %} {{ form.description.value }} {% endif %}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-default form-button">edit</button>
+                    <button type="submit" class="btn btn-default form-button">{{ button }}</button>
                 </div>
             </form>
         </div>

@@ -120,7 +120,7 @@ def sorted_faults(request, order_by):
 
 @login_required
 def add_fault(request):
-    template = loader.get_template('cti/add_fault.html')
+    template = loader.get_template('cti/fault_form.html')
 
     if request.method == "POST":
         form = FaultForm(request.POST)
@@ -140,6 +140,7 @@ def add_fault(request):
         form = FaultForm()
 
     context = {'form': form,
+               'button': 'add',
                'header': 'new fault'}
 
     return HttpResponse(template.render(context, request))
@@ -147,7 +148,7 @@ def add_fault(request):
 
 @login_required
 def edit_fault(request, fault_id):
-    template = loader.get_template('cti/edit_fault.html')
+    template = loader.get_template('cti/fault_form.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -162,6 +163,7 @@ def edit_fault(request, fault_id):
                 messages.warning(request, "fault not added {}".format(form.errors))
 
         context = {'form': form,
+                   'button': 'edit',
                    'header': 'edit fault'}
 
         return HttpResponse(template.render(context, request))
