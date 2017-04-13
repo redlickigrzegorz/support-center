@@ -50,9 +50,18 @@ body {
 }
 
 .panel-button,
-.panel-button:hover {
+.panel-button:hover,
+.panel-button:focus {
     color: #000000;
     font-size: 15px;
+}
+
+.button,
+.button:hover,
+.button:focus {
+    color: #808080;
+    font-size: 15px;
+    text-decoration: none;
 }
 
 .hr-divider {
@@ -123,7 +132,9 @@ body {
     cursor: pointer;
 }
 
-.dropdown a:hover {background-color: #f1f1f1}
+.dropdown a:hover {
+    background-color: #f1f1f1
+}
 
 .show {
     display:block;

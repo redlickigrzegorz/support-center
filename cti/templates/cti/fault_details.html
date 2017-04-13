@@ -84,6 +84,14 @@
                             created by {{ fault.issuer }} (phone number: {{ fault.phone_number }})
                         </div>
                     </div>
+                    {% if request.user.username == fault.issuer %}
+                        <hr class="hr-top-divider">
+                        <div class="panel-row row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 ending-div">
+                                <a href="{% url 'cti:edit_fault' fault.id %}" class="button">edit</a>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
