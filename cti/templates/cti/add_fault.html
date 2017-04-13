@@ -1,22 +1,20 @@
 {% extends 'cti/base.html' %}
 
-{% block title %}add{% endblock %}
+{% block title %}{{ header }}{% endblock %}
 
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
-    {% if messages %}
-        <ul class="messages">
+    <div class="message-row">
+        {% if messages %}
             {% for message in messages %}
-                <div class="col-md-offset-4 col-md-4 allert-message">
-                    <div class="alert alert-{{ message.tags }}">
-                        <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
-                        {{ message }}
-                    </div>
+                <div class="alert alert-{{ message.tags }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <span>{{ message }}</span>
                 </div>
             {% endfor %}
-        </ul>
-    {% endif %}
+        {% endif %}
+    </div>
     <div class="panel panel-default">
         <div class="panel-body col-xs-10 col-sm-8 col-md-6">
             <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data">

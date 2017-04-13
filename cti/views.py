@@ -158,8 +158,11 @@ def edit_fault(request, fault_id):
                 fault = form.save(commit=False)
                 fault.save()
                 messages.success(request, "fault edited successful")
+            else:
+                messages.warning(request, "fault not added {}".format(form.errors))
 
-        context = {'form': form}
+        context = {'form': form,
+                   'header': 'edit fault'}
 
         return HttpResponse(template.render(context, request))
 
@@ -182,7 +185,7 @@ def delete_fault(request, fault_id):
         faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
         context = {'faults': faults,
-                   'fields': Fault().get_fields()}
+                   'header': 'all faults'}
 
         return HttpResponse(template.render(context, request))
 
