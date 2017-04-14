@@ -45,6 +45,10 @@ body {
     line-height: 50px;
 }
 
+.content-row > .panel-default:hover {
+    background-color: #fffee8;
+}
+
 .panel-row {
     margin: 5px;
 }
