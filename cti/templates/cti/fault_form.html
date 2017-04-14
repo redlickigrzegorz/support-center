@@ -10,7 +10,11 @@
             <div class="alert">
             {% for message in messages %}
                 <div class="alert-{{ message.tags }}">
-                    <span class="glyphicon glyphicon-remove"></span>
+                    {% if message.tags == 'success' %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
                     <span>{{ message }}</span>
                 </div>
             {% endfor %}

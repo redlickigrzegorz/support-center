@@ -10,7 +10,11 @@
             <div class="alert">
             {% for message in messages %}
                 <div class="alert-{{ message.tags }}">
-                    <span class="glyphicon glyphicon-remove"></span>
+                    {% if message.tags == 'success' %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
                     <span>{{ message }}</span>
                 </div>
             {% endfor %}
@@ -79,11 +83,11 @@
                     <div class="row panel-row">
                         <div class="col-xs-2 col-sm-2 col-md-2 status-div">
                             {% if fault.status == 0 %}
-                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
                             {% elif fault.status == 1 %}
-                                <span class="glyphicon glyphicon-hourglass" aria-hidden="true">  </span>
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true">  </span>
                             {% elif fault.status == 2 %}
-                                <span class="glyphicon glyphicon-ok" aria-hidden="true">  </span>
+                                <span class="glyphicon glyphicon-check" aria-hidden="true">  </span>
                             {% endif %}
                         </div>
                         <div class="col-xs-10 col-sm-10 col-md-10 body-div">
