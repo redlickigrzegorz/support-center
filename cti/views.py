@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .backends import InvbookBackend
@@ -175,6 +176,7 @@ def edit_fault(request, fault_id):
 
 
 @login_required
+@staff_member_required
 def delete_fault(request, fault_id):
     template = loader.get_template('cti/index.html')
 
@@ -242,6 +244,7 @@ def user_details(request):
 
 
 @login_required
+@staff_member_required
 def assign_to_me(request, fault_id):
     template = loader.get_template('cti/index.html')
 
@@ -268,6 +271,7 @@ def assign_to_me(request, fault_id):
 
 
 @login_required
+@staff_member_required
 def change_password(request):
     template = loader.get_template('cti/change_password.html')
 
