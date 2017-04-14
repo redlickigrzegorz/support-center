@@ -5,6 +5,18 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    <div class="row message-row">
+        {% if messages %}
+            <div class="alert">
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
     <div class="dropdown-row">
         <div class="dropdown">
             <button onclick="dropdownFunction()" class="dropdown-button">sort by<span class="caret"></span></button>
@@ -59,18 +71,6 @@
                 </a>
             </div>
         </div>
-    </div>
-    <div class="row message-row">
-        {% if messages %}
-            <div class="alert">
-            {% for message in messages %}
-                <div class="alert-{{ message.tags }}">
-                    <span class="glyphicon glyphicon-remove"></span>
-                    <span>{{ message }}</span>
-                </div>
-            {% endfor %}
-            </div>
-        {% endif %}
     </div>
     <div class="content-row">
         {% for fault in faults %}

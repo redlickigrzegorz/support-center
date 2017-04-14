@@ -151,25 +151,31 @@ def add_fault(request):
 
 @login_required
 def edit_fault(request, fault_id):
-    template = loader.get_template('cti/fault_form.html')
-
     try:
         fault = Fault.objects.get(pk=fault_id)
-        form = FaultForm(request.POST or None, instance=fault)
 
-        if request.method == "POST":
-            if form.is_valid():
-                fault = form.save(commit=False)
-                fault.save()
-                messages.success(request, "fault edited successful")
-            else:
-                messages.warning(request, "fault not added {}".format(form.errors))
+        if fault.issuer == request.user.username:
+            template = loader.get_template('cti/fault_form.html')
 
-        context = {'form': form,
-                   'button': 'edit',
-                   'header': 'edit fault'}
+            form = FaultForm(request.POST or None, instance=fault)
 
-        return HttpResponse(template.render(context, request))
+            if request.method == "POST":
+                if form.is_valid():
+                    fault = form.save(commit=False)
+                    fault.save()
+                    messages.success(request, "fault edited successful")
+                else:
+                    for field in form:
+                        for error in field.errors:
+                            messages.warning(request, "{} - {}".format(field.name, error))
+
+            context = {'form': form,
+                       'button': 'edit',
+                       'header': 'edit fault'}
+
+            return HttpResponse(template.render(context, request))
+        else:
+            raise Http404("you are not owner of fault {}".format(fault_id))
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
