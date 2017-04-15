@@ -23,27 +23,30 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-body col-xs-10 col-sm-8 col-md-6">
-            <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data" onsubmit="return myFunction();">
+            <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data" onsubmit="return validateFault();">
                 {% csrf_token %}
                 <div class="form-group">
                     <div class="form-normal-div">
                         <input type="text" id="phone_number" name="phone_number" class="form-control form-cell" placeholder="phone number" {% if form.phone_number.value != None %} value="{{ form.phone_number.value }}" {% endif %}>
-                        <div class="alert-warning"><span id="dupa"></span></div>
+                        <div class="alert-warning"><span id="phone_number_alert"></span></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-normal-div">
                         <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" {% if form.object_number.value != None %} value="{{ form.object_number.value }}" {% endif %}>
+                        <div class="alert-warning"><span id="object_number_alert"></span></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
                         <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" {% if form.topic.value != None %} value="{{ form.topic.value }}" {% endif %}>
+                        <div class="alert-warning"><span id="topic_alert"></span></div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
                         <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7">{% if form.description.value != None %} {{ form.description.value }} {% endif %}</textarea>
+                        <div class="alert-warning"><span id="description_alert"></span></div>
                     </div>
                 </div>
                 <div class="form-group">

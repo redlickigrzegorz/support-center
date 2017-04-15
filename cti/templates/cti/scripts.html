@@ -46,19 +46,68 @@
         }
     }
 
-    function myFunction() {
-        var x, text;
+    function validateFault() {
+        var phone_number = document.getElementById("phone_number").value;
+        var object_number = document.getElementById("object_number").value;
+        var topic = document.getElementById("topic").value;
+        var description = document.getElementById("description").value;
 
-        // Get the value of the input field with id="numb"
-        x = document.getElementById("phone_number").value;
+        var phone_number_alert = document.getElementById("phone_number_alert");
+        var object_number_alert = document.getElementById("object_number_alert");
+        var topic_alert = document.getElementById("topic_alert");
+        var description_alert = document.getElementById("description_alert");
 
-        // If x is Not a Number or less than one or greater than 10
-        if (x == 'a') {
-            text = "Input not valid";
-        } else {
-            text = "Input OK";
+        var object_number_regex = new RegExp("^([0-9]{10})$");
+        var phone_number_regex = new RegExp("^([+]?[1]?[0-9]{9,15})$");
+
+        if (!phone_number) {
+            phone_number_alert.innerHTML = "phone number is required";
         }
-        document.getElementById("dupa").innerHTML = text;
+        else {
+            if (phone_number_regex.test(phone_number)) {
+                phone_number_alert.innerHTML = "";
+            }
+            else {
+                phone_number_alert.innerHTML = "allowed phone number format: +999999999 (9-15 digits with possible plus)";
+            }
+        }
+
+        if (!object_number) {
+            object_number_alert.innerHTML = "object number is required";
+        }
+        else {
+            if (object_number_regex.test(object_number)) {
+                object_number_alert.innerHTML = "";
+            }
+            else {
+                object_number_alert.innerHTML = "allowed object number format: 9999999999 (10 digits)";
+            }
+        }
+
+        if (!topic) {
+            topic_alert.innerHTML = "topic is required";
+        }
+        else {
+            if (topic.length > 50) {
+                topic_alert.innerHTML = "allowed topic max length: 50 signs";
+            }
+            else {
+                topic_alert.innerHTML = "";
+            }
+        }
+
+        if (!description) {
+            description_alert.innerHTML = "description is required";
+        }
+        else {
+            if (description.length > 200) {
+                description_alert.innerHTML = "allowed description max length: 200 signs";
+            }
+            else {
+                description_alert.innerHTML = "";
+            }
+        }
+
 
         return false;
     }
