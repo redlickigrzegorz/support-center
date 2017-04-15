@@ -1,12 +1,12 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.9.1/jquery.tablesorter.min.js"></script>
 
 <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
     $(document).ready(function() {
         $('.menu-button').click(function(event) {
             $('.menu-button').removeClass('selected');
@@ -14,6 +14,7 @@
             event.preventDefault();
         })
     });
+
     $(function() {
         $(".trigger").click(function() {
             $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
@@ -23,6 +24,7 @@
             $(".trigger").html("<input id='id_date_time' name='date_time' type='text' value='" + $("#datepicker").val() + "' required='' data-dpmaxz-eid='2'>");
         });
     });
+
     $(function(){
         $("#myDummyTable").tablesorter({widgets: ['zebra']});
     });
