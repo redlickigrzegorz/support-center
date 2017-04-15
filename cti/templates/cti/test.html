@@ -1,35 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load static %}
-
-        <title>{% block title %}{% endblock %}</title>
-
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        <link href="http://mottie.github.io/tablesorter/css/theme.default.css" rel="stylesheet">
-
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/menu.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/body.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/forms.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/modal.css' %}" />
-
-        <link rel="shortcut icon" type="image/png" href="{% static 'resources/favicon.ico' %}"/>
-
-        {% include 'cti/scripts.html' %}
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form name="ff1" method="post" onsubmit="return validateForm();">
-    {% csrf_token %}
- <input type="text" name="email" id="fremail" placeholder="your@email.com" />
- <input type="text" name="title" id="frtitle" placeholder="Title" />
- <input type="text" name="url" id="frurl" placeholder="http://yourwebsite.com/" />
- <input type="submit" name="Submit" value="Continue" onclick="validateForm()"/>
-</form>
+
+<div class="container">
+  <h3>Tooltip Example</h3>
+    <input data-toggle="tooltip" data-placement="right" title="Hooray!" type="text" id="phone_number" name="phone_number" placeholder="phone number">
+
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
 </body>
 </html>
