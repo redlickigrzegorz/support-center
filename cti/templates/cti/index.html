@@ -118,4 +118,19 @@
             <hr class="hr-divider">
         {% endfor %}
     </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if faults.has_previous %}
+                <a href="?page={{ faults.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                page {{ faults.number }} of {{ faults.paginator.num_pages }}
+            </span>
+
+            {% if faults.has_next %}
+                <a href="?page={{ faults.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div>
 {% endblock %}

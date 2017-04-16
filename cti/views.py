@@ -13,6 +13,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from .backends import InvbookBackend
 from django.contrib.auth import get_user_model
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def test(request):
@@ -55,7 +56,18 @@ def logout(request):
 def index(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+
+    paginator = Paginator(faults_list, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        faults = paginator.page(page)
+    except PageNotAnInteger:
+        faults = paginator.page(1)
+    except EmptyPage:
+        faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
                'header': 'all faults'}
@@ -67,7 +79,18 @@ def index(request):
 def my_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, issuer=request.user.get_username())
+    faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username())
+
+    paginator = Paginator(faults_list, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        faults = paginator.page(page)
+    except PageNotAnInteger:
+        faults = paginator.page(1)
+    except EmptyPage:
+        faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
                'header': 'my faults'}
@@ -79,7 +102,18 @@ def my_faults(request):
 def resolved_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status=2)
+    faults_list = Fault.objects.filter(is_visible=True, status=2)
+
+    paginator = Paginator(faults_list, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        faults = paginator.page(page)
+    except PageNotAnInteger:
+        faults = paginator.page(1)
+    except EmptyPage:
+        faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
                'header': 'resolved faults'}
@@ -91,7 +125,18 @@ def resolved_faults(request):
 def sorted_faults(request, order_by):
     template = loader.get_template('cti/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by(order_by)
+    faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by(order_by)
+
+    paginator = Paginator(faults_list, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        faults = paginator.page(page)
+    except PageNotAnInteger:
+        faults = paginator.page(1)
+    except EmptyPage:
+        faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
                'header': 'sorted faults'}
