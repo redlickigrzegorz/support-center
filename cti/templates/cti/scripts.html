@@ -58,50 +58,72 @@
         var object_number_regex = new RegExp("^([0-9]{10})$");
         var phone_number_regex = new RegExp("^([+]?[1]?[0-9]{9,15})$");
 
-        $('#phone_number').tooltip('destroy');
+        $('#phone_number').tooltip({placement: 'right', title: '', trigger: 'manual'});
+        $('#object_number').tooltip({placement: 'right', title: '', trigger: 'manual'});
+        $('#topic').tooltip({placement: 'right', title: '', trigger: 'manual'});
+        $('#description').tooltip({placement: 'right', title: '', trigger: 'manual'});
+
         if (!phone_number) {
-            $('#phone_number').tooltip({placement: 'right', title: 'phone number is required', trigger: 'manual'}).tooltip('show');
+            $('#phone_number').attr('data-original-title', 'phone number is required')
+                              .tooltip('fixTitle')
+                              .tooltip('show');
         }
         else {
             if (!phone_number_regex.test(phone_number)) {
-                $('#phone_number').tooltip({placement: 'right', title: 'allowed phone number format: +999999999 (9-15 digits with possible plus)', trigger: 'manual'}).tooltip('show');
+                $('#phone_number').attr('data-original-title', 'allowed phone number format: +999999999 (9-15 digits with possible plus)')
+                                  .tooltip('fixTitle')
+                                  .tooltip('show');
+            }
+            else {
+                $('#phone_number').tooltip('hide');
             }
         }
 
         if (!object_number) {
-            object_number_alert.innerHTML = "object number is required";
-            $('#object_number').tooltip('show')
+            $('#object_number').attr('data-original-title', 'object number is required')
+                               .tooltip('fixTitle')
+                               .tooltip('show');
         }
         else {
-            if (object_number_regex.test(object_number)) {
-                object_number_alert.innerHTML = "";
+            if (!object_number_regex.test(object_number)) {
+                $('#object_number').attr('data-original-title', 'allowed object number format: 9999999999 (10 digits)')
+                                   .tooltip('fixTitle')
+                                   .tooltip('show');
             }
             else {
-                object_number_alert.innerHTML = "allowed object number format: 9999999999 (10 digits)";
+                $('#object_number').tooltip('hide');
             }
         }
 
         if (!topic) {
-            topic_alert.innerHTML = "topic is required";
+            $('#topic').attr('data-original-title', 'topic is required')
+                       .tooltip('fixTitle')
+                       .tooltip('show');
         }
         else {
             if (topic.length > 50) {
-                topic_alert.innerHTML = "allowed topic max length: 50 signs";
+                $('#topic').attr('data-original-title', 'allowed topic max length: 50 signs')
+                           .tooltip('fixTitle')
+                           .tooltip('show');
             }
             else {
-                topic_alert.innerHTML = "";
+                $('#topic').tooltip('hide');
             }
         }
 
         if (!description) {
-            description_alert.innerHTML = "description is required";
+            $('#description').attr('data-original-title', 'description is required')
+                             .tooltip('fixTitle')
+                             .tooltip('show');
         }
         else {
             if (description.length > 200) {
-                description_alert.innerHTML = "allowed description max length: 200 signs";
+                $('#description').attr('data-original-title', 'allowed description max length: 200 signs')
+                                 .tooltip('fixTitle')
+                                 .tooltip('show');
             }
             else {
-                description_alert.innerHTML = "";
+                $('#description').tooltip('hide');
             }
         }
 
