@@ -16,12 +16,11 @@
     });
 
     $(function() {
-        $(".trigger").click(function() {
-            $("#datepicker").datepicker({dateFormat: 'yy-mm-dd'});
-            $("#datepicker").datepicker("show");
-        });
-        $("#datepicker").change(function () {
-            $(".trigger").html("<input id='id_date_time' name='date_time' type='text' value='" + $("#datepicker").val() + "' required='' data-dpmaxz-eid='2'>");
+        $('#contact-button').click(function () {
+            $('#phone_number').tooltip('hide');
+            $('#object_number').tooltip('hide');
+            $('#topic').tooltip('hide');
+            $('#description').tooltip('hide');
         });
     });
 
@@ -39,6 +38,8 @@
             }
         }
     };
+
+
 
     function dropdownFunction() {
         document.getElementById("myDropdown").classList.toggle("show");

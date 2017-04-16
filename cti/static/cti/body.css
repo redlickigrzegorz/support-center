@@ -1,9 +1,9 @@
 body {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
 }
 
 .jumbotron {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
 }
 
 .alert {
@@ -11,7 +11,7 @@ body {
 }
 
 .alert-error {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     color: #ff0000;
     font-size: 16px;
     text-align: center;
@@ -19,7 +19,7 @@ body {
 }
 
 .alert-warning {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     color: #ffa500;
     font-size: 16px;
     text-align: center;
@@ -27,7 +27,7 @@ body {
 }
 
 .alert-success {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     color: #008000;
     font-size: 16px;
     text-align: center;
@@ -128,7 +128,7 @@ body {
 .dropdown-button,
 .dropdown-button:hover,
 .dropdown-button:focus {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     color: #000000;
     padding: 10px;
     font-size: 16px;
