@@ -53,6 +53,10 @@ body {
     margin: 5px;
 }
 
+.pagination-row {
+    text-align: end;
+}
+
 .panel-button,
 .panel-button:hover,
 .panel-button:focus {
@@ -60,12 +64,15 @@ body {
     font-size: 15px;
 }
 
-.button,
-.button:hover,
-.button:focus {
+.button {
     color: #000000;
     font-size: 15px;
-    text-decoration: none;
+    font-weight: bold;
+}
+
+.button:hover,
+.button:focus {
+    color: #808080;
 }
 
 .hr-divider {
