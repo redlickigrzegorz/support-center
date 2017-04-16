@@ -25,10 +25,6 @@
         });
     });
 
-    $(function(){
-        $("#myDummyTable").tablesorter({widgets: ['zebra']});
-    });
-
     window.onclick = function(event) {
         if (!event.target.matches('.dropdown-button')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -62,20 +58,19 @@
         var object_number_regex = new RegExp("^([0-9]{10})$");
         var phone_number_regex = new RegExp("^([+]?[1]?[0-9]{9,15})$");
 
+        $('#phone_number').tooltip('destroy');
         if (!phone_number) {
-            phone_number_alert.innerHTML = "phone number is required";
+            $('#phone_number').tooltip({placement: 'right', title: 'phone number is required', trigger: 'manual'}).tooltip('show');
         }
         else {
-            if (phone_number_regex.test(phone_number)) {
-                phone_number_alert.innerHTML = "";
-            }
-            else {
-                phone_number_alert.innerHTML = "allowed phone number format: +999999999 (9-15 digits with possible plus)";
+            if (!phone_number_regex.test(phone_number)) {
+                $('#phone_number').tooltip({placement: 'right', title: 'allowed phone number format: +999999999 (9-15 digits with possible plus)', trigger: 'manual'}).tooltip('show');
             }
         }
 
         if (!object_number) {
             object_number_alert.innerHTML = "object number is required";
+            $('#object_number').tooltip('show')
         }
         else {
             if (object_number_regex.test(object_number)) {
