@@ -56,7 +56,7 @@ def logout(request):
 def index(request):
     template = loader.get_template('cti/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
 
     paginator = Paginator(faults_list, 5)
 
@@ -79,7 +79,7 @@ def index(request):
 def my_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username())
+    faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-created_at')
 
     paginator = Paginator(faults_list, 5)
 
@@ -102,7 +102,7 @@ def my_faults(request):
 def resolved_faults(request):
     template = loader.get_template('cti/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, status=2)
+    faults_list = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
 
     paginator = Paginator(faults_list, 5)
 
