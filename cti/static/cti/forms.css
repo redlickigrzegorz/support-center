@@ -35,6 +35,7 @@
 .form-description-cell {
     height: 100px;
     text-align: left;
+    resize: none;
 }
 
 .tooltip-inner {
