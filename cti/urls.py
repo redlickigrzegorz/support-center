@@ -30,6 +30,7 @@ urlpatterns = [
 
     # searched faults
     url(r'^searched_faults/$', views.searched_faults, name='searched_faults'),
+    url(r'^json/searched_faults/$', views_json.searched_faults, name='searched_faults_json'),
 
     # adding fault
     url(r'^add_fault/$', views.add_fault, name='add_fault'),

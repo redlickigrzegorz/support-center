@@ -88,6 +88,22 @@ def sorted_faults(request, order_by):
 
 
 @login_required
+def searched_faults(request):
+    query = request.GET.get('searched_text')
+
+    if query:
+        faults = get_faults_from_session(request).filter(Q(topic__icontains=query)).order_by('-created_at')
+    else:
+        faults = get_faults_from_session(request).order_by('-created_at')
+
+    post_faults_to_session(request, faults)
+
+    result = {'faults': serializers.serialize('json', faults)}
+
+    return JsonResponse(result)
+
+
+@login_required
 def add_fault(request):
     result = {'add_fault_status': False}
 
