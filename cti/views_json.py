@@ -4,6 +4,7 @@ from .forms import FaultForm
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.core import serializers
@@ -112,6 +113,7 @@ def edit_fault(request, fault_id):
 
 
 @login_required
+@staff_member_required
 def delete_fault(request, fault_id):
     result = {'delete_fault_status': False}
 
@@ -169,6 +171,7 @@ def user_details(request):
 
 
 @login_required
+@staff_member_required
 def assign_to_me(request, fault_id):
     result = {'assign_fault_status': False}
 
@@ -189,6 +192,7 @@ def assign_to_me(request, fault_id):
 
 
 @login_required
+@staff_member_required
 def change_password(request):
     result = {'change_password_status': False}
 
