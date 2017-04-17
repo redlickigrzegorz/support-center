@@ -106,6 +106,12 @@
     width: 100%;
 }
 
+.text-muted,
+.text-muted:hover,
+.text-muted:focus {
+    color: #777;
+}
+
 .footer {
     float:right;
 }

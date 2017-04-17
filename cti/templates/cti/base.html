@@ -122,6 +122,9 @@
         </div>
         <footer class="footer navbar-fixed-bottom">
             <div class="container footer-container">
+                {% if request.user.is_staff %}
+                    <a href="" class="text-muted">admin site</a>
+                {% endif %}
                 <span class="text-muted footer">© copyright by Grzegorz Redlicki</span>
             </div>
         </footer>
