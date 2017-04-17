@@ -17,12 +17,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 
 
-def test(request):
-    template = loader.get_template('cti/test.html')
-
-    return HttpResponse(template.render(request=request))
-
-
 def post_faults_to_session(request, faults):
     request.session['faults'] = serializers.serialize("json", faults)
 
