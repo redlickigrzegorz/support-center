@@ -15,6 +15,7 @@ from .backends import InvbookBackend
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
+from django.db.models import Q
 
 
 def post_faults_to_session(request, faults):
@@ -156,6 +157,37 @@ def sorted_faults(request, order_by):
 
     context = {'faults': faults,
                'header': 'sorted faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def searched_faults(request):
+    template = loader.get_template('cti/index.html')
+
+    query = request.GET.get('searched_text')
+
+    if query:
+        faults_list = get_faults_from_session(request).filter(Q(topic__icontains=query)).order_by('-created_at')
+    else:
+        messages.warning(request, 'no matches for this query')
+        faults_list = get_faults_from_session(request).order_by('-created_at')
+
+    post_faults_to_session(request, faults_list)
+
+    paginator = Paginator(faults_list, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        faults = paginator.page(page)
+    except PageNotAnInteger:
+        faults = paginator.page(1)
+    except EmptyPage:
+        faults = paginator.page(paginator.num_pages)
+
+    context = {'faults': faults,
+               'header': 'searched faults'}
 
     return HttpResponse(template.render(context, request))
 

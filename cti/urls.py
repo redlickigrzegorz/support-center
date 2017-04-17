@@ -28,6 +28,9 @@ urlpatterns = [
     url(r'^sorted_faults/(?P<order_by>.+)$', views.sorted_faults, name='sorted_faults'),
     url(r'^json/sorted_faults/(?P<order_by>.+)$', views_json.sorted_faults, name='sorted_faults_json'),
 
+    # searched faults
+    url(r'^searched_faults/$', views.searched_faults, name='searched_faults'),
+
     # adding fault
     url(r'^add_fault/$', views.add_fault, name='add_fault'),
     url(r'^json/add_fault$', views_json.add_fault, name='add_fault_json'),
