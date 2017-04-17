@@ -14,12 +14,30 @@ from django.contrib.auth.models import User
 from .backends import InvbookBackend
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core import serializers
 
 
 def test(request):
     template = loader.get_template('cti/test.html')
 
     return HttpResponse(template.render(request=request))
+
+
+def post_faults_to_session(request, faults):
+    request.session['faults'] = serializers.serialize("json", faults)
+
+
+def get_faults_from_session(request):
+    if 'faults' in request.session:
+        pk_list = []
+        for fault in serializers.deserialize("json", request.session['faults']):
+            pk_list.append(fault.object.pk)
+
+        faults = Fault.objects.filter(pk__in=pk_list)
+    else:
+        faults = Fault.objects.all()
+
+    return faults
 
 
 def login(request):
@@ -57,6 +75,7 @@ def index(request):
     template = loader.get_template('cti/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+    post_faults_to_session(request, faults_list)
 
     paginator = Paginator(faults_list, 5)
 
@@ -80,6 +99,7 @@ def my_faults(request):
     template = loader.get_template('cti/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-created_at')
+    post_faults_to_session(request, faults_list)
 
     paginator = Paginator(faults_list, 5)
 
@@ -103,6 +123,7 @@ def resolved_faults(request):
     template = loader.get_template('cti/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
+    post_faults_to_session(request, faults_list)
 
     paginator = Paginator(faults_list, 5)
 
@@ -125,7 +146,8 @@ def resolved_faults(request):
 def sorted_faults(request, order_by):
     template = loader.get_template('cti/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by(order_by)
+    faults_list = get_faults_from_session(request).order_by(order_by)
+    post_faults_to_session(request, faults_list)
 
     paginator = Paginator(faults_list, 5)
 
