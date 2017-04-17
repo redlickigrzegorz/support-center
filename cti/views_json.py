@@ -11,6 +11,7 @@ from django.core import serializers
 from django.http import JsonResponse
 from .backends import InvbookBackend
 from django.contrib.auth import get_user_model
+from .views import post_faults_to_session, get_faults_from_session
 
 
 def login(request):
@@ -32,7 +33,7 @@ def login(request):
             else:
                 result['error_message'] = 'your account has been disabled'
         else:
-            result['error_message'] = 'invalid login'
+            result['error_message'] = 'invalid login or password'
 
     return JsonResponse(result)
 
@@ -48,7 +49,8 @@ def logout(request):
 
 @login_required
 def index(request):
-    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-updated_at')
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+    post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
 
@@ -57,7 +59,8 @@ def index(request):
 
 @login_required
 def my_faults(request):
-    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-updated_at')
+    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-created_at')
+    post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
 
@@ -66,7 +69,18 @@ def my_faults(request):
 
 @login_required
 def resolved_faults(request):
-    faults = Fault.objects.filter(is_visible=True, status=2).order_by('-updated_at')
+    faults = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
+    post_faults_to_session(request, faults)
+
+    result = {'faults': serializers.serialize('json', faults)}
+
+    return JsonResponse(result)
+
+
+@login_required
+def sorted_faults(request, order_by):
+    faults = get_faults_from_session(request).order_by(order_by)
+    post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
 
@@ -79,8 +93,10 @@ def add_fault(request):
 
     if request.method == "POST":
         form = FaultForm(request.POST)
+
         if form.is_valid():
             fault = form.save(commit=False)
+            fault.issuer = request.user
             fault.save()
 
             invbook = InvbookBackend()
