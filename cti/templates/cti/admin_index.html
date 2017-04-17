@@ -1,0 +1,136 @@
+{% extends 'cti/admin_base.html' %}
+
+{% block title %}{{ header }}{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block body %}
+    <div class="row message-row">
+        {% if messages %}
+            <div class="alert">
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">
+                    {% if message.tags == 'success' %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="dropdown-row">
+        <div class="dropdown">
+            <button onclick="dropdownFunction()" class="dropdown-button">sort by<span class="caret"></span></button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="{% url 'cti:sorted_faults' '-topic' %}">
+                    <span>
+                        <span>topic</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' 'topic' %}">
+                    <span class="dropup">
+                        <span>topic</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' '-created_at' %}">
+                    <span>
+                        <span>created at</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' 'created_at' %}">
+                    <span class="dropup">
+                        <span>created at</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' '-status' %}">
+                    <span>
+                        <span>status</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' 'status' %}">
+                    <span class="dropup">
+                        <span>status</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' '-priority' %}">
+                    <span>
+                        <span>priority</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+                <a href="{% url 'cti:sorted_faults' 'priority' %}">
+                    <span class="dropup">
+                        <span>priority</span>
+                        <span class="caret"></span>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="content-row">
+        {% for fault in faults %}
+            <div class="panel panel-default">
+                <a href="{% url 'cti:fault_details' fault.id %}" class="panel-button">
+                    <div class="row panel-row">
+                        <div class="col-xs-2 col-sm-2 col-md-2 status-div">
+                            {% if fault.status == 0 %}
+                                <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                            {% elif fault.status == 1 %}
+                                <span class="glyphicon glyphicon-wrench" aria-hidden="true">  </span>
+                            {% elif fault.status == 2 %}
+                                <span class="glyphicon glyphicon-check" aria-hidden="true">  </span>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-10 col-sm-10 col-md-10 body-div">
+                            <div class="row panel-row">
+                                <div class="col-xs-4 col-sm-6 col-md-6 starting-div header-div">
+                                    <span>{{ fault.topic }}</span>
+                                </div>
+                                <div class="col-xs-8 col-sm-6 col-md-6 ending-div">
+                                    <span>{{ fault.created_at }}</span>
+                                </div>
+                            </div>
+                            <hr class="hr-bottom-divider">
+                            <div class="row panel-row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
+                                    <span>{{ fault.description }}</span>
+                                </div>
+                            </div>
+                            <hr class="hr-top-divider">
+                            <div class="row panel-row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 ending-div">
+                                    <span>created by {{ fault.issuer }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <hr class="hr-divider">
+        {% endfor %}
+    </div>
+    <div class="pagination-row">
+        <div class="col-xs-12 col-sm-12 col-md-12 ending-div">
+            {% if faults.has_previous %}
+                <a href="?page={{ faults.previous_page_number }}" class="button">previous</a>
+            {% endif %}
+
+            <span class="current">
+                page {{ faults.number }} of {{ faults.paginator.num_pages }}
+            </span>
+
+            {% if faults.has_next %}
+                <a href="?page={{ faults.next_page_number }}" class="button">next</a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

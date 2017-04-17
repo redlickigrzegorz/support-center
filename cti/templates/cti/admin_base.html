@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/menu.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/admin_menu.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/body.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/forms.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/logo.css' %}" />
@@ -123,7 +123,7 @@
         <footer class="footer navbar-fixed-bottom">
             <div class="container footer-container">
                 {% if request.user.is_staff %}
-                    <a href="{% url 'cti:index_admin' %}" class="text-muted">admin site</a>
+                    <a href="{% url 'cti:index' %}" class="text-muted">client site</a>
                 {% endif %}
                 <span class="text-muted footer">© copyright by Grzegorz Redlicki</span>
             </div>

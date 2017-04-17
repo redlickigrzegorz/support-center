@@ -39,7 +39,6 @@ urlpatterns = [
     # editing fault
     url(r'^edit_fault/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
     url(r'^json/edit_fault/(?P<fault_id>[0-9]+)/$', views_json.edit_fault, name='edit_fault_json'),
-    url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 
     # deleting fault
     url(r'^delete/(?P<fault_id>[0-9]+)/$', views.delete_fault, name='delete_fault'),
@@ -64,4 +63,11 @@ urlpatterns = [
     # changing password
     url(r'^change_password/$', views.change_password, name='change_password'),
     url(r'^json/change_password/$', views_json.change_password, name='change_password_json'),
+
+    # admin index
+    url(r'^admin/index/$', views_admin.index, name='index_admin'),
+
+    # admin editing fault
+    url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
+
 ]
