@@ -31,14 +31,14 @@
 .navbar-default .navbar-nav > .active > a:hover,
 .navbar-default .navbar-nav > .active > a:focus {
     color: #ffffff;
-    background-color: #691e19;
+    background-color: #606060;
 }
 
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
     color: #ffffff;
-    background-color: #691e19;
+    background-color: #606060;
 }
 
 .navbar-default .navbar-nav > li > a > .navbar-label {
@@ -59,7 +59,7 @@
 .navbar-default .navbar-nav > .dropdown > .dropdown-menu,
 .navbar-default .navbar-nav > .dropdown > .dropdown-menu > li > a {
     color: #ffffff;
-    background-color: #781e19;
+    background-color: #606060;
 }
 
 .navbar-default .navbar-nav > .dropdown > .dropdown-menu > li:hover,

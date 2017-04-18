@@ -38,7 +38,7 @@
             </thead>
             <tbody>
                 {% for fault in faults %}
-                    <tr>
+                    <tr data-toggle="collapse" data-target="#fault-{{ fault.id }}">
                         <td>{{ fault.created_at|date:'Y-m-d H:i' }}</td>
                         <td>{{ fault.updated_at|date:'Y-m-d H:i' }}</td>
                         <td>{{ fault.object_number }}</td>
@@ -71,6 +71,13 @@
                                 <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
                             {% endif %}
                         </td>
+                    </tr>
+                    <tr>
+                        <div class="accordian-body collapse" id="fault-{{ fault.id }}">
+                            <div class="row">
+                                {{ fault.topic }}
+                            </div>
+                        </div>
                     </tr>
                 {% endfor %}
             </tbody>
