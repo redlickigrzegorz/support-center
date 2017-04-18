@@ -39,7 +39,7 @@
                 </thead>
                 <tbody>
                     {% for fault in faults %}
-                        <tr>
+                        <tr id="fault-{{ fault.id }}" class="fault-tr">
                             <td>{{ fault.created_at|date:'Y-m-d H:i' }}</td>
                             <td>{{ fault.updated_at|date:'Y-m-d H:i' }}</td>
                             <td>{{ fault.object_number }}</td>
@@ -78,4 +78,5 @@
             </table>
         {% endif %}
     </div>
+    <div id="img_container"></div>
 {% endblock %}

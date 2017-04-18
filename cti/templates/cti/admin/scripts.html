@@ -10,8 +10,19 @@
             sortList: [[0,1]]
         });
     });
+
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $(document).ready(function() {
+        $('.fault-tr').click(function(event) {
+            var id = $(this).attr('id');
+
+            var num = Math.floor((Math.random()*10)+1);
+            var img = $('<div>Image '+num+':<img src="image' + num + '.png" /></div>');
+            $("#img_container").html(img).offset({ top: event.pageY, left: event.pageX});
+        });
     });
 
     $(document).ready(function() {
