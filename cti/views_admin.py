@@ -22,7 +22,7 @@ from .views import post_faults_to_session, get_faults_from_session
 @login_required
 @staff_member_required
 def index(request):
-    template = loader.get_template('cti/admin_index.html')
+    template = loader.get_template('cti/admin/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
     post_faults_to_session(request, faults_list)
@@ -47,7 +47,7 @@ def index(request):
 @login_required
 @staff_member_required
 def edit_fault(request, fault_id):
-    template = loader.get_template('cti/admin_edit_fault.html')
+    template = loader.get_template('cti/admin/edit_fault.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)
