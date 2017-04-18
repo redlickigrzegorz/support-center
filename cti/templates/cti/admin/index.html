@@ -5,25 +5,25 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
-    <div class="content-row">
-        <div class="row message-row">
-            {% if messages %}
-                <div class="alert">
-                {% for message in messages %}
-                    <div class="alert-{{ message.tags }}">
-                        {% if message.tags == 'success' %}
-                            <span class="glyphicon glyphicon-ok"></span>
-                        {% else %}
-                            <span class="glyphicon glyphicon-remove"></span>
-                        {% endif %}
-                        <span>{{ message }}</span>
-                    </div>
-                {% endfor %}
+    <div class="row message-row">
+        {% if messages %}
+            <div class="alert">
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">
+                    {% if message.tags == 'success' %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                    <span>{{ message }}</span>
                 </div>
-            {% endif %}
-        </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="content-row">
         {% if faults %}
-            <table id="myTable" class="tablesorter">
+            <table id="faultTable" class="tablesorter">
                 <thead>
                     <tr>
                         <th>created at</th>
@@ -76,6 +76,6 @@
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-    {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}
