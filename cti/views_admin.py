@@ -25,10 +25,22 @@ def index(request):
     template = loader.get_template('cti/admin/index.html')
 
     faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
-    post_faults_to_session(request, faults)
 
     context = {'faults': faults,
                'header': 'all faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
+def resolved_faults(request):
+    template = loader.get_template('cti/admin/index.html')
+
+    faults = Fault.objects.filter(is_visible=True, status=2)
+
+    context = {'faults': faults,
+               'header': 'resolved faults'}
 
     return HttpResponse(template.render(context, request))
 

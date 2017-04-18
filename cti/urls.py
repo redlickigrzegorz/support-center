@@ -67,6 +67,9 @@ urlpatterns = [
     # admin index
     url(r'^admin/index/$', views_admin.index, name='index_admin'),
 
+    # admin resolved faults
+    url(r'^admin/resolved_faults/$', views_admin.resolved_faults, name='resolved_faults_admin'),
+
     # admin editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 
