@@ -24,7 +24,7 @@ from .views import post_faults_to_session, get_faults_from_session
 def index(request):
     template = loader.get_template('cti/admin/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
     post_faults_to_session(request, faults)
 
     context = {'faults': faults,

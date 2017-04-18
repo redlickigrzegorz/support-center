@@ -87,6 +87,10 @@ body {
     margin-top: 5px;
 }
 
+.status {
+    display: none;
+}
+
 .status-div {
     text-align: center;
     margin-top: 50px;
@@ -154,6 +158,12 @@ body {
 
 .tablesorter-header {
     outline: none;
+}
+
+.tablesorter-default tbody > tr:hover > td
+{
+    background-color: #fffee8;
+    color: #000000
 }
 
 @media (max-width: 767px) {

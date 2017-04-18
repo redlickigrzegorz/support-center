@@ -6,7 +6,10 @@
 
 <script>
     $(function(){
-        $("#myTable").tablesorter();
+        $("#myTable").tablesorter({
+        // sort on the first column and third column, order asc
+        sortList: [[0,1]]
+    });
     });
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
