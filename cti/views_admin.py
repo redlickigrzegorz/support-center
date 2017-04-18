@@ -27,7 +27,7 @@ def index(request):
     faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
     post_faults_to_session(request, faults_list)
 
-    paginator = Paginator(faults_list, 5)
+    paginator = Paginator(faults_list, 20)
 
     page = request.GET.get('page')
 

@@ -152,6 +152,10 @@ body {
     display:block;
 }
 
+.tablesorter-header {
+    outline: none;
+}
+
 @media (max-width: 767px) {
     .jumbotron {
         padding-top: 50px;
