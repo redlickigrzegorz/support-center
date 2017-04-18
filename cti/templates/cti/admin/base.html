@@ -56,15 +56,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:add_fault' %}" title="add fault">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="navbar-label">add fault</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{% url 'cti:my_faults' %}" title="my faults">
+                            <a href="{% url 'cti:my_faults_admin' %}" title="faults assigned to me">
                                 <span class="glyphicon glyphicon-th-list"></span>
-                                <span class="navbar-label">my faults</span>
+                                <span class="navbar-label">faults assigned to me</span>
                             </a>
                         </li>
                         <li>
@@ -74,9 +68,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="" id="contact-button" data-toggle="modal" data-target="#contact-modal" title="contact">
-                                <span class="glyphicon glyphicon-earphone"></span>
-                                <span class="navbar-label">contact</span>
+                            <a href="" title="users">
+                                <span class="glyphicon glyphicon-education"></span>
+                                <span class="navbar-label">users</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" title="statistics">
+                                <span class="glyphicon glyphicon-stats"></span>
+                                <span class="navbar-label">statistics</span>
                             </a>
                         </li>
                         <li class="dropdown">

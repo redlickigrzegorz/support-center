@@ -47,6 +47,19 @@ def resolved_faults(request):
 
 @login_required
 @staff_member_required
+def my_faults(request):
+    template = loader.get_template('cti/admin/index.html')
+
+    faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+
+    context = {'faults': faults,
+               'header': 'faults assigned to me'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
 def edit_fault(request, fault_id):
     template = loader.get_template('cti/admin/edit_fault.html')
 

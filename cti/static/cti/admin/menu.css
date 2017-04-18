@@ -82,7 +82,7 @@
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-    background-color: #691e19;
+    background-color: #606060;
 }
 
 .navbar-default .navbar-toggle .icon-bar {
@@ -109,7 +109,7 @@
 .text-muted,
 .text-muted:hover,
 .text-muted:focus {
-    color: #777;
+    color: #777777;
 }
 
 .footer {
