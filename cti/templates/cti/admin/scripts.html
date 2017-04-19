@@ -18,10 +18,29 @@
     $(document).ready(function() {
         $('.fault-tr').click(function(event) {
             var id = $(this).attr('id');
-
-            var num = Math.floor((Math.random()*10)+1);
-            var img = $('<div>Image '+num+':<img src="image' + num + '.png" /></div>');
-            $("#img_container").html(img).offset({ top: event.pageY, left: event.pageX});
+            var content = $('<div class="options-menu">'+
+                                '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
+                                    '<a href="" class="option-button details-button" title="details">'+
+                                        '<span class="glyphicon glyphicon-file"></span>'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
+                                    '<a href="" class="option-button edit-button" title="edit">'+
+                                        '<span class="glyphicon glyphicon-pencil"></span>'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
+                                    '<a href="" class="option-button assign-button" title="assign to me">'+
+                                        '<span class="glyphicon glyphicon-plus"></span>'+
+                                    '</a>'+
+                                '</div>'+
+                                '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
+                                    '<a href="" class="option-button delete-button" title="delete">'+
+                                        '<span class="glyphicon glyphicon-trash"></span>'+
+                                    '</a>'+
+                                '</div>'+
+                            '</div>');
+            $("#options-modal").html(content).offset({ top: event.pageY, left: event.pageX});
         });
     });
 

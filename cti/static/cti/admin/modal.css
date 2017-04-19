@@ -5,3 +5,36 @@
 .modal-body {
     color: #969594;
 }
+
+.options-menu {
+    width: 200px;
+    height:50px;
+    line-height: 50px;
+    text-align: center;
+    align-content: center;
+}
+
+.option {
+    font-size: 20px;
+    background-color: #ffffff;
+}
+
+.option-button:hover {
+    color: #000000;
+}
+
+.details-button {
+    color: #0c692c;
+}
+
+.edit-button {
+    color: #193b69;
+}
+
+.assign-button {
+    color: #ffa500;
+}
+
+.delete-button {
+    color: #ba120f;
+}
