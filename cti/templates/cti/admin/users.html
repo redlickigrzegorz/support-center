@@ -1,0 +1,67 @@
+{% extends 'cti/admin/base.html' %}
+
+{% block title %}{{ header }}{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block body %}
+    <div class="row message-row">
+        {% if messages %}
+            <div class="alert">
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">
+                    {% if message.tags == 'success' %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="content-row">
+        {% if users %}
+            <table id="faultTable" class="tablesorter">
+                <thead>
+                    <tr>
+                        <th>date joined</th>
+                        <th>last login</th>
+                        <th>username</th>
+                        <th>first name</th>
+                        <th>last name</th>
+                        <th>email</th>
+                        <th>active</th>
+                        <th>admin</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr id="{{ user.id }}" class="user-tr">
+                            <td class="user-td">{{ user.date_joined|date:'Y-m-d H:i' }}</td>
+                            <td class="user-td">{{ user.last_login|date:'Y-m-d H:i' }}</td>
+                            <td class="user-td">{{ user.username }}</td>
+                            <td class="user-td">{{ user.first_name }}</td>
+                            <td class="user-td">{{ user.last_name }}</td>
+                            <td class="user-td">{{ user.email }}</td>
+                            <td class="user-td">
+                                <span class="status">{{ user.is_active }}</span>
+                                {% if user.is_active == 1 %}
+                                    <span class="user-td glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                {% endif %}
+                            </td>
+                            <td class="user-td">
+                                <span class="status">{{ user.is_staff }}</span>
+                                {% if user.is_staff == 1 %}
+                                    <span class="user-td glyphicon glyphicon-ok" aria-hidden="true"></span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+    <div id="options-modal"></div>
+{% endblock %}

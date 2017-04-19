@@ -172,6 +172,21 @@ def object_details(request, object_id):
 
 @login_required
 @staff_member_required
+def all_users(request):
+    template = loader.get_template('cti/admin/users.html')
+
+    User = get_user_model()
+
+    users = User.objects.all()
+
+    context = {'users': users,
+               'header': 'all faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
 def change_password(request):
     template = loader.get_template('cti/change_password.html')
 

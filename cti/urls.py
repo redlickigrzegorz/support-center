@@ -78,4 +78,7 @@ urlpatterns = [
 
     # admin - deleting fault
     url(r'^admin/delete_fault/(?P<fault_id>[0-9]+)/$', views_admin.delete_fault, name='delete_fault_admin'),
+
+    # admin - all users
+    url(r'^admin/users/$', views_admin.all_users, name='all_users_admin'),
 ]
