@@ -94,19 +94,14 @@ def delete_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        template = loader.get_template('cti/admin/index.html')
-
         if fault.is_visible:
             fault.is_visible = False
             fault.save()
             messages.success(request, "fault deleted successful")
+        else:
+            messages.warning(request, "fault is already deleted")
 
-        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
-
-        context = {'faults': faults,
-                   'header': 'all faults'}
-
-        return HttpResponse(template.render(context, request))
+        return HttpResponseRedirect(reverse('cti:index_admin'))
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
@@ -118,8 +113,6 @@ def assign_to_me(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        template = loader.get_template('cti/admin/index.html')
-
         if fault.handler == '0':
             fault.handler = request.user.get_username()
             fault.status = 1
@@ -128,12 +121,7 @@ def assign_to_me(request, fault_id):
         else:
             messages.warning(request, "fault is already assigned")
 
-        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
-
-        context = {'faults': faults,
-                   'header': 'all faults'}
-
-        return HttpResponse(template.render(context, request))
+        return HttpResponseRedirect(reverse('cti:index_admin'))
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
