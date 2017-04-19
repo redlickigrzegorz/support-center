@@ -34,6 +34,19 @@ def index(request):
 
 @login_required
 @staff_member_required
+def my_faults(request):
+    template = loader.get_template('cti/admin/index.html')
+
+    faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+
+    context = {'faults': faults,
+               'header': 'faults assigned to me'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
 def resolved_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
@@ -47,13 +60,13 @@ def resolved_faults(request):
 
 @login_required
 @staff_member_required
-def my_faults(request):
+def deleted_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+    faults = Fault.objects.filter(is_visible=False)
 
     context = {'faults': faults,
-               'header': 'faults assigned to me'}
+               'header': 'deleted faults'}
 
     return HttpResponse(template.render(context, request))
 
