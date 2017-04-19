@@ -62,6 +62,7 @@ urlpatterns = [
     url(r'^admin/resolved_faults/$', views_admin.resolved_faults, name='resolved_faults_admin'),
 
     # admin - details of fault
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/$', views_admin.fault_details, name='fault_details_admin'),
 
     # admin - details of object
 

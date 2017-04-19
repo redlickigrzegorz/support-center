@@ -133,6 +133,20 @@ def assign_to_me(request, fault_id):
         raise Http404("fault does not exist")
 
 
+@login_required
+@staff_member_required
+def fault_details(request, fault_id):
+    template = loader.get_template('cti/admin/fault_details.html')
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+        context = {'fault': fault,
+                   'header': 'fault\'s details'}
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+    return HttpResponse(template.render(context, request))
+
 
 @login_required
 @staff_member_required
