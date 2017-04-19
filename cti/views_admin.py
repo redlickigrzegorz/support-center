@@ -150,6 +150,21 @@ def fault_details(request, fault_id):
 
 @login_required
 @staff_member_required
+def object_details(request, object_id):
+    template = loader.get_template('cti/admin/object_details.html')
+
+    try:
+        object = Object.objects.get(object_number=object_id)
+        context = {'object': object,
+                   'header': 'object\'s details'}
+    except Object.DoesNotExist:
+        raise Http404("object does not exist")
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
 def change_password(request):
     template = loader.get_template('cti/change_password.html')
 
