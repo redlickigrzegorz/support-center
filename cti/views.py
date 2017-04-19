@@ -251,6 +251,7 @@ def edit_fault(request, fault_id):
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
+
 @login_required
 def fault_details(request, fault_id):
     template = loader.get_template('cti/fault_details.html')
