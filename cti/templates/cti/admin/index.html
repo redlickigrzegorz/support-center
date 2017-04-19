@@ -50,26 +50,26 @@
                                 {% if fault.handler != '0' %}
                                     {{ fault.handler }}
                                 {% else %}
-                                    <span>non handler</span>
+                                    non handler
                                 {% endif %}
                             </td>
                             <td class="fault-td">
                                 {% if fault.priority == 0 %}
-                                    <span>trivial</span>
+                                    trivial
                                 {% elif fault.priority == 1 %}
-                                    <span>standard</span>
+                                    standard
                                 {% elif fault.priority == 2 %}
-                                    <span>urgent</span>
+                                    urgent
                                 {% endif %}
                             </td>
                             <td class="fault-td">
                                 <span class="status">{{ fault.status }}</span>
                                 {% if fault.status == 0 %}
-                                    <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
+                                    <span class="fault-td glyphicon glyphicon-hourglass" aria-hidden="true"></span>
                                 {% elif fault.status == 1 %}
-                                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                    <span class="fault-td glyphicon glyphicon-wrench" aria-hidden="true"></span>
                                 {% elif fault.status == 2 %}
-                                    <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
+                                    <span class="fault-td glyphicon glyphicon-check" aria-hidden="true"></span>
                                 {% endif %}
                             </td>
                         </tr>
