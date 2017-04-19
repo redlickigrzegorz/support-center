@@ -91,10 +91,10 @@ def edit_fault(request, fault_id):
 @login_required
 @staff_member_required
 def delete_fault(request, fault_id):
-    template = loader.get_template('cti/admin/index.html')
-
     try:
         fault = Fault.objects.get(pk=fault_id)
+
+        template = loader.get_template('cti/admin/index.html')
 
         if fault.is_visible:
             fault.is_visible = False
@@ -112,16 +112,15 @@ def delete_fault(request, fault_id):
         raise Http404("fault does not exist")
 
 
-
 @login_required
 @staff_member_required
 def assign_to_me(request, fault_id):
-    template = loader.get_template('cti/admin/index.html')
-
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        if fault.handler == '0' or fault.handler == '':
+        template = loader.get_template('cti/admin/index.html')
+
+        if fault.handler == '0':
             fault.handler = request.user.get_username()
             fault.status = 1
             fault.save()
@@ -132,7 +131,7 @@ def assign_to_me(request, fault_id):
         faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
         context = {'faults': faults,
-                   'fields': Fault().get_fields(), }
+                   'header': 'all faults'}
 
         return HttpResponse(template.render(context, request))
 
