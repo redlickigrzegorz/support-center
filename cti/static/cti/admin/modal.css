@@ -6,6 +6,10 @@
     color: #969594;
 }
 
+#options-modal {
+    width: 0px;
+}
+
 .options-menu {
     width: 200px;
     height:50px;

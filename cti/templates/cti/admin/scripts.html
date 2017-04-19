@@ -17,6 +17,7 @@
 
     $(document).ready(function() {
         $('.fault-tr').click(function(event) {
+            $("#options-modal").width("0px");
             var id = $(this).attr('id');
             var content = $('<div class="options-menu">'+
                                 '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
@@ -40,7 +41,7 @@
                                     '</a>'+
                                 '</div>'+
                             '</div>');
-            $("#options-modal").html(content).offset({ top: event.pageY, left: event.pageX});
+            $("#options-modal").html(content).offset({ top: event.pageY, left: event.pageX}).animate({width: "200px"});
         });
     });
 

@@ -40,20 +40,20 @@
                 <tbody>
                     {% for fault in faults %}
                         <tr id="{{ fault.id }}" class="fault-tr">
-                            <td>{{ fault.created_at|date:'Y-m-d H:i' }}</td>
-                            <td>{{ fault.updated_at|date:'Y-m-d H:i' }}</td>
-                            <td>{{ fault.object_number }}</td>
-                            <td>{{ fault.topic }}</td>
-                            <td>{{ fault.issuer }}</td>
-                            <td>{{ fault.phone_number }}</td>
-                            <td>
+                            <td class="fault-td">{{ fault.created_at|date:'Y-m-d H:i' }}</td>
+                            <td class="fault-td">{{ fault.updated_at|date:'Y-m-d H:i' }}</td>
+                            <td class="fault-td">{{ fault.object_number }}</td>
+                            <td class="fault-td">{{ fault.topic }}</td>
+                            <td class="fault-td">{{ fault.issuer }}</td>
+                            <td class="fault-td">{{ fault.phone_number }}</td>
+                            <td class="fault-td">
                                 {% if fault.handler != '0' %}
                                     {{ fault.handler }}
                                 {% else %}
                                     <span>non handler</span>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td class="fault-td">
                                 {% if fault.priority == 0 %}
                                     <span>trivial</span>
                                 {% elif fault.priority == 1 %}
@@ -62,7 +62,7 @@
                                     <span>urgent</span>
                                 {% endif %}
                             </td>
-                            <td>
+                            <td class="fault-td">
                                 <span class="status">{{ fault.status }}</span>
                                 {% if fault.status == 0 %}
                                     <span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span>
