@@ -4,14 +4,12 @@ from .forms import FaultForm
 from django.contrib.auth import authenticate
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib import messages
-from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import JsonResponse
 from .backends import InvbookBackend
 from django.contrib.auth import get_user_model
 from .views import post_faults_to_session, get_faults_from_session
+from django.db.models import Q
 
 
 def login(request):
@@ -145,26 +143,6 @@ def edit_fault(request, fault_id):
 
 
 @login_required
-@staff_member_required
-def delete_fault(request, fault_id):
-    result = {'delete_fault_status': False}
-
-    try:
-        fault = Fault.objects.get(pk=fault_id)
-
-        if fault.is_visible:
-            fault.is_visible = False
-            fault.save()
-
-            result['delete_fault_status'] = True
-
-        return JsonResponse(result)
-
-    except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
-
-
-@login_required
 def fault_details(request, fault_id):
     try:
         fault = Fault.objects.filter(pk=fault_id)
@@ -200,54 +178,3 @@ def user_details(request):
 
     except User.DoesNotExist:
         raise Http404("user does not exist")
-
-
-@login_required
-@staff_member_required
-def assign_to_me(request, fault_id):
-    result = {'assign_fault_status': False}
-
-    try:
-        fault = Fault.objects.get(pk=fault_id)
-
-        if fault.handler == '0' or fault.handler == '':
-            fault.handler = request.user.get_username()
-            fault.status = 1
-            fault.save()
-
-            result['assign_fault_status'] = True
-
-        return JsonResponse(result)
-
-    except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
-
-
-@login_required
-@staff_member_required
-def change_password(request):
-    result = {'change_password_status': False}
-
-    if request.method == "POST":
-        old_password = request.POST['old_password']
-        new_password = request.POST['new_password']
-        new_password_repeat = request.POST['new_password_repeat']
-
-        user = User.objects.get(username__exact=request.user)
-
-        if new_password != new_password_repeat:
-            messages.warning(request, 'new password fields are different! ')
-
-        if not user.check_password(old_password):
-            messages.warning(request, 'old password is wrong')
-
-        if user.check_password(old_password) and new_password == new_password_repeat:
-            user.set_password(new_password)
-            user.save()
-            user = authenticate(username=request.user, password=new_password)
-            auth.login(request, user)
-            messages.success(request, 'password has been changed')
-
-            result['change_password_status'] = True
-
-    return JsonResponse(result)

@@ -40,10 +40,6 @@ urlpatterns = [
     url(r'^edit_fault/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
     url(r'^json/edit_fault/(?P<fault_id>[0-9]+)/$', views_json.edit_fault, name='edit_fault_json'),
 
-    # deleting fault
-    url(r'^delete/(?P<fault_id>[0-9]+)/$', views.delete_fault, name='delete_fault'),
-    url(r'^json/delete_fault/(?P<fault_id>[0-9]+)/$', views_json.delete_fault, name='delete_fault_json'),
-
     # details of fault
     url(r'^fault_details/(?P<fault_id>[0-9]+)/$', views.fault_details, name='fault_details'),
     url(r'^json/fault_details/(?P<fault_id>[0-9]+)/$', views_json.fault_details, name='fault_details_json'),
@@ -56,24 +52,23 @@ urlpatterns = [
     url(r'^user_details/$', views.user_details, name='user_details'),
     url(r'^json/user_details/$', views_json.user_details, name='user_details_json'),
 
-    # assigning fault
-    url(r'^assign_to_me/(?P<fault_id>[0-9]+)/$', views.assign_to_me, name='assign_to_me'),
-    url(r'^json/assign_to_me/(?P<fault_id>[0-9]+)/$', views_json.assign_to_me, name='assign_to_me_json'),
-
-    # changing password
-    url(r'^change_password/$', views.change_password, name='change_password'),
-    url(r'^json/change_password/$', views_json.change_password, name='change_password_json'),
-
-    # admin index
+    # admin - index
     url(r'^admin/index/$', views_admin.index, name='index_admin'),
 
-    # admin my faults
+    # admin - my faults
     url(r'^admin/my_faults/$', views_admin.my_faults, name='my_faults_admin'),
 
-    # admin resolved faults
+    # admin - resolved faults
     url(r'^admin/resolved_faults/$', views_admin.resolved_faults, name='resolved_faults_admin'),
 
-    # admin editing fault
+    # admin - details of fault
+
+    # admin - details of object
+
+    # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 
+    # admin - assigning fault
+
+    # admin - deleting fault
 ]
