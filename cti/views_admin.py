@@ -61,10 +61,11 @@ def my_faults(request):
 @login_required
 @staff_member_required
 def edit_fault(request, fault_id):
-    template = loader.get_template('cti/admin/edit_fault.html')
-
     try:
         fault = Fault.objects.get(pk=fault_id)
+
+        template = loader.get_template('cti/admin/fault_form.html')
+
         form = AdminFaultForm(request.POST or None, instance=fault)
 
         if request.method == "POST":
@@ -72,8 +73,14 @@ def edit_fault(request, fault_id):
                 fault = form.save(commit=False)
                 fault.save()
                 messages.success(request, "fault edited successful")
+            else:
+                for field in form:
+                    for error in field.errors:
+                        messages.warning(request, "{} - {}".format(field.name, error))
 
-        context = {'form': form}
+        context = {'form': form,
+                   'button': 'edit',
+                   'header': 'edit fault'}
 
         return HttpResponse(template.render(context, request))
 

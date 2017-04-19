@@ -1,0 +1,62 @@
+{% extends 'cti/admin/base.html' %}
+
+{% block title %}{{ header }}{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block body %}
+    <div class="row message-row">
+        {% if messages %}
+            <div class="alert">
+            {% for message in messages %}
+                <div class="alert-{{ message.tags }}">
+                    {% if message.tags == 'success' %}
+                        <span class="glyphicon glyphicon-ok"></span>
+                    {% else %}
+                        <span class="glyphicon glyphicon-remove"></span>
+                    {% endif %}
+                    <span>{{ message }}</span>
+                </div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body col-xs-10 col-sm-8 col-md-6">
+            <form class="form-horizontal" action="" method="POST" enctype="multipart/form-data" onsubmit="return validateFault();">
+                {% csrf_token %}
+                <div class="form-group">
+                    <div class="form-short-div">
+                        <select id="priority" name="priority" class="form-control form-cell">
+                            <option value="0" {% if form.priority.value == 0 %}selected{% endif %}>trivial</option>
+                            <option value="1" {% if form.priority.value == 1 %}selected{% endif %}>standard</option>
+                            <option value="2" {% if form.priority.value == 2 %}selected{% endif %}>urgent</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-normal-div">
+                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" {% if form.object_number.value != None %} value="{{ form.object_number.value }}" {% endif %}>
+                        <div class="alert-warning"><span id="object_number_alert"></span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-long-div">
+                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" {% if form.topic.value != None %} value="{{ form.topic.value }}" {% endif %}>
+                        <div class="alert-warning"><span id="topic_alert"></span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-long-div">
+                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7">{% if form.description.value != None %}{{ form.description.value }}{% endif %}</textarea>
+                        <div class="alert-warning"><span id="description_alert"></span></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default form-button">{{ button }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
