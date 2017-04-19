@@ -109,7 +109,7 @@ def delete_fault(request, fault_id):
 @login_required
 @staff_member_required
 def assign_to_me(request, fault_id):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/admin/index.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)

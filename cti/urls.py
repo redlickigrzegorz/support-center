@@ -71,6 +71,7 @@ urlpatterns = [
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 
     # admin - assigning fault
+    url(r'^admin/assign_to_me/(?P<fault_id>[0-9]+)/$', views_admin.assign_to_me, name='assign_to_me_admin'),
 
     # admin - deleting fault
 ]
