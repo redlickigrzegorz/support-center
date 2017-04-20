@@ -167,6 +167,23 @@ def object_details(request, object_id):
 
 @login_required
 @staff_member_required
+def user_details(request):
+    template = loader.get_template('cti/admin/user_details.html')
+
+    User = get_user_model()
+
+    try:
+        user = User.objects.get(username__exact=request.user)
+        context = {'user': user,
+                   'header': 'user\'s details'}
+    except User.DoesNotExist:
+        raise Http404("user does not exist")
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
 def all_users(request):
     template = loader.get_template('cti/admin/users.html')
 
