@@ -145,14 +145,14 @@
         }
 
         if (validation) {
-            var confirmation = confirm("are you sure you want to add such fault??");
-
-            if (confirmation) {
-                return true
-            }
+            $('#confirm-modal').modal('show');
         }
-
-        return false;
     }
+    $(document).ready(function() {
+        $('#confirm-form').click(function () {
+            $('#confirm-modal').modal('hide');
+            $('#fault-form').submit();
+        });
+    });
 
 </script>
