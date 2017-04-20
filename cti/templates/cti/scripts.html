@@ -39,13 +39,13 @@
         }
     };
 
-    $(window).on('load',function(){
-        $('#myModal').modal('show');
+    $(window).on('load',function() {
+        $('#alert-modal').modal('show');
     });
 
-    setTimeout(function(){
-  $('#myModal').modal('hide')
-}, 4000);
+    setTimeout(function() {
+        $('#alert-modal').modal('hide')
+    }, 5000);
 
     function dropdownFunction() {
         document.getElementById("myDropdown").classList.toggle("show");

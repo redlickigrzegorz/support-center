@@ -5,37 +5,19 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
-    <div class="modal fade" id="myModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-  <div class="modal-header">
-    <a class="close" data-dismiss="modal">×</a>
-    <h3>Modal header</h3>
-  </div>
-  <div class="modal-body">
-    <p>One fine body…</p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" class="btn">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
-  </div>
-        </div>
-    </div>
-</div>
-    <a class="btn" data-toggle="modal" href="#myModal" >Launch Modal</a>
-    <div class="row message-row">
         {% if messages %}
-            <div class="alert">
-            {% for message in messages %}
-                <div class="alert-{{ message.tags }}">
-                    {% if message.tags == 'success' %}
-                        <span class="glyphicon glyphicon-ok"></span>
-                    {% else %}
-                        <span class="glyphicon glyphicon-remove"></span>
-                    {% endif %}
-                    <span>{{ message }}</span>
+            <div class="modal fade" id="alert-modal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="alert">
+                        {% for message in messages %}
+                            <div class="alert-{{ message.tags }}">
+                                <span>{{ message }}</span>
+                            </div>
+                        {% endfor %}
+                        </div>
+                    </div>
                 </div>
-            {% endfor %}
             </div>
         {% endif %}
     </div>
