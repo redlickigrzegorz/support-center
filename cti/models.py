@@ -104,7 +104,7 @@ class Object(models.Model):
         return [field.name for field in all_fields]
 
     def __str__(self):
-        return '{} - {} - {}'.format(self.created_at, self.object_number, self.object_name)
+        return '{} - {} - {}'.format(self.date, self.object_number, self.object_name)
 
 
 class User(AbstractUser):

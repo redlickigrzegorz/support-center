@@ -2,7 +2,7 @@ from django.template import loader
 from django.http import HttpResponse
 from .models import Fault, Object
 from django.http import Http404
-from .forms import FaultForm, AdminFaultForm
+from .forms import AdminFaultForm
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.contrib import auth
@@ -11,12 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .backends import InvbookBackend
 from django.contrib.auth import get_user_model
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core import serializers
-from django.db.models import Q
-from .views import post_faults_to_session, get_faults_from_session
 
 
 @login_required

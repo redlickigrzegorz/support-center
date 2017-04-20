@@ -54,6 +54,7 @@
                                 {% endif %}
                             </td>
                             <td class="fault-td">
+                                <span class="status">{{ fault.priority }}</span>
                                 {% if fault.priority == 0 %}
                                     trivial
                                 {% elif fault.priority == 1 %}
