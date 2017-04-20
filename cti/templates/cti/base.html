@@ -115,6 +115,21 @@
                 <hr class="hr-divider">
                 <div class="body-container">
                     {% include 'cti/contact_modal.html' %}
+                    {% if messages %}
+                        <div class="modal fade" id="alert-modal">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="alert">
+                                    {% for message in messages %}
+                                        <div class="alert-{{ message.tags }}">
+                                            <span>{{ message }}</span>
+                                        </div>
+                                    {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                     {% block body %}
                     {% endblock %}
                 </div>

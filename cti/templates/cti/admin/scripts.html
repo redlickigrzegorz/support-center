@@ -60,6 +60,14 @@
         })
     });
 
+    $(window).on('load',function() {
+        $('#alert-modal').modal('show');
+    });
+
+    setTimeout(function() {
+        $('#alert-modal').modal('hide')
+    }, 5000);
+
     $(function() {
         $('#contact-button').click(function () {
             $('#phone_number').tooltip('hide');
