@@ -39,6 +39,14 @@
         }
     };
 
+    $(window).on('load',function(){
+        $('#myModal').modal('show');
+    });
+
+    setTimeout(function(){
+  $('#myModal').modal('hide')
+}, 4000);
+
     function dropdownFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
