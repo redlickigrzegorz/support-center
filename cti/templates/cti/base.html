@@ -21,13 +21,37 @@
         <link rel="shortcut icon" type="image/png" href="{% static 'resources/favicon.ico' %}"/>
 
         {% include 'cti/scripts.html' %}
-        <script type="text/javascript">
-            var a = "{{ header }}";
-            $.alert({
-                title: 'Alert!',
-                content: a,
-            });
-        </script>
+        {% if messages %}
+            <script type="text/javascript">
+                {% for message in messages %}
+                    let title = "{{ message.tags }}";
+                    let message = "{{ message }}";
+                    let type = 'green';
+                    let icon = 'glyphicon glyphicon-ok-sign';
+
+                    {% if message.tags == "warning" %}
+                        icon = 'glyphicon glyphicon-info-sign';
+                        type = 'orange';
+                    {% elif message.tags == "error" %}
+                        icon = 'glyphicon glyphicon-remove-sign';
+                        type = 'red';
+                    {% endif %}
+
+                    let dialog = $.dialog({
+                        icon: icon,
+                        title: title,
+                        content: message,
+                        backgroundDismiss: true,
+                        type: type,
+                        closeIcon: null,
+                    });
+
+                    setTimeout(function(){
+                        dialog.close();
+                    },4000);
+               {% endfor %}
+            </script>
+        {% endif %}
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -123,21 +147,6 @@
                 <hr class="hr-divider">
                 <div class="body-container">
                     {% include 'cti/contact_modal.html' %}
-                    {% if messages %}
-                        <div class="modal fade" id="alert-modal">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="alert">
-                                    {% for message in messages %}
-                                        <div class="alert-{{ message.tags }}">
-                                            <span>{{ message }}</span>
-                                        </div>
-                                    {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
                     {% block body %}
                     {% endblock %}
                 </div>
