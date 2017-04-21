@@ -35,12 +35,14 @@
 .navbar-default .navbar-nav > li > a:focus {
     color: #ffffff;
     background-color: #691e19;
+    outline: none;
 }
 
 .navbar-default-admin .navbar-nav > li > a:hover,
 .navbar-default-admin .navbar-nav > li > a:focus {
     color: #ffffff;
     background-color: #606060;
+    outline: none;
 }
 
 .navbar-default .navbar-nav > .active > a,
