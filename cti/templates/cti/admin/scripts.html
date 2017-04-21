@@ -168,7 +168,18 @@
         }
 
         if (validation) {
-            $('#confirm-modal').modal('show');
+            $.confirm({
+                title: 'confirm!',
+                content: 'are you sure you want to do this??',
+                type: 'dark',
+                buttons: {
+                    confirm: function () {
+                        $('#fault-form').submit();
+                    },
+                    cancel: function () {
+                    }
+                }
+            });
         }
     }
 
