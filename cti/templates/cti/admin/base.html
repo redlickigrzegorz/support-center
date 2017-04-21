@@ -27,39 +27,14 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.7/js/jquery.tablesorter.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.7/js/jquery.tablesorter.widgets.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
+
+        <script type="text/javascript" src="{% static 'cti/js/dropdown_menu.js' %}"></script>
+        <script type="text/javascript" src="{% static 'cti/js/option_menu.js' %}"></script>
+        <script type="text/javascript" src="{% static 'cti/js/selector.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/tablesorter.js' %}"></script>
+        <script type="text/javascript" src="{% static 'cti/js/validator.js' %}"></script>
 
-        {% include 'cti/admin/scripts.html' %}
-        {% if messages %}
-            <script type="text/javascript">
-                {% for message in messages %}
-                    let title = "{{ message.tags }}";
-                    let message = "{{ message }}";
-                    let type = 'green';
-                    let icon = 'glyphicon glyphicon-ok-sign';
-
-                    {% if message.tags == "warning" %}
-                        icon = 'glyphicon glyphicon-info-sign';
-                        type = 'orange';
-                    {% elif message.tags == "error" %}
-                        icon = 'glyphicon glyphicon-remove-sign';
-                        type = 'red';
-                    {% endif %}
-
-                    let dialog = $.dialog({
-                        icon: icon,
-                        title: title,
-                        content: message,
-                        backgroundDismiss: true,
-                        type: type
-                    });
-
-                    setTimeout(function(){
-                        dialog.close();
-                    },4000);
-               {% endfor %}
-            </script>
-        {% endif %}
+        {% include 'cti/scripts/alert_messages.html' %}
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top">

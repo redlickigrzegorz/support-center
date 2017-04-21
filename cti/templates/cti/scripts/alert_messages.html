@@ -1,0 +1,30 @@
+{% if messages %}
+    <script type="text/javascript">
+        {% for message in messages %}
+            let title = "{{ message.tags }}";
+            let message = "{{ message }}";
+            let type = 'green';
+            let icon = 'glyphicon glyphicon-ok-sign';
+
+            {% if message.tags == "warning" %}
+                icon = 'glyphicon glyphicon-info-sign';
+                type = 'orange';
+            {% elif message.tags == "error" %}
+                icon = 'glyphicon glyphicon-remove-sign';
+                type = 'red';
+            {% endif %}
+
+            let dialog = $.dialog({
+                icon: icon,
+                title: title,
+                content: message,
+                backgroundDismiss: true,
+                type: type
+            });
+
+            setTimeout(function(){
+                dialog.close();
+            },4000);
+       {% endfor %}
+    </script>
+{% endif %}
