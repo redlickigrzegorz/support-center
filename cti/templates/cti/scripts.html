@@ -146,13 +146,23 @@
         }
 
         if (validation) {
-            $('#confirm-modal').modal('show');
+            $.confirm({
+                title: 'confirm!',
+                content: 'are you sure you want to do this??',
+                buttons: {
+                    confirm: function () {
+                        $('#fault-form').submit();
+                    },
+                    cancel: function () {
+                    }
+                }
+            });
         }
     }
     $(document).ready(function() {
         $('#confirm-form').click(function () {
             $('#confirm-modal').modal('hide');
-            $('#fault-form').submit();
+
         });
     });
 
