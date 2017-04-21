@@ -136,10 +136,19 @@ body {
     display: block;
 }
 
-.dropdown-button,
+.dropdown-button {
+    background-color: #f9f9f9;
+    color: #000000;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
 .dropdown-button:hover,
 .dropdown-button:focus {
-    background-color: #f9f9f9;
+    background-color: #f1f1f1;
     color: #000000;
     padding: 10px;
     font-size: 16px;

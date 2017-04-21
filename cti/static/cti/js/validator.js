@@ -195,7 +195,7 @@ function validateFaultAdmin() {
         $.confirm({
             title: 'confirm!',
             content: 'are you sure you want to do this??',
-            type: 'red',
+            type: 'dark',
             buttons: {
                 confirm: function () {
                     $('#fault-form').submit();
