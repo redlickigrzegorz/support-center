@@ -46,7 +46,10 @@ def login(request):
             if user.is_active:
                 auth.login(request, user)
 
-                return HttpResponseRedirect(reverse('cti:index'))
+                if user.is_staff:
+                    return HttpResponseRedirect(reverse('cti:index_admin'))
+                else:
+                    return HttpResponseRedirect(reverse('cti:index'))
             else:
                 messages.warning(request, 'your account has been disabled')
         else:
