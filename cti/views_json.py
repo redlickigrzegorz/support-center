@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import JsonResponse
 from .backends import InvbookBackend
-from django.contrib.auth import get_user_model
+from .models import User
 from .views import post_faults_to_session, get_faults_from_session
 from django.db.models import Q
 
@@ -168,8 +168,6 @@ def object_details(request, object_id):
 
 @login_required
 def user_details(request):
-    User = get_user_model()
-
     try:
         user = User.objects.filter(username__exact=request.user)
         result = {'user': serializers.serialize('json', user)}

@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .backends import InvbookBackend
-from django.contrib.auth import get_user_model
+from .models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.db.models import Q
@@ -283,8 +283,6 @@ def object_details(request, object_id):
 @login_required
 def user_details(request):
     template = loader.get_template('cti/user_details.html')
-
-    User = get_user_model()
 
     try:
         user = User.objects.get(username__exact=request.user)
