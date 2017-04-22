@@ -2,15 +2,6 @@ $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(function() {
-    $('#contact.txt-button').click(function () {
-        $('#phone_number').tooltip('hide');
-        $('#object_number').tooltip('hide');
-        $('#topic').tooltip('hide');
-        $('#description').tooltip('hide');
-    });
-});
-
 function validateFault() {
     var validation = true;
 
