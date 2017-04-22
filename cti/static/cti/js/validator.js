@@ -3,7 +3,7 @@ $(document).ready(function(){
 });
 
 $(function() {
-    $('#contact-button').click(function () {
+    $('#contact.txt-button').click(function () {
         $('#phone_number').tooltip('hide');
         $('#object_number').tooltip('hide');
         $('#topic').tooltip('hide');

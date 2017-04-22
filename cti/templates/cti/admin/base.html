@@ -29,6 +29,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
 
         <script type="text/javascript" src="{% static 'cti/js/dropdown_menu.js' %}"></script>
+        <script type="text/javascript" src="{% static 'cti/js/modal.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/option_menu.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/selector.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/tablesorter.js' %}"></script>
@@ -135,7 +136,6 @@
                 </div>
                 <hr class="hr-divider">
                 <div class="body-container">
-                    {% include 'cti/contact_modal.html' %}
                     {% block body %}
                     {% endblock %}
                 </div>
