@@ -195,7 +195,7 @@ def all_users(request):
 @login_required
 @staff_member_required
 def change_password(request):
-    template = loader.get_template('cti/change_password.html')
+    template = loader.get_template('cti/admin/change_password.html')
 
     if request.method == "POST":
         old_password = request.POST['old_password']
@@ -204,19 +204,24 @@ def change_password(request):
 
         user = User.objects.get(username__exact=request.user)
 
-        if new_password != new_password_repeat:
-            messages.warning(request, 'new password fields are different! ')
-
         if not user.check_password(old_password):
             messages.warning(request, 'old password is wrong')
+
+        if new_password != new_password_repeat:
+            messages.warning(request, 'new password fields are different!')
 
         if user.check_password(old_password) and new_password == new_password_repeat:
             user.set_password(new_password)
             user.save()
+
             user = authenticate(username=request.user, password=new_password)
             auth.login(request, user)
+
             messages.success(request, 'password has been changed')
 
-            return HttpResponseRedirect(reverse('cti:index'))
+            return HttpResponseRedirect(reverse('cti:index_admin'))
 
-    return HttpResponse(template.render(request))
+    context = {'button': 'change',
+               'header': 'change password'}
+
+    return HttpResponse(template.render(context, request))

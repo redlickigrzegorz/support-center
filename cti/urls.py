@@ -73,6 +73,9 @@ urlpatterns = [
     # admin - details of user
     url(r'^admin/user_details/$', views_admin.user_details, name='user_details_admin'),
 
+    # admin - change password
+    url(r'^admin/change_password/$', views_admin.change_password, name='change_password_admin'),
+
     # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 
