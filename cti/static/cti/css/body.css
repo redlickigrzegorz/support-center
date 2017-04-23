@@ -75,6 +75,16 @@ body {
     color: #808080;
 }
 
+.ending-div > a {
+    color: #000000;
+}
+
+.ending-div > a:hover,
+.ending-div > a:focus {
+    color: #808080;
+    text-decoration: none;
+}
+
 .hr-divider {
    margin-top: 0;
 }

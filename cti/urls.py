@@ -73,9 +73,6 @@ urlpatterns = [
     # admin - details of user
     url(r'^admin/user_details/$', views_admin.user_details, name='user_details_admin'),
 
-    # admin - change password
-    url(r'^admin/change_password/$', views_admin.change_password, name='change_password_admin'),
-
     # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 
@@ -87,4 +84,10 @@ urlpatterns = [
 
     # admin - all users
     url(r'^admin/users/$', views_admin.all_users, name='all_users_admin'),
+
+    # admin - change password
+    url(r'^admin/change_password/$', views_admin.change_password, name='change_password_admin'),
+
+    # admin - report phone number
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number, name='report_phone_number_admin'),
 ]

@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .models import User
+from django.core.mail import send_mail
 
 
 @login_required
@@ -225,3 +226,28 @@ def change_password(request):
                'header': 'change password'}
 
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
+def report_phone_number(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        subject = 'fault {} - phone number reported'.format(fault.id)
+        message = 'please change phone number\n' \
+                  '{} - this is not working\n\n' \
+                  'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+            format(fault.phone_number, fault.topic, fault.description, fault.id)
+        from_email = 'redlicki.grzegorz@gmail.com'
+
+        user = User.objects.get(username=fault.issuer)
+        recipient_list = [user.email]
+
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+        messages.success(request, "phone number reported successfully")
+
+        return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
