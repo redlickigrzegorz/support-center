@@ -39,23 +39,6 @@
     resize: none;
 }
 
-.tooltip-inner {
-    max-width: 200px;
-    padding: 3px 8px;
-    color: #ffffff;
-    text-align: center;
-    background-color: #ffa500;
-    border-radius: 4px;
-}
-
-.tooltip-arrow {
-    top: 50%;
-    left: 0;
-    margin-top: -5px;
-    border-width: 5px 5px 5px 0;
-    border-right-color: #ffa500!important;
-}
-
 .input-group-addon {
     width: 50px;
 }
