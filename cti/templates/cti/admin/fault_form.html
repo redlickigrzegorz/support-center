@@ -11,6 +11,7 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <div class="form-short-div">
+                        <label for="priority"></label>
                         <select id="priority" name="priority" class="form-control form-cell">
                             <option value="0" {% if form.priority.value == 0 %}selected{% endif %}>trivial</option>
                             <option value="1" {% if form.priority.value == 1 %}selected{% endif %}>standard</option>
@@ -20,21 +21,27 @@
                 </div>
                 <div class="form-group">
                     <div class="form-normal-div">
-                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number" {% if form.object_number.value != None %} value="{{ form.object_number.value }}" {% endif %}>
+                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number"
+                               data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
+                                {% if form.object_number.value != None %} value="{{ form.object_number.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic" {% if form.topic.value != None %} value="{{ form.topic.value }}" {% endif %}>
+                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic"
+                               data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
+                                {% if form.topic.value != None %} value="{{ form.topic.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7">{% if form.description.value != None %}{{ form.description.value }}{% endif %}</textarea>
+                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7"
+                                  data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
+                        >{% if form.description.value != None %}{{ form.description.value }}{% endif %}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <button type="button" onclick="return validateFaultAdmin();" class="btn btn-default form-button">{{ button }}</button>
+                    <button type="button" onclick="return validateFault();" class="btn btn-default form-button">{{ button }}</button>
                 </div>
             </form>
         </div>

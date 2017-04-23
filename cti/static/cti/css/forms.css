@@ -7,12 +7,14 @@
     width: 25%;
     margin: 0 auto;
     float: left;
+    display: flex;
 }
 
 .form-normal-div {
     width: 50%;
     margin: 0 auto;
     float: left;
+    display: flex;
 }
 
 .form-long-div {
@@ -38,6 +40,24 @@
     text-align: left;
     resize: none;
 }
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f1c40f;
+    border-radius: 4px;
+ }
+
+ .tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: #f1c40f!important;
+ }
 
 .input-group-addon {
     width: 50px;
