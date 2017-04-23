@@ -14,6 +14,7 @@ from .models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.db.models import Q
+from django.core.mail import send_mail
 
 
 def post_faults_to_session(request, faults):
@@ -207,6 +208,12 @@ def add_fault(request):
 
             invbook = InvbookBackend()
             invbook.get_or_create_object(fault.object_number)
+
+            send_mail('new fault added',
+                      'new fault message',
+                      'redlicki.grzegorz@gmail.com',
+                      ['redlicki.grzegorz@gmail.com'],
+                      fail_silently=False,)
 
             messages.success(request, "fault added successful")
         else:
