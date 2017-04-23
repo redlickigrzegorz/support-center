@@ -209,11 +209,22 @@ def add_fault(request):
             invbook = InvbookBackend()
             invbook.get_or_create_object(fault.object_number)
 
-            send_mail('new fault added',
-                      'new fault message',
-                      'redlicki.grzegorz@gmail.com',
-                      ['redlicki.grzegorz@gmail.com'],
-                      fail_silently=False,)
+            subject = 'fault {} created - {}'.format(fault.id, fault.topic)
+            message = 'issuer: {}\n' \
+                      'object: {}\n\n' \
+                      'topic: {}\n' \
+                      'description: {}\n\n' \
+                      'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'.\
+                format(fault.issuer, fault.object_number, fault.topic, fault.description, fault.id)
+            from_email = 'redlicki.grzegorz@gmail.com'
+            recipient_list = []
+
+            users = User.objects.filter(is_staff=True)
+
+            for user in users:
+                recipient_list.append(user.email)
+
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
             messages.success(request, "fault added successful")
         else:

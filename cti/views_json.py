@@ -10,6 +10,7 @@ from .backends import InvbookBackend
 from .models import User
 from .views import post_faults_to_session, get_faults_from_session
 from django.db.models import Q
+from django.core.mail import send_mail
 
 
 def login(request):
@@ -115,6 +116,23 @@ def add_fault(request):
 
             invbook = InvbookBackend()
             invbook.get_or_create_object(fault.object_number)
+
+            subject = 'fault {} created - {}'.format(fault.id, fault.topic)
+            message = 'issuer: {}\n' \
+                      'object: {}\n\n' \
+                      'topic: {}\n' \
+                      'description: {}\n\n' \
+                      'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
+                format(fault.issuer, fault.object_number, fault.topic, fault.description, fault.id)
+            from_email = 'redlicki.grzegorz@gmail.com'
+            recipient_list = []
+
+            users = User.objects.filter(is_staff=True)
+
+            for user in users:
+                recipient_list.append(user.email)
+
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
             result['add_fault_status'] = True
 
