@@ -64,26 +64,24 @@ urlpatterns = [
     # admin - deleted faults
     url(r'^admin/deleted_faults/$', views_admin.deleted_faults, name='deleted_faults_admin'),
 
-    # admin - details of fault
-    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/$', views_admin.fault_details, name='fault_details_admin'),
-
-    # admin - details of object
-    url(r'^admin/object_details/(?P<object_id>[0-9]+)/$', views_admin.object_details, name='object_details_admin'),
-
-    # admin - details of user
-    url(r'^admin/user_details/(?P<user_id>[0-9]+)/$', views_admin.user_details, name='user_details_admin'),
+    # admin - all users
+    url(r'^admin/users/$', views_admin.all_users, name='all_users_admin'),
 
     # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
+
+    # admin - finishing fault
+    url(r'^admin/finish_fault/(?P<fault_id>[0-9]+)/$', views_admin.finish_fault, name='finish_fault_admin'),
+
+    # admin - deleting fault
+    url(r'^admin/delete_fault/(?P<fault_id>[0-9]+)/$', views_admin.delete_fault, name='delete_fault_admin'),
 
     # admin - assigning fault
     url(r'^admin/assign_to_me/(?P<fault_id>[0-9]+)/$', views_admin.assign_to_me, name='assign_to_me_admin'),
 
     # admin - reassigning fault
-    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/reassign_fault/(?P<username>[0-9]+)$', views_admin.reassign_fault, name='reassign_fault_admin'),
-
-    # admin - deleting fault
-    url(r'^admin/delete_fault/(?P<fault_id>[0-9]+)/$', views_admin.delete_fault, name='delete_fault_admin'),
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/reassign_fault/(?P<username>[0-9]+)$', views_admin.reassign_fault,
+        name='reassign_fault_admin'),
 
     # admin - restoring fault
     url(r'^admin/restore_fault/(?P<fault_id>[0-9]+)/$', views_admin.restore_fault, name='restore_fault_admin'),
@@ -97,18 +95,23 @@ urlpatterns = [
     # admin - restoring user
     url(r'^admin/restore_user/(?P<user_id>[0-9]+)/$', views_admin.restore_user, name='restore_user_admin'),
 
-    # admin - finishing fault
-    url(r'^admin/finish_fault/(?P<fault_id>[0-9]+)/$', views_admin.finish_fault, name='finish_fault_admin'),
-
-    # admin - all users
-    url(r'^admin/users/$', views_admin.all_users, name='all_users_admin'),
-
     # admin - change password
     url(r'^admin/change_password/$', views_admin.change_password, name='change_password_admin'),
 
+    # admin - details of fault
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/$', views_admin.fault_details, name='fault_details_admin'),
+
+    # admin - details of object
+    url(r'^admin/object_details/(?P<object_id>[0-9]+)/$', views_admin.object_details, name='object_details_admin'),
+
+    # admin - details of user
+    url(r'^admin/user_details/(?P<user_id>[0-9]+)/$', views_admin.user_details, name='user_details_admin'),
+
     # admin - ask for reassign
-    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/ask_for_reassign/(?P<username>[0-9]+)$', views_admin.ask_for_reassign, name='ask_for_reassign_admin'),
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/ask_for_reassign/(?P<username>[0-9]+)$',
+        views_admin.ask_for_reassign, name='ask_for_reassign_admin'),
 
     # admin - report phone number
-    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number, name='report_phone_number_admin'),
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number,
+        name='report_phone_number_admin'),
 ]

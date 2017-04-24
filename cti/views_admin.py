@@ -60,10 +60,23 @@ def resolved_faults(request):
 def deleted_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
-    faults = Fault.objects.filter(is_visible=False)
+    faults = Fault.objects.filter(is_visible=False, status=3)
 
     context = {'faults': faults,
                'header': 'deleted faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
+def all_users(request):
+    template = loader.get_template('cti/admin/users.html')
+
+    users = User.objects.all()
+
+    context = {'users': users,
+               'header': 'all users'}
 
     return HttpResponse(template.render(context, request))
 
@@ -99,6 +112,8 @@ def edit_fault(request, fault_id):
                         send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
                     messages.success(request, "fault edited successful")
+
+                    return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
                 else:
                     for field in form:
                         for error in field.errors:
@@ -113,7 +128,44 @@ def edit_fault(request, fault_id):
             messages.warning(request, "this fault is already ended")
 
             return HttpResponseRedirect(reverse('cti:index_admin'))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
 
+
+@login_required
+@staff_member_required
+def finish_fault(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
+
+        if fault.status != 2 and fault.status != 3:
+            if fault.handler == request.user.username:
+                fault.status = 2
+                fault.save()
+
+                compare_two_faults(request, previous_version_of_fault, fault)
+
+                if request.user.username != fault.issuer:
+                    subject = 'fault {} - your fault was finished'.format(fault.id)
+                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.id)
+                    from_email = 'redlicki.grzegorz@gmail.com'
+
+                    user = User.objects.get(username=fault.issuer)
+                    recipient_list = [user.email]
+
+                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+                messages.success(request, "fault finished successful")
+
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+            else:
+                messages.warning(request, "you are not handler of this fault")
+        else:
+            messages.warning(request, "fault is not ready to finish")
+
+        return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -123,6 +175,7 @@ def edit_fault(request, fault_id):
 def delete_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
 
         if fault.is_visible:
             if fault.handler == request.user.username:
@@ -130,14 +183,28 @@ def delete_fault(request, fault_id):
                 fault.status = 3
                 fault.save()
 
+                compare_two_faults(request, previous_version_of_fault, fault)
+
+                if request.user.username != fault.issuer:
+                    subject = 'fault {} - your fault was deleted'.format(fault.id)
+                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.id)
+                    from_email = 'redlicki.grzegorz@gmail.com'
+
+                    user = User.objects.get(username=fault.issuer)
+                    recipient_list = [user.email]
+
+                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
                 messages.success(request, "fault deleted successful")
+
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
                 messages.warning(request, "you are not handler of this fault")
         else:
             messages.warning(request, "fault is already deleted")
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -147,6 +214,7 @@ def delete_fault(request, fault_id):
 def assign_to_me(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
 
         if fault.handler == '0':
             if fault.status == 0:
@@ -154,14 +222,28 @@ def assign_to_me(request, fault_id):
                 fault.status = 1
                 fault.save()
 
+                compare_two_faults(request, previous_version_of_fault, fault)
+
+                if request.user.username != fault.issuer:
+                    subject = 'fault {} - your fault was assigned'.format(fault.id)
+                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.id)
+                    from_email = 'redlicki.grzegorz@gmail.com'
+
+                    user = User.objects.get(username=fault.issuer)
+                    recipient_list = [user.email]
+
+                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
                 messages.success(request, "fault assigned successful")
+
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
                 messages.warning(request, "fault status is not free to assign")
         else:
             messages.warning(request, "fault is already assigned")
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -171,6 +253,7 @@ def assign_to_me(request, fault_id):
 def reassign_fault(request, fault_id, username):
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
 
         if fault.handler == request.user.username:
             user = User.objects.get(username=username)
@@ -179,23 +262,28 @@ def reassign_fault(request, fault_id, username):
                 fault.handler = username
                 fault.save()
 
-                subject = 'fault {} - fault was assign to you'.format(fault.id)
+                compare_two_faults(request, previous_version_of_fault, fault)
+
+                subject = 'fault {} - fault was reasigned'.format(fault.id)
                 message = 'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
                     format(fault.id)
                 from_email = 'redlicki.grzegorz@gmail.com'
 
-                recipient_list = [user.email]
+                issuer = User.objects.get(username=fault.issuer)
+
+                recipient_list = [user.email, issuer.email]
 
                 send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
                 messages.success(request, "fault reassigned successful")
+
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
                 messages.warning(request, "this user is not authorized to assigning faults")
         else:
             messages.warning(request, "you can not reassign this fault")
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -205,6 +293,7 @@ def reassign_fault(request, fault_id, username):
 def restore_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
 
         if fault.status == 2 or fault.status == 3:
             if fault.handler == request.user.username:
@@ -212,54 +301,28 @@ def restore_fault(request, fault_id):
                 fault.status = 1
                 fault.save()
 
+                compare_two_faults(request, previous_version_of_fault, fault)
+
+                if request.user.username != fault.issuer:
+                    subject = 'fault {} - your fault was restored'.format(fault.id)
+                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.id)
+                    from_email = 'redlicki.grzegorz@gmail.com'
+
+                    user = User.objects.get(username=fault.issuer)
+                    recipient_list = [user.email]
+
+                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
                 messages.success(request, "fault restore successful")
+
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
                 messages.warning(request, "you are not handler of this fault")
         else:
             messages.warning(request, "fault is not ended")
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
-
-    except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
-
-
-@login_required
-@staff_member_required
-def restore_user(request, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-
-        if not user.is_active:
-            user.is_active = True
-            user.save()
-
-            messages.success(request, "user restored successful")
-        else:
-            messages.warning(request, "user is not blocked")
-
-        return HttpResponseRedirect(reverse('cti:all_users_admin'))
-
-    except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
-
-
-@login_required
-@staff_member_required
-def block_user(request, user_id):
-    try:
-        user = User.objects.get(id=user_id)
-
-        if user.is_active:
-            user.is_active = False
-            user.save()
-
-            messages.success(request, "user blocked successful")
-        else:
-            messages.warning(request, "user is already blocked")
-
-        return HttpResponseRedirect(reverse('cti:all_users_admin'))
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -281,6 +344,8 @@ def edit_user(request, user_id):
                     user.save()
 
                     messages.success(request, "user edited successful")
+
+                    return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
                 else:
                     for field in form:
                         for error in field.errors:
@@ -295,90 +360,56 @@ def edit_user(request, user_id):
             messages.warning(request, "this user is not editable")
 
             return HttpResponseRedirect(reverse('cti:all_users_admin'))
-
     except User.DoesNotExist:
         raise Http404("user does not exist")
 
 
 @login_required
 @staff_member_required
-def finish_fault(request, fault_id):
-    try:
-        fault = Fault.objects.get(pk=fault_id)
-
-        if fault.status !=2 and fault.status != 3:
-            if fault.handler == request.user.username:
-                fault.status = 2
-                fault.save()
-
-                messages.success(request, "fault finished successful")
-            else:
-                messages.warning(request, "you are not handler of this fault")
-        else:
-            messages.warning(request, "fault is not ready to finish")
-
-        return HttpResponseRedirect(reverse('cti:index_admin'))
-
-    except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
-
-
-@login_required
-@staff_member_required
-def fault_details(request, fault_id):
-    template = loader.get_template('cti/admin/fault_details.html')
-
-    try:
-        fault = Fault.objects.get(pk=fault_id)
-        context = {'fault': fault,
-                   'header': 'fault\'s details'}
-    except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
-
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
-@staff_member_required
-def object_details(request, object_id):
-    template = loader.get_template('cti/admin/object_details.html')
-
-    try:
-        object = Object.objects.get(object_number=object_id)
-        context = {'object': object,
-                   'header': 'object\'s details'}
-    except Object.DoesNotExist:
-        raise Http404("object does not exist")
-
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
-@staff_member_required
-def user_details(request, user_id):
-    template = loader.get_template('cti/admin/user_details.html')
-
+def block_user(request, user_id):
     try:
         user = User.objects.get(id=user_id)
-        context = {'user': user,
-                   'header': 'user\'s details'}
-    except User.DoesNotExist:
-        raise Http404("user does not exist")
 
-    return HttpResponse(template.render(context, request))
+        if user.is_active:
+            if not user.is_staff:
+                user.is_active = False
+                user.save()
+
+                messages.success(request, "user blocked successful")
+
+                return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
+            else:
+                messages.warning(request, "user is one of admins")
+        else:
+            messages.warning(request, "user is already blocked")
+
+        return HttpResponseRedirect(reverse('cti:all_users_admin'))
+    except User.DoesNotExist:
+        raise Http404("fault does not exist")
 
 
 @login_required
 @staff_member_required
-def all_users(request):
-    template = loader.get_template('cti/admin/users.html')
+def restore_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
 
-    users = User.objects.all()
+        if not user.is_active:
+            if not user.is_staff:
+                user.is_active = True
+                user.save()
 
-    context = {'users': users,
-               'header': 'all users'}
+                messages.success(request, "user restored successful")
 
-    return HttpResponse(template.render(context, request))
+                return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
+            else:
+                messages.warning(request, "user is one of admins")
+        else:
+            messages.warning(request, "user is not blocked")
+
+        return HttpResponseRedirect(reverse('cti:all_users_admin'))
+    except User.DoesNotExist:
+        raise Http404("fault does not exist")
 
 
 @login_required
@@ -393,22 +424,21 @@ def change_password(request):
 
         user = User.objects.get(username__exact=request.user)
 
-        if not user.check_password(old_password):
+        if user.check_password(old_password):
+            if new_password == new_password_repeat:
+                user.set_password(new_password)
+                user.save()
+
+                user = authenticate(username=request.user, password=new_password)
+                auth.login(request, user)
+
+                messages.success(request, 'password has been changed')
+
+                return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': request.user.id}))
+            else:
+                messages.warning(request, 'password fields are different!')
+        else:
             messages.warning(request, 'old password is wrong')
-
-        if new_password != new_password_repeat:
-            messages.warning(request, 'new password fields are different!')
-
-        if user.check_password(old_password) and new_password == new_password_repeat:
-            user.set_password(new_password)
-            user.save()
-
-            user = authenticate(username=request.user, password=new_password)
-            auth.login(request, user)
-
-            messages.success(request, 'password has been changed')
-
-            return HttpResponseRedirect(reverse('cti:index_admin'))
 
     context = {'button': 'change',
                'header': 'change password'}
@@ -418,24 +448,78 @@ def change_password(request):
 
 @login_required
 @staff_member_required
+def fault_details(request, fault_id):
+    template = loader.get_template('cti/admin/fault_details.html')
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        context = {'fault': fault,
+                   'header': 'fault\'s details'}
+
+        return HttpResponse(template.render(context, request))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
+def object_details(request, object_id):
+    template = loader.get_template('cti/admin/object_details.html')
+
+    try:
+        fault_object = Object.objects.get(object_number=object_id)
+
+        context = {'object': fault_object,
+                   'header': 'object\'s details'}
+
+        return HttpResponse(template.render(context, request))
+    except Object.DoesNotExist:
+        raise Http404("object does not exist")
+
+
+@login_required
+@staff_member_required
+def user_details(request, user_id):
+    template = loader.get_template('cti/admin/user_details.html')
+
+    try:
+        user = User.objects.get(id=user_id)
+
+        context = {'user': user,
+                   'header': 'user\'s details'}
+
+        return HttpResponse(template.render(context, request))
+    except User.DoesNotExist:
+        raise Http404("user does not exist")
+
+
+@login_required
+@staff_member_required
 def ask_for_reassign(request, fault_id, username):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        subject = 'fault {} - asking for reasign'.format(fault.id)
-        message = 'please reassign me to this fault\n\n' \
-                  'link to reassign automatically: http://212.191.92.101:6009/admin/fault_details/{}/reassign_fault/{}'. \
-            format(fault.id, username)
-        from_email = 'redlicki.grzegorz@gmail.com'
+        if request.user.is_staff:
+            subject = 'fault {} - asking for reasign'.format(fault.id)
+            message = 'please reassign me to this fault\n\n' \
+                      'link to reassign automatically: ' \
+                      'http://212.191.92.101:6009/admin/fault_details/{}/reassign_fault/{}'. \
+                format(fault.id, username)
+            from_email = 'redlicki.grzegorz@gmail.com'
 
-        user = User.objects.get(username=fault.handler)
-        recipient_list = [user.email]
+            user = User.objects.get(username=fault.handler)
+            recipient_list = [user.email]
 
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-        messages.success(request, "ask for reassign send successfully")
+            messages.success(request, "ask for reassign send successfully")
 
-        return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+            return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+        else:
+            messages.warning(request, "you are not allowed to reassigning")
+
+            return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -446,20 +530,25 @@ def report_phone_number(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        subject = 'fault {} - phone number reported'.format(fault.id)
-        message = 'please change phone number\n' \
-                  '{} - this is not working\n\n' \
-                  'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-            format(fault.phone_number, fault.topic, fault.description, fault.id)
-        from_email = 'redlicki.grzegorz@gmail.com'
+        if request.user.is_staff:
+            subject = 'fault {} - phone number reported'.format(fault.id)
+            message = 'please change phone number\n' \
+                      '{} - this is not working\n\n' \
+                      'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                format(fault.phone_number, fault.topic, fault.description, fault.id)
+            from_email = 'redlicki.grzegorz@gmail.com'
 
-        user = User.objects.get(username=fault.issuer)
-        recipient_list = [user.email]
+            user = User.objects.get(username=fault.issuer)
+            recipient_list = [user.email]
 
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-        messages.success(request, "phone number reported successfully")
+            messages.success(request, "phone number reported successfully")
 
-        return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+            return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+        else:
+            messages.warning(request, "you are not allowed to reporting phones")
+
+            return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
