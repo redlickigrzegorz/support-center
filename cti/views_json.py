@@ -30,6 +30,7 @@ def login(request):
             if user.is_active:
                 result['login_status'] = True
                 result['username'] = username
+
                 auth.login(request, user)
             else:
                 result['error_message'] = 'your account has been disabled'
@@ -167,35 +168,33 @@ def edit_fault(request, fault_id):
                 raise Http404("fault {} is already ended".format(fault_id))
         else:
             raise Http404("you are not owner of fault {}".format(fault_id))
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
 
 @login_required
-def fault_details(request, fault_id):
+def fault_details(fault_id):
     try:
         fault = Fault.objects.filter(pk=fault_id)
 
         if fault.status == 3:
+            result = {'fault': serializers.serialize('json', fault)}
+
+            return JsonResponse(result)
+        else:
             raise Http404("fault does not exist")
-
-        result = {'fault': serializers.serialize('json', fault)}
-
-        return JsonResponse(result)
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
 
 @login_required
-def object_details(request, object_id):
+def object_details(object_id):
     try:
-        object = Object.objects.filter(object_number=object_id)
-        result = {'object': serializers.serialize('json', object)}
+        fault_object = Object.objects.filter(object_number=object_id)
+
+        result = {'object': serializers.serialize('json', fault_object)}
 
         return JsonResponse(result)
-
     except Object.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -207,6 +206,5 @@ def user_details(request):
         result = {'user': serializers.serialize('json', user)}
 
         return JsonResponse(result)
-
     except User.DoesNotExist:
         raise Http404("user does not exist")

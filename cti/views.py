@@ -228,6 +228,8 @@ def add_fault(request):
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
             messages.success(request, "fault added successful")
+
+            return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault.id}))
         else:
             for field in form:
                 for error in field.errors:
@@ -262,6 +264,8 @@ def edit_fault(request, fault_id):
                         compare_two_faults(request, previous_version_of_fault, fault)
 
                         messages.success(request, "fault edited successful")
+
+                        return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
                     else:
                         for field in form:
                             for error in field.errors:
@@ -276,8 +280,6 @@ def edit_fault(request, fault_id):
                 raise Http404("fault {} is already ended".format(fault_id))
         else:
             raise Http404("you are not owner of fault {}".format(fault_id))
-
-
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -289,15 +291,15 @@ def fault_details(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        if fault.status == 3:
-            raise Http404("fault does not exist")
+        if not fault.status == 3:
+            context = {'fault': fault,
+                       'header': 'fault\'s details'}
 
-        context = {'fault': fault,
-                   'header': 'fault\'s details'}
+            return HttpResponse(template.render(context, request))
+        else:
+            raise Http404("fault does not exist")
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
-
-    return HttpResponse(template.render(context, request))
 
 
 @login_required
@@ -305,13 +307,14 @@ def object_details(request, object_id):
     template = loader.get_template('cti/client/object_details.html')
 
     try:
-        object = Object.objects.get(object_number=object_id)
-        context = {'object': object,
+        fault_object = Object.objects.get(object_number=object_id)
+
+        context = {'object': fault_object,
                    'header': 'object\'s details'}
+
+        return HttpResponse(template.render(context, request))
     except Object.DoesNotExist:
         raise Http404("object does not exist")
-
-    return HttpResponse(template.render(context, request))
 
 
 @login_required
@@ -320,9 +323,10 @@ def user_details(request):
 
     try:
         user = User.objects.get(username__exact=request.user)
+
         context = {'user': user,
                    'header': 'user\'s details'}
+
+        return HttpResponse(template.render(context, request))
     except User.DoesNotExist:
         raise Http404("user does not exist")
-
-    return HttpResponse(template.render(context, request))
