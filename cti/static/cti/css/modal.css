@@ -17,7 +17,7 @@
 .options-menu {
     border-top: 4px solid #e74c3c;
     border-radius: 12px;
-    width: 170px;
+    width: 160px;
     height:35px;
     line-height: 31px;
     text-align: center;
@@ -47,4 +47,12 @@
 
 .delete-button {
     color: #ba120f;
+}
+
+.finish-button {
+    color: #ffa500;
+}
+
+.restore-button {
+    color: #ffa500;
 }
