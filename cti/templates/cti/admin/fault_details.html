@@ -59,7 +59,7 @@
                                 none
                             {% else %}
                                 {{ fault.handler }}
-                                <a href="{% url 'cti:ask_for_reassign_admin' fault.id %}" title="ask for reassign">
+                                <a href="{% url 'cti:ask_for_reassign_admin' fault.id request.user.username %}" title="ask for reassign">
                                     <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
                                 </a>
                             {% endif %}

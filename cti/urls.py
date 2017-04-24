@@ -79,6 +79,9 @@ urlpatterns = [
     # admin - assigning fault
     url(r'^admin/assign_to_me/(?P<fault_id>[0-9]+)/$', views_admin.assign_to_me, name='assign_to_me_admin'),
 
+    # admin - reassigning fault
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/reassign_fault/(?P<username>[0-9]+)$', views_admin.reassign_fault, name='reassign_fault_admin'),
+
     # admin - deleting fault
     url(r'^admin/delete_fault/(?P<fault_id>[0-9]+)/$', views_admin.delete_fault, name='delete_fault_admin'),
 
@@ -89,7 +92,7 @@ urlpatterns = [
     url(r'^admin/change_password/$', views_admin.change_password, name='change_password_admin'),
 
     # admin - ask for reassign
-    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/ask_for_reassign/$', views_admin.ask_for_reassign, name='ask_for_reassign_admin'),
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/ask_for_reassign/(?P<username>[0-9]+)$', views_admin.ask_for_reassign, name='ask_for_reassign_admin'),
 
     # admin - report phone number
     url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number, name='report_phone_number_admin'),

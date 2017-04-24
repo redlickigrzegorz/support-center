@@ -158,6 +158,40 @@ def assign_to_me(request, fault_id):
 
 @login_required
 @staff_member_required
+def reassign_fault(request, fault_id, username):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.handler == request.user.username:
+            user = User.objects.get(username=username)
+
+            if user.is_staff:
+                fault.handler = username
+                fault.save()
+
+                subject = 'fault {} - fault was assign to you'.format(fault.id)
+                message = 'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
+                    format(fault.id)
+                from_email = 'redlicki.grzegorz@gmail.com'
+
+                recipient_list = [user.email]
+
+                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+                messages.success(request, "fault reassigned successful")
+            else:
+                messages.warning(request, "this user is not authorized to assigning faults")
+        else:
+            messages.warning(request, "you can not reassign this fault")
+
+        return HttpResponseRedirect(reverse('cti:index_admin'))
+
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
 def fault_details(request, fault_id):
     template = loader.get_template('cti/admin/fault_details.html')
 
@@ -251,14 +285,14 @@ def change_password(request):
 
 @login_required
 @staff_member_required
-def ask_for_reassign(request, fault_id):
+def ask_for_reassign(request, fault_id, username):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
         subject = 'fault {} - asking for reasign'.format(fault.id)
         message = 'please reassign me to this fault\n\n' \
-                  'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
-            format(fault.id)
+                  'link to reassign automatically: http://212.191.92.101:6009/admin/fault_details/{}/reassign_fault/{}'. \
+            format(fault.id, username)
         from_email = 'redlicki.grzegorz@gmail.com'
 
         user = User.objects.get(username=fault.handler)
