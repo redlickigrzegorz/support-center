@@ -2,7 +2,7 @@ from django.template import loader
 from django.http import HttpResponse
 from .models import Fault, Object
 from django.http import Http404
-from .forms import AdminFaultForm
+from .forms import AdminFaultForm, UserForm
 from django.contrib.auth import authenticate
 from django.http import HttpResponseRedirect
 from django.contrib import auth
@@ -266,6 +266,42 @@ def block_user(request, user_id):
 
 @login_required
 @staff_member_required
+def edit_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+
+        if not user.is_staff or user.username == request.user.username:
+            template = loader.get_template('cti/admin/user_form.html')
+
+            form = UserForm(request.POST or None, instance=user)
+
+            if request.method == "POST":
+                if form.is_valid():
+                    user = form.save(commit=False)
+                    user.save()
+
+                    messages.success(request, "user edited successful")
+                else:
+                    for field in form:
+                        for error in field.errors:
+                            messages.warning(request, "{} - {}".format(field.name, error))
+
+            context = {'form': form,
+                       'button': 'edit',
+                       'header': 'edit user'}
+
+            return HttpResponse(template.render(context, request))
+        else:
+            messages.warning(request, "this user is not editable")
+
+            return HttpResponseRedirect(reverse('cti:all_users_admin'))
+
+    except User.DoesNotExist:
+        raise Http404("user does not exist")
+
+
+@login_required
+@staff_member_required
 def finish_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -340,7 +376,7 @@ def all_users(request):
     users = User.objects.all()
 
     context = {'users': users,
-               'header': 'all faults'}
+               'header': 'all users'}
 
     return HttpResponse(template.render(context, request))
 

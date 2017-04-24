@@ -1,5 +1,5 @@
 from django import forms
-from .models import Fault
+from .models import Fault, User
 
 
 class FaultForm(forms.ModelForm):
@@ -56,3 +56,18 @@ class AdminFaultForm(forms.ModelForm):
     class Meta:
         model = Fault
         fields = ['object_number', 'topic', 'description', 'priority']
+
+
+class UserForm(forms.ModelForm):
+    # first name
+    first_name = forms.CharField(max_length=30)
+
+    #last name
+    last_name = forms.CharField(max_length=30)
+
+    # email
+    email = forms.CharField(max_length=200)
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']

@@ -88,6 +88,9 @@ urlpatterns = [
     # admin - restoring fault
     url(r'^admin/restore_fault/(?P<fault_id>[0-9]+)/$', views_admin.restore_fault, name='restore_fault_admin'),
 
+    # admin - edit user
+    url(r'^admin/edit_user/(?P<user_id>[0-9]+)/$', views_admin.edit_user, name='edit_user_admin'),
+
     # admin - blocking user
     url(r'^admin/block_user/(?P<user_id>[0-9]+)/$', views_admin.block_user, name='block_user_admin'),
 

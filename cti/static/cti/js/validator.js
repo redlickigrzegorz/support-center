@@ -110,3 +110,22 @@ function validateFault() {
         });
     }
 }
+
+function validateUser() {
+    let validation = true;
+
+    if (validation) {
+        $.confirm({
+            title: 'confirm!',
+            content: 'are you sure you want to do this??',
+            type: 'red',
+            buttons: {
+                confirm: function () {
+                    $('#user-form').submit();
+                },
+                cancel: function () {
+                }
+            }
+        });
+    }
+}
