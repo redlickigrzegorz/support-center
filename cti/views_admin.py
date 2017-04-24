@@ -139,10 +139,14 @@ def assign_to_me(request, fault_id):
         fault = Fault.objects.get(pk=fault_id)
 
         if fault.handler == '0':
-            fault.handler = request.user.get_username()
-            fault.status = 1
-            fault.save()
-            messages.success(request, "fault assigned successful")
+            if fault.status == 0:
+                fault.handler = request.user.get_username()
+                fault.status = 1
+                fault.save()
+
+                messages.success(request, "fault assigned successful")
+            else:
+                messages.warning(request, "fault status is not free to assign")
         else:
             messages.warning(request, "fault is already assigned")
 
