@@ -149,18 +149,24 @@ def edit_fault(request, fault_id):
         fault = Fault.objects.get(pk=fault_id)
         previous_version_of_fault = copy(fault)
 
-        form = FaultForm(request.POST or None, instance=fault)
+        if fault.issuer == request.user.username:
+            if fault.status != 2 and fault.status != 3:
+                form = FaultForm(request.POST or None, instance=fault)
 
-        if request.method == "POST":
-            if form.is_valid():
-                fault = form.save(commit=False)
-                fault.save()
+                if request.method == "POST":
+                    if form.is_valid():
+                        fault = form.save(commit=False)
+                        fault.save()
 
-                compare_two_faults(request, previous_version_of_fault, fault)
+                        compare_two_faults(request, previous_version_of_fault, fault)
 
-                result['edit_fault_status'] = True
+                        result['edit_fault_status'] = True
 
-        return JsonResponse(result)
+                return JsonResponse(result)
+            else:
+                raise Http404("fault {} is already ended".format(fault_id))
+        else:
+            raise Http404("you are not owner of fault {}".format(fault_id))
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")

@@ -75,39 +75,44 @@ def edit_fault(request, fault_id):
         fault = Fault.objects.get(pk=fault_id)
         previous_version_of_fault = copy(fault)
 
-        template = loader.get_template('cti/admin/fault_form.html')
+        if fault.status != 2 and fault.status != 3:
+            template = loader.get_template('cti/admin/fault_form.html')
 
-        form = AdminFaultForm(request.POST or None, instance=fault)
+            form = AdminFaultForm(request.POST or None, instance=fault)
 
-        if request.method == "POST":
-            if form.is_valid():
-                fault = form.save(commit=False)
-                fault.save()
+            if request.method == "POST":
+                if form.is_valid():
+                    fault = form.save(commit=False)
+                    fault.save()
 
-                compare_two_faults(request, previous_version_of_fault, fault)
+                    compare_two_faults(request, previous_version_of_fault, fault)
 
-                if request.user.username != fault.issuer:
-                    subject = 'fault {} - fault was edited by admins'.format(fault.id)
-                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                        format(fault.id)
-                    from_email = 'redlicki.grzegorz@gmail.com'
+                    if request.user.username != fault.issuer:
+                        subject = 'fault {} - fault was edited by admins'.format(fault.id)
+                        message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                            format(fault.id)
+                        from_email = 'redlicki.grzegorz@gmail.com'
 
-                    user = User.objects.get(username=fault.issuer)
-                    recipient_list = [user.email]
+                        user = User.objects.get(username=fault.issuer)
+                        recipient_list = [user.email]
 
-                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-                messages.success(request, "fault edited successful")
-            else:
-                for field in form:
-                    for error in field.errors:
-                        messages.warning(request, "{} - {}".format(field.name, error))
+                    messages.success(request, "fault edited successful")
+                else:
+                    for field in form:
+                        for error in field.errors:
+                            messages.warning(request, "{} - {}".format(field.name, error))
 
-        context = {'form': form,
-                   'button': 'edit',
-                   'header': 'edit fault'}
+            context = {'form': form,
+                       'button': 'edit',
+                       'header': 'edit fault'}
 
-        return HttpResponse(template.render(context, request))
+            return HttpResponse(template.render(context, request))
+        else:
+            messages.warning(request, "this fault is already ended")
+
+            return HttpResponseRedirect(reverse('cti:index_admin'))
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")

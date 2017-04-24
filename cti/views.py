@@ -249,30 +249,34 @@ def edit_fault(request, fault_id):
         previous_version_of_fault = copy(fault)
 
         if fault.issuer == request.user.username:
-            template = loader.get_template('cti/fault_form.html')
+            if fault.status != 2 and fault.status != 3:
+                template = loader.get_template('cti/fault_form.html')
 
-            form = FaultForm(request.POST or None, instance=fault)
+                form = FaultForm(request.POST or None, instance=fault)
 
-            if request.method == "POST":
-                if form.is_valid():
-                    fault = form.save(commit=False)
-                    fault.save()
+                if request.method == "POST":
+                    if form.is_valid():
+                        fault = form.save(commit=False)
+                        fault.save()
 
-                    compare_two_faults(request, previous_version_of_fault, fault)
+                        compare_two_faults(request, previous_version_of_fault, fault)
 
-                    messages.success(request, "fault edited successful")
-                else:
-                    for field in form:
-                        for error in field.errors:
-                            messages.warning(request, "{} - {}".format(field.name, error))
+                        messages.success(request, "fault edited successful")
+                    else:
+                        for field in form:
+                            for error in field.errors:
+                                messages.warning(request, "{} - {}".format(field.name, error))
 
-            context = {'form': form,
-                       'button': 'edit',
-                       'header': 'edit fault'}
+                context = {'form': form,
+                           'button': 'edit',
+                           'header': 'edit fault'}
 
-            return HttpResponse(template.render(context, request))
+                return HttpResponse(template.render(context, request))
+            else:
+                raise Http404("fault {} is already ended".format(fault_id))
         else:
             raise Http404("you are not owner of fault {}".format(fault_id))
+
 
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
