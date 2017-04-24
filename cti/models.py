@@ -41,8 +41,9 @@ class Fault(models.Model):
         (0, 'not started'),
         (1, 'queued'),
         (2, 'completed'),
+        (3, 'deleted'),
     )
-    status = models.IntegerField(validators=[MaxValueValidator(2)], choices=status_list, default=0)
+    status = models.IntegerField(validators=[MaxValueValidator(3)], choices=status_list, default=0)
 
     # priority
     priority_list = (
@@ -55,6 +56,9 @@ class Fault(models.Model):
     # is visible
     is_visible = models.BooleanField(default=True)
 
+    # watchers
+    watchers = models.CharField(max_length=200, default='[]')
+
     def get_fields(self):
         all_fields = []
 
@@ -65,6 +69,34 @@ class Fault(models.Model):
 
     def __str__(self):
         return '{} - {}'.format(self.created_at, self.topic)
+
+
+class History(models.Model):
+    # fault id
+    fault_id = models.IntegerField()
+
+    # created at
+    changed_at = models.DateTimeField()
+
+    # changed field
+    changed_field = models.CharField(max_length=20)
+
+    # previous version
+    previous_version = models.CharField(max_length=200)
+
+    # actual version
+    actual_version = models.CharField(max_length=200)
+
+    def get_fields(self):
+        all_fields = []
+
+        for field in self._meta.fields:
+            all_fields.append(field)
+
+        return [field.name for field in all_fields]
+
+    def __str__(self):
+        return '{} - {} - {}'.format(self.changed_at, self.fault_id, self.changed_field)
 
 
 class Object(models.Model):
