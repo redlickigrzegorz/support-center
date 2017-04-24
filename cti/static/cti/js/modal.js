@@ -20,7 +20,7 @@ $(function() {
                      '<br>- telephone: + 48 42 631 24 40',
             backgroundDismiss: true,
             columnClass: 'medium',
-            type: 'dark'
+            type: 'red'
         });
     });
 });
