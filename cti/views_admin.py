@@ -13,7 +13,8 @@ from django.contrib import messages
 from .models import User
 from django.core.mail import send_mail
 from copy import copy
-from .helper import compare_two_faults
+from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session
+from django.db.models import Q
 
 
 @login_required
@@ -22,6 +23,7 @@ def index(request):
     template = loader.get_template('cti/admin/index.html')
 
     faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    post_faults_to_session(request, faults)
 
     context = {'faults': faults,
                'header': 'all faults'}
@@ -35,6 +37,7 @@ def my_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
     faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+    post_faults_to_session(request, faults)
 
     context = {'faults': faults,
                'header': 'faults assigned to me'}
@@ -48,9 +51,31 @@ def resolved_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
     faults = Fault.objects.filter(is_visible=True, status=2)
+    post_faults_to_session(request, faults)
 
     context = {'faults': faults,
                'header': 'resolved faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def searched_faults(request):
+    template = loader.get_template('cti/admin/index.html')
+
+    query = request.GET.get('searched_text')
+
+    if query:
+        faults = get_faults_from_session(request).filter(Q(topic__icontains=query))
+    else:
+        messages.warning(request, 'no matches for this query')
+
+        faults = get_faults_from_session(request)
+
+    post_faults_to_session(request, faults)
+
+    context = {'faults': faults,
+               'header': 'searched faults'}
 
     return HttpResponse(template.render(context, request))
 
@@ -61,6 +86,7 @@ def deleted_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
     faults = Fault.objects.filter(is_visible=False, status=3)
+    post_faults_to_session(request, faults)
 
     context = {'faults': faults,
                'header': 'deleted faults'}

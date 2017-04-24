@@ -1,4 +1,23 @@
 from .models import History
+from django.core import serializers
+from .models import Fault
+
+
+def post_faults_to_session(request, faults):
+    request.session['faults'] = serializers.serialize("json", faults)
+
+
+def get_faults_from_session(request):
+    if 'faults' in request.session:
+        pk_list = []
+        for fault in serializers.deserialize("json", request.session['faults']):
+            pk_list.append(fault.object.pk)
+
+        faults = Fault.objects.filter(pk__in=pk_list)
+    else:
+        faults = Fault.objects.all()
+
+    return faults
 
 
 def compare_two_faults(request, previous_version, actual_version):

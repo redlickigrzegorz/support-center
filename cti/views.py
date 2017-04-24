@@ -11,28 +11,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .backends import InvbookBackend
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core import serializers
 from django.db.models import Q
 from django.core.mail import send_mail
 from copy import copy
-from .helper import compare_two_faults
-
-
-def post_faults_to_session(request, faults):
-    request.session['faults'] = serializers.serialize("json", faults)
-
-
-def get_faults_from_session(request):
-    if 'faults' in request.session:
-        pk_list = []
-        for fault in serializers.deserialize("json", request.session['faults']):
-            pk_list.append(fault.object.pk)
-
-        faults = Fault.objects.filter(pk__in=pk_list)
-    else:
-        faults = Fault.objects.all()
-
-    return faults
+from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session
 
 
 def login(request):
@@ -174,6 +156,7 @@ def searched_faults(request):
         faults_list = get_faults_from_session(request).filter(Q(topic__icontains=query)).order_by('-created_at')
     else:
         messages.warning(request, 'no matches for this query')
+
         faults_list = get_faults_from_session(request).order_by('-created_at')
 
     post_faults_to_session(request, faults_list)

@@ -61,6 +61,9 @@ urlpatterns = [
     # admin - resolved faults
     url(r'^admin/resolved_faults/$', views_admin.resolved_faults, name='resolved_faults_admin'),
 
+    # admin - searched faults
+    url(r'^admin/searched_faults/$', views_admin.searched_faults, name='searched_faults_admin'),
+
     # admin - deleted faults
     url(r'^admin/deleted_faults/$', views_admin.deleted_faults, name='deleted_faults_admin'),
 
