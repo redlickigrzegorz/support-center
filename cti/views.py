@@ -1,6 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
-from .models import Fault, Object
+from .models import Fault, Object, User
 from django.http import Http404
 from .forms import FaultForm
 from django.contrib.auth import authenticate
@@ -10,11 +10,12 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .backends import InvbookBackend
-from .models import User
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core import serializers
 from django.db.models import Q
 from django.core.mail import send_mail
+from copy import copy
+from .helper import compare_two_faults
 
 
 def post_faults_to_session(request, faults):
@@ -245,6 +246,7 @@ def add_fault(request):
 def edit_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
 
         if fault.issuer == request.user.username:
             template = loader.get_template('cti/fault_form.html')
@@ -255,6 +257,9 @@ def edit_fault(request, fault_id):
                 if form.is_valid():
                     fault = form.save(commit=False)
                     fault.save()
+
+                    compare_two_faults(request, previous_version_of_fault, fault)
+
                     messages.success(request, "fault edited successful")
                 else:
                     for field in form:

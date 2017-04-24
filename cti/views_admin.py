@@ -12,6 +12,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .models import User
 from django.core.mail import send_mail
+from copy import copy
+from .helper import compare_two_faults
 
 
 @login_required
@@ -71,6 +73,7 @@ def deleted_faults(request):
 def edit_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
 
         template = loader.get_template('cti/admin/fault_form.html')
 
@@ -80,6 +83,8 @@ def edit_fault(request, fault_id):
             if form.is_valid():
                 fault = form.save(commit=False)
                 fault.save()
+
+                compare_two_faults(request, previous_version_of_fault, fault)
 
                 if request.user.username != fault.issuer:
                     subject = 'fault {} - fault was edited by admins'.format(fault.id)

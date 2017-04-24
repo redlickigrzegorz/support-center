@@ -11,6 +11,8 @@ from .models import User
 from .views import post_faults_to_session, get_faults_from_session
 from django.db.models import Q
 from django.core.mail import send_mail
+from .helper import compare_two_faults
+from copy import copy
 
 
 def login(request):
@@ -145,12 +147,16 @@ def edit_fault(request, fault_id):
 
     try:
         fault = Fault.objects.get(pk=fault_id)
+        previous_version_of_fault = copy(fault)
+
         form = FaultForm(request.POST or None, instance=fault)
 
         if request.method == "POST":
             if form.is_valid():
                 fault = form.save(commit=False)
                 fault.save()
+
+                compare_two_faults(request, previous_version_of_fault, fault)
 
                 result['edit_fault_status'] = True
 
