@@ -80,6 +80,18 @@ def edit_fault(request, fault_id):
             if form.is_valid():
                 fault = form.save(commit=False)
                 fault.save()
+
+                if request.user.username != fault.issuer:
+                    subject = 'fault {} - fault was edited by admins'.format(fault.id)
+                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.id)
+                    from_email = 'redlicki.grzegorz@gmail.com'
+
+                    user = User.objects.get(username=fault.issuer)
+                    recipient_list = [user.email]
+
+                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
                 messages.success(request, "fault edited successful")
             else:
                 for field in form:
