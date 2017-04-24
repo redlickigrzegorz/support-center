@@ -75,6 +75,9 @@ class History(models.Model):
     # fault id
     fault_id = models.IntegerField()
 
+    # changer id
+    changer_id = models.IntegerField()
+
     # created at
     changed_at = models.DateTimeField()
 
