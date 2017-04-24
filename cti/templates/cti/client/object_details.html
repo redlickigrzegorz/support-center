@@ -1,6 +1,6 @@
-{% extends 'cti/base.html' %}
+{% extends 'cti/client/base.html' %}
 
-{% block title %}{{ header }}{% endblock %}
+{% block title %}detail{% endblock %}
 
 {% block header %}{{ header }}{% endblock %}
 
@@ -11,32 +11,42 @@
             <div class="panel-row row">
                 <div class="panel-row row">
                     <div class="col-xs-6 col-sm-6 col-md-6 starting-div header-div">
-                        {{ user.username }}
+                        {{ object.object_name }}
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 ending-div">
-                        {{ user.date_joined }}
+                        {{ object.date }}
                     </div>
                 </div>
                 <hr class="hr-bottom-divider">
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>first name:</b> {{ user.first_name }}
+                        <b>object number:</b> {{ object.object_number }}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>last name:</b> {{ user.last_name }}
+                        <b>status:</b>
+                        {% if object.status == 0 %}
+                            missing
+                        {% elif object.status == 1 %}
+                            located
+                        {% endif %}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>email:</b> {{ user.email }}
+                        <b>room:</b> {{ object.room }}
+                    </div>
+                </div>
+                <div class="panel-row row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
+                        <b>price:</b> {{ object.price }}
                     </div>
                 </div>
                 <hr class="hr-bottom-divider">
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>last login:</b> {{ user.last_login }}
+                        {{ object.comments }}
                     </div>
                 </div>
             </div>

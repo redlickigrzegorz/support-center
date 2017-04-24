@@ -36,7 +36,7 @@ def get_faults_from_session(request):
 
 
 def login(request):
-    template = loader.get_template('cti/login.html')
+    template = loader.get_template('cti/client/login.html')
 
     if request.method == "POST":
         username = request.POST['username']
@@ -61,7 +61,7 @@ def login(request):
 
 
 def logout(request):
-    template = loader.get_template('cti/logout.html')
+    template = loader.get_template('cti/client/logout.html')
 
     auth.logout(request)
 
@@ -70,7 +70,7 @@ def logout(request):
 
 @login_required
 def index(request):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/client/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
     post_faults_to_session(request, faults_list)
@@ -94,7 +94,7 @@ def index(request):
 
 @login_required
 def my_faults(request):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/client/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-created_at')
     post_faults_to_session(request, faults_list)
@@ -118,7 +118,7 @@ def my_faults(request):
 
 @login_required
 def resolved_faults(request):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/client/index.html')
 
     faults_list = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
     post_faults_to_session(request, faults_list)
@@ -142,7 +142,7 @@ def resolved_faults(request):
 
 @login_required
 def sorted_faults(request, order_by):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/client/index.html')
 
     faults_list = get_faults_from_session(request).order_by(order_by)
     post_faults_to_session(request, faults_list)
@@ -166,7 +166,7 @@ def sorted_faults(request, order_by):
 
 @login_required
 def searched_faults(request):
-    template = loader.get_template('cti/index.html')
+    template = loader.get_template('cti/client/index.html')
 
     query = request.GET.get('searched_text')
 
@@ -197,7 +197,7 @@ def searched_faults(request):
 
 @login_required
 def add_fault(request):
-    template = loader.get_template('cti/fault_form.html')
+    template = loader.get_template('cti/client/fault_form.html')
 
     if request.method == "POST":
         form = FaultForm(request.POST)
@@ -250,7 +250,7 @@ def edit_fault(request, fault_id):
 
         if fault.issuer == request.user.username:
             if fault.status != 2 and fault.status != 3:
-                template = loader.get_template('cti/fault_form.html')
+                template = loader.get_template('cti/client/fault_form.html')
 
                 form = FaultForm(request.POST or None, instance=fault)
 
@@ -284,7 +284,7 @@ def edit_fault(request, fault_id):
 
 @login_required
 def fault_details(request, fault_id):
-    template = loader.get_template('cti/fault_details.html')
+    template = loader.get_template('cti/client/fault_details.html')
 
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -302,7 +302,7 @@ def fault_details(request, fault_id):
 
 @login_required
 def object_details(request, object_id):
-    template = loader.get_template('cti/object_details.html')
+    template = loader.get_template('cti/client/object_details.html')
 
     try:
         object = Object.objects.get(object_number=object_id)
@@ -316,7 +316,7 @@ def object_details(request, object_id):
 
 @login_required
 def user_details(request):
-    template = loader.get_template('cti/user_details.html')
+    template = loader.get_template('cti/client/user_details.html')
 
     try:
         user = User.objects.get(username__exact=request.user)
