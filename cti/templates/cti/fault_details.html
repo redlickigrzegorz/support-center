@@ -62,13 +62,14 @@
                             {% endif %}
                         </div>
                     </div>
-                    <a href="{% url 'cti:object_details' fault.object_number %}" class="panel-button">
-                        <div class="panel-row row">
-                            <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                                <b>object number:</b> {{ fault.object_number }}
-                            </div>
+                    <div class="panel-row row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
+                            <b>object number:</b>
+                            <a href="{% url 'cti:object_details' fault.object_number %}" title="details of object">
+                                {{ fault.object_number }}
+                            </a>
                         </div>
-                    </a>
+                    </div>
                     <hr class="hr-bottom-divider">
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">

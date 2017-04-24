@@ -88,6 +88,9 @@ urlpatterns = [
     # admin - change password
     url(r'^admin/change_password/$', views_admin.change_password, name='change_password_admin'),
 
+    # admin - ask for reassign
+    url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/ask_for_reassign/$', views_admin.ask_for_reassign, name='ask_for_reassign_admin'),
+
     # admin - report phone number
     url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number, name='report_phone_number_admin'),
 ]

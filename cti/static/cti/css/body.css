@@ -75,12 +75,12 @@ body {
     color: #808080;
 }
 
-.ending-div > a {
+div > a {
     color: #000000;
 }
 
-.ending-div > a:hover,
-.ending-div > a:focus {
+div > a:hover,
+div > a:focus {
     color: #808080;
     text-decoration: none;
 }

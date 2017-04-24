@@ -247,6 +247,30 @@ def change_password(request):
 
 @login_required
 @staff_member_required
+def ask_for_reassign(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        subject = 'fault {} - asking for reasign'.format(fault.id)
+        message = 'please reassign me to this fault\n\n' \
+                  'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
+            format(fault.id)
+        from_email = 'redlicki.grzegorz@gmail.com'
+
+        user = User.objects.get(username=fault.handler)
+        recipient_list = [user.email]
+
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+        messages.success(request, "ask for reassign send successfully")
+
+        return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
 def report_phone_number(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
