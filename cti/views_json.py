@@ -170,6 +170,10 @@ def edit_fault(request, fault_id):
 def fault_details(request, fault_id):
     try:
         fault = Fault.objects.filter(pk=fault_id)
+
+        if fault.status == 3:
+            raise Http404("fault does not exist")
+
         result = {'fault': serializers.serialize('json', fault)}
 
         return JsonResponse(result)

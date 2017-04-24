@@ -121,6 +121,7 @@ def delete_fault(request, fault_id):
 
         if fault.is_visible:
             fault.is_visible = False
+            fault.status = 3
             fault.save()
             messages.success(request, "fault deleted successful")
         else:

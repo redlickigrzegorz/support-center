@@ -284,6 +284,10 @@ def fault_details(request, fault_id):
 
     try:
         fault = Fault.objects.get(pk=fault_id)
+
+        if fault.status == 3:
+            raise Http404("fault does not exist")
+
         context = {'fault': fault,
                    'header': 'fault\'s details'}
     except Fault.DoesNotExist:
