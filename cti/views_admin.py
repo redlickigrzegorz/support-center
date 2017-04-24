@@ -120,11 +120,14 @@ def delete_fault(request, fault_id):
         fault = Fault.objects.get(pk=fault_id)
 
         if fault.is_visible:
-            fault.is_visible = False
-            fault.status = 3
-            fault.save()
+            if fault.handler == request.user.username:
+                fault.is_visible = False
+                fault.status = 3
+                fault.save()
 
-            messages.success(request, "fault deleted successful")
+                messages.success(request, "fault deleted successful")
+            else:
+                messages.warning(request, "you are not handler of this fault")
         else:
             messages.warning(request, "fault is already deleted")
 
@@ -185,6 +188,53 @@ def reassign_fault(request, fault_id, username):
                 messages.warning(request, "this user is not authorized to assigning faults")
         else:
             messages.warning(request, "you can not reassign this fault")
+
+        return HttpResponseRedirect(reverse('cti:index_admin'))
+
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
+def restore_fault(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.status == 2 or fault.status == 3:
+            if fault.handler == request.user.username:
+                fault.is_visible = True
+                fault.status = 1
+                fault.save()
+
+                messages.success(request, "fault restore successful")
+            else:
+                messages.warning(request, "you are not handler of this fault")
+        else:
+            messages.warning(request, "fault is not ended")
+
+        return HttpResponseRedirect(reverse('cti:index_admin'))
+
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
+def finish_fault(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        if fault.status !=2 and fault.status != 3:
+            if fault.handler == request.user.username:
+                fault.status = 2
+                fault.save()
+
+                messages.success(request, "fault finished successful")
+            else:
+                messages.warning(request, "you are not handler of this fault")
+        else:
+            messages.warning(request, "fault is not ready to finish")
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
 

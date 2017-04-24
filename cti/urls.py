@@ -85,6 +85,12 @@ urlpatterns = [
     # admin - deleting fault
     url(r'^admin/delete_fault/(?P<fault_id>[0-9]+)/$', views_admin.delete_fault, name='delete_fault_admin'),
 
+    # admin - restoring fault
+    url(r'^admin/restore_fault/(?P<fault_id>[0-9]+)/$', views_admin.restore_fault, name='restore_fault_admin'),
+
+    # admin - finishing fault
+    url(r'^admin/finish_fault/(?P<fault_id>[0-9]+)/$', views_admin.finish_fault, name='finish_fault_admin'),
+
     # admin - all users
     url(r'^admin/users/$', views_admin.all_users, name='all_users_admin'),
 
