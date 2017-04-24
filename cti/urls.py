@@ -71,7 +71,7 @@ urlpatterns = [
     url(r'^admin/object_details/(?P<object_id>[0-9]+)/$', views_admin.object_details, name='object_details_admin'),
 
     # admin - details of user
-    url(r'^admin/user_details/$', views_admin.user_details, name='user_details_admin'),
+    url(r'^admin/user_details/(?P<user_id>[0-9]+)/$', views_admin.user_details, name='user_details_admin'),
 
     # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
@@ -87,6 +87,12 @@ urlpatterns = [
 
     # admin - restoring fault
     url(r'^admin/restore_fault/(?P<fault_id>[0-9]+)/$', views_admin.restore_fault, name='restore_fault_admin'),
+
+    # admin - blocking user
+    url(r'^admin/block_user/(?P<user_id>[0-9]+)/$', views_admin.block_user, name='block_user_admin'),
+
+    # admin - restoring user
+    url(r'^admin/restore_user/(?P<user_id>[0-9]+)/$', views_admin.restore_user, name='restore_user_admin'),
 
     # admin - finishing fault
     url(r'^admin/finish_fault/(?P<fault_id>[0-9]+)/$', views_admin.finish_fault, name='finish_fault_admin'),

@@ -226,6 +226,46 @@ def restore_fault(request, fault_id):
 
 @login_required
 @staff_member_required
+def restore_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+
+        if not user.is_active:
+            user.is_active = True
+            user.save()
+
+            messages.success(request, "user restored successful")
+        else:
+            messages.warning(request, "user is not blocked")
+
+        return HttpResponseRedirect(reverse('cti:all_users_admin'))
+
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
+def block_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+
+        if user.is_active:
+            user.is_active = False
+            user.save()
+
+            messages.success(request, "user blocked successful")
+        else:
+            messages.warning(request, "user is already blocked")
+
+        return HttpResponseRedirect(reverse('cti:all_users_admin'))
+
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
 def finish_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
@@ -279,11 +319,11 @@ def object_details(request, object_id):
 
 @login_required
 @staff_member_required
-def user_details(request):
+def user_details(request, user_id):
     template = loader.get_template('cti/admin/user_details.html')
 
     try:
-        user = User.objects.get(username__exact=request.user)
+        user = User.objects.get(id=user_id)
         context = {'user': user,
                    'header': 'user\'s details'}
     except User.DoesNotExist:
