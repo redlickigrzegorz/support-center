@@ -136,7 +136,7 @@ def all_history(request):
     history = History.objects.all()
 
     context = {'history': history,
-               'header': 'all users'}
+               'header': 'history'}
 
     return HttpResponse(template.render(context, request))
 
