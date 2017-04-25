@@ -70,6 +70,9 @@ urlpatterns = [
     # admin - all users
     url(r'^admin/users/$', views_admin.all_users, name='all_users_admin'),
 
+    # admin - all users
+    url(r'^admin/history/$', views_admin.all_history, name='all_history_admin'),
+
     # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
 

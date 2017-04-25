@@ -1,6 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
-from .models import Fault, Object
+from .models import Fault, Object, History
 from django.http import Http404
 from .forms import AdminFaultForm, UserForm
 from django.contrib.auth import authenticate
@@ -102,6 +102,19 @@ def all_users(request):
     users = User.objects.all()
 
     context = {'users': users,
+               'header': 'all users'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
+def all_history(request):
+    template = loader.get_template('cti/admin/history.html')
+
+    history = History.objects.all()
+
+    context = {'history': history,
                'header': 'all users'}
 
     return HttpResponse(template.render(context, request))

@@ -1,0 +1,36 @@
+{% extends 'cti/admin/base.html' %}
+
+{% block title %}{{ header }}{% endblock %}
+
+{% block header %}{{ header }}{% endblock %}
+
+{% block body %}
+    <div class="content-row">
+        {% if history %}
+            <table id="historyTable" class="tablesorter">
+                <thead>
+                    <tr>
+                        <th>changed at</th>
+                        <th>fault it</th>
+                        <th>changer id</th>
+                        <th>changed field</th>
+                        <th>previous version</th>
+                        <th>actual version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for element in history %}
+                        <tr id="{{ element.id }}" class="history-tr">
+                            <td class="history-td">{{ element.changed_at|date:'Y-m-d H:i' }}</td>
+                            <td class="history-td">{{ element.fault_id }}</td>
+                            <td class="history-td">{{ element.changer_id }}</td>
+                            <td class="history-td">{{ element.changed_field }}</td>
+                            <td class="history-td">{{ element.previous_version }}</td>
+                            <td class="history-td">{{ element.actual_version }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}
