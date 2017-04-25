@@ -16,7 +16,6 @@ from django.core.mail import send_mail
 from copy import copy
 from .helper import compare_two_faults, get_faults_from_session,\
     post_faults_to_session, make_list_of_watchers, make_string_of_watchers
-import json
 
 
 def login(request):
@@ -104,7 +103,13 @@ def my_faults(request):
 def watched_faults(request):
     template = loader.get_template('cti/client/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-created_at')
+    all_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+    faults_list = []
+
+    for fault in all_faults:
+        if request.user.username in make_list_of_watchers(fault.watchers):
+            faults_list.append(fault)
+
     post_faults_to_session(request, faults_list)
 
     paginator = Paginator(faults_list, 5)
@@ -119,7 +124,7 @@ def watched_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'header': 'my faults'}
+               'header': 'watched faults'}
 
     return HttpResponse(template.render(context, request))
 
@@ -298,21 +303,24 @@ def watch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        watchers = make_list_of_watchers(fault.watchers)
+        if fault.status != 2 and fault.status != 3:
+            watchers = make_list_of_watchers(fault.watchers)
 
-        if request.user.username in watchers:
-            watchers.remove(request.user.username)
+            if request.user.username in watchers:
+                watchers.remove(request.user.username)
 
-            messages.success(request, "you don't watch on this fault from this time")
+                messages.success(request, "you don't watch on this fault from this time")
+            else:
+                watchers.append(request.user.username)
+
+                messages.success(request, "you watch on this fault from this time")
+
+            fault.watchers = make_string_of_watchers(watchers)
+            fault.save()
+
+            return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
         else:
-            watchers.append(request.user.username)
-
-            messages.success(request, "you watch on this fault from this time")
-
-        fault.watchers = make_string_of_watchers(watchers)
-        fault.save()
-
-        return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
+            raise Http404("fault {} is already ended".format(fault_id))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 

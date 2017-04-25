@@ -71,6 +71,13 @@ def my_faults(request):
 
 @login_required
 def watched_faults(request):
+    all_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+    faults_list = []
+
+    for fault in all_faults:
+        if request.user.username in make_list_of_watchers(fault.watchers):
+            faults_list.append(fault)
+
     faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-created_at')
     post_faults_to_session(request, faults)
 
@@ -189,21 +196,24 @@ def watch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        watchers = make_list_of_watchers(fault.watchers)
+        if fault.status != 2 and fault.status != 3:
+            watchers = make_list_of_watchers(fault.watchers)
 
-        if request.user.username in watchers:
-            watchers.remove(request.user.username)
+            if request.user.username in watchers:
+                watchers.remove(request.user.username)
 
-            result['watch_status'] = False
+                result['watch_status'] = False
+            else:
+                watchers.append(request.user.username)
+
+                result['watch_status'] = True
+
+            fault.watchers = make_string_of_watchers(watchers)
+            fault.save()
+
+            return JsonResponse(result)
         else:
-            watchers.append(request.user.username)
-
-            result['watch_status'] = True
-
-        fault.watchers = make_string_of_watchers(watchers)
-        fault.save()
-
-        return JsonResponse(result)
+            raise Http404("fault {} is already ended".format(fault_id))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 

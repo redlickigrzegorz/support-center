@@ -51,11 +51,17 @@ def my_faults(request):
 def watched_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+    all_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    faults = []
+
+    for fault in all_faults:
+        if request.user.username in make_list_of_watchers(fault.watchers):
+            faults.append(fault)
+
     post_faults_to_session(request, faults)
 
     context = {'faults': faults,
-               'header': 'faults assigned to me'}
+               'header': 'watched faults'}
 
     return HttpResponse(template.render(context, request))
 
@@ -192,19 +198,22 @@ def watch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        watchers = make_list_of_watchers(fault.watchers)
+        if fault.status != 2 and fault.status != 3:
+            watchers = make_list_of_watchers(fault.watchers)
 
-        if request.user.username in watchers:
-            watchers.remove(request.user.username)
+            if request.user.username in watchers:
+                watchers.remove(request.user.username)
 
-            messages.success(request, "you don't watch on this fault from this time")
+                messages.success(request, "you don't watch on this fault from this time")
+            else:
+                watchers.append(request.user.username)
+
+                messages.success(request, "you watch on this fault from this time")
+
+            fault.watchers = make_string_of_watchers(watchers)
+            fault.save()
         else:
-            watchers.append(request.user.username)
-
-            messages.success(request, "you watch on this fault from this time")
-
-        fault.watchers = make_string_of_watchers(watchers)
-        fault.save()
+            messages.warning(request, "this fault is already ended")
 
         return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
     except Fault.DoesNotExist:
