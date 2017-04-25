@@ -72,6 +72,17 @@ body {
     font-weight: bold;
 }
 
+.star-button {
+    color: #ffa500;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.star-button:hover,
+.star-button:focus {
+    color: #ffa500;
+}
+
 div > a,
 td > a {
     color: #000000;

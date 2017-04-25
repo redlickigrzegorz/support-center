@@ -1,6 +1,7 @@
 from .models import History
 from django.core import serializers
 from .models import Fault
+import re
 
 
 def post_faults_to_session(request, faults):
@@ -18,6 +19,20 @@ def get_faults_from_session(request):
         faults = Fault.objects.all()
 
     return faults
+
+
+def make_list_of_watchers(string_of_watchers):
+    pattern = r"(\d{6})"
+
+    return re.findall(pattern, string_of_watchers)
+
+
+def make_string_of_watchers(list_of_watchers):
+    string_of_watchers = '['
+    string_of_watchers += ','.join(map(str, list_of_watchers))
+    string_of_watchers += ']'
+
+    return string_of_watchers
 
 
 def compare_two_faults(request, previous_version, actual_version):

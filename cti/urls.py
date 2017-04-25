@@ -40,6 +40,9 @@ urlpatterns = [
     url(r'^edit_fault/(?P<fault_id>[0-9]+)/$', views.edit_fault, name='edit_fault'),
     url(r'^json/edit_fault/(?P<fault_id>[0-9]+)/$', views_json.edit_fault, name='edit_fault_json'),
 
+    # watching fault
+    url(r'^watch_fault/(?P<fault_id>[0-9]+)/$', views.watch_fault, name='watch_fault'),
+
     # details of fault
     url(r'^fault_details/(?P<fault_id>[0-9]+)/$', views.fault_details, name='fault_details'),
     url(r'^json/fault_details/(?P<fault_id>[0-9]+)/$', views_json.fault_details, name='fault_details_json'),

@@ -14,7 +14,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.core.mail import send_mail
 from copy import copy
-from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session
+from .helper import compare_two_faults, get_faults_from_session,\
+    post_faults_to_session, make_list_of_watchers, make_string_of_watchers
+import json
 
 
 def login(request):
@@ -263,6 +265,19 @@ def edit_fault(request, fault_id):
                 raise Http404("fault {} is already ended".format(fault_id))
         else:
             raise Http404("you are not owner of fault {}".format(fault_id))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+def watch_fault(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        watchers = make_list_of_watchers(fault.watchers)
+
+
+        return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
