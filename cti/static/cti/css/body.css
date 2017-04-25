@@ -64,15 +64,12 @@ body {
     font-size: 15px;
 }
 
-.button {
-    color: #000000;
-    font-size: 17px;
-    font-weight: bold;
-}
-
+.button,
 .button:hover,
 .button:focus {
-    color: #808080;
+    color: #000000;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 div > a,
