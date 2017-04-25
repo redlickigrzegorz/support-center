@@ -64,7 +64,7 @@
                             {% else %}
                                 {{ fault.handler }}
                                 {% if fault.status != 2 and fault.status != 3 %}
-                                    <a href="{% url 'cti:ask_for_reassign_admin' fault.id request.user.username %}" title="ask for reassign">
+                                    <a href="{% url 'cti:ask_for_reassign_admin' fault.id request.user.username %}" id="ask-for-reassign" onclick="return confirm_asking_for_reassigning()" title="ask for reassign">
                                         <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
                                     </a>
                                 {% endif %}
@@ -92,9 +92,9 @@
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 ending-div">
                             created by {{ fault.issuer }} ({{ fault.phone_number }}
-                            <a href="{% url 'cti:report_phone_number_admin' fault.id %}" title="report phone number">
-                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>)
-                            </a>
+                            <a href="{% url 'cti:report_phone_number_admin' fault.id %}" id="report-number" onclick="return confirm_reporting_phone_number()" title="report phone number">
+                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+                            </a>)
                         </div>
                     </div>
                     <hr class="hr-top-divider">

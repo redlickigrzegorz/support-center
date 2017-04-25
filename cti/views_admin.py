@@ -527,25 +527,28 @@ def ask_for_reassign(request, fault_id, username):
         fault = Fault.objects.get(pk=fault_id)
 
         if request.user.is_staff:
-            subject = 'fault {} - asking for reasign'.format(fault.id)
-            message = 'please reassign me to this fault\n\n' \
-                      'link to reassign automatically: ' \
-                      'http://212.191.92.101:6009/admin/fault_details/{}/reassign_fault/{}'. \
-                format(fault.id, username)
-            from_email = 'redlicki.grzegorz@gmail.com'
+            if fault.handler != request.user.username:
+                subject = 'fault {} - asking for reasign'.format(fault.id)
+                message = 'please reassign me to this fault\n\n' \
+                          'link to reassign automatically: ' \
+                          'http://212.191.92.101:6009/admin/fault_details/{}/reassign_fault/{}'. \
+                    format(fault.id, username)
+                from_email = 'redlicki.grzegorz@gmail.com'
 
-            user = User.objects.get(username=fault.handler)
-            recipient_list = [user.email]
+                user = User.objects.get(username=fault.handler)
+                recipient_list = [user.email]
 
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-            messages.success(request, "ask for reassign send successfully")
+                messages.success(request, "ask for reassign send successfully")
 
-            return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+            else:
+                messages.warning(request, "you are handler of this fault already")
         else:
             messages.warning(request, "you are not allowed to reassigning")
 
-            return HttpResponseRedirect(reverse('cti:index_admin'))
+        return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
