@@ -121,5 +121,33 @@
             </div>
         </div>
     </div>
+    <table id="historyTable" class="tablesorter">
+        <thead>
+            <tr>
+                <th>changed at</th>
+                <th>fault id</th>
+                <th>changer id</th>
+                <th>changed field</th>
+                <th>previous version</th>
+                <th>actual version</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for element in history %}
+                <tr id="{{ element.id }}" class="history-tr">
+                    <td class="history-td">{{ element.changed_at|date:'Y-m-d H:i' }}</td>
+                    <td class="history-td">{{ element.fault_id }}</td>
+                    <td class="history-td">
+                        <a href="{% url 'cti:user_details_admin' element.changer_id %}">
+                            {{ element.changer_id }}
+                        </a>
+                    </td>
+                    <td class="history-td">{{ element.changed_field }}</td>
+                    <td class="history-td">{{ element.previous_version }}</td>
+                    <td class="history-td">{{ element.actual_version }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}

@@ -75,12 +75,15 @@ body {
     color: #808080;
 }
 
-div > a {
+div > a,
+td > a {
     color: #000000;
 }
 
 div > a:hover,
-div > a:focus {
+div > a:focus,
+td > a:hover,
+td > a:focus {
     color: #808080;
     text-decoration: none;
 }

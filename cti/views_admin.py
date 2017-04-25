@@ -492,8 +492,10 @@ def fault_details(request, fault_id):
 
     try:
         fault = Fault.objects.get(pk=fault_id)
+        history = History.objects.filter(fault_id=fault_id)
 
         context = {'fault': fault,
+                   'history': history,
                    'header': 'fault\'s details'}
 
         return HttpResponse(template.render(context, request))

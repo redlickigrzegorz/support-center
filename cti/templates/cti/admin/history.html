@@ -11,7 +11,7 @@
                 <thead>
                     <tr>
                         <th>changed at</th>
-                        <th>fault it</th>
+                        <th>fault id</th>
                         <th>changer id</th>
                         <th>changed field</th>
                         <th>previous version</th>
@@ -22,8 +22,16 @@
                     {% for element in history %}
                         <tr id="{{ element.id }}" class="history-tr">
                             <td class="history-td">{{ element.changed_at|date:'Y-m-d H:i' }}</td>
-                            <td class="history-td">{{ element.fault_id }}</td>
-                            <td class="history-td">{{ element.changer_id }}</td>
+                            <td class="history-td">
+                                <a href="{% url 'cti:fault_details_admin' element.fault_id %}">
+                                    {{ element.fault_id }}
+                                </a>
+                            </td>
+                            <td class="history-td">
+                                <a href="{% url 'cti:user_details_admin' element.changer_id %}">
+                                    {{ element.changer_id }}
+                                </a>
+                            </td>
                             <td class="history-td">{{ element.changed_field }}</td>
                             <td class="history-td">{{ element.previous_version }}</td>
                             <td class="history-td">{{ element.actual_version }}</td>
