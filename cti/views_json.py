@@ -70,6 +70,16 @@ def my_faults(request):
 
 
 @login_required
+def watched_faults(request):
+    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-created_at')
+    post_faults_to_session(request, faults)
+
+    result = {'faults': serializers.serialize('json', faults)}
+
+    return JsonResponse(result)
+
+
+@login_required
 def resolved_faults(request):
     faults = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
     post_faults_to_session(request, faults)

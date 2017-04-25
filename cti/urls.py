@@ -20,6 +20,10 @@ urlpatterns = [
     url(r'^my_faults/$', views.my_faults, name='my_faults'),
     url(r'^json/my_faults/$', views_json.my_faults, name='my_faults_json'),
 
+    # watched faults
+    url(r'^watched_faults/$', views.watched_faults, name='watched_faults'),
+    url(r'^json/watched_faults/$', views_json.watched_faults, name='watched_faults_json'),
+
     # resolved faults
     url(r'^resolved_faults/$', views.resolved_faults, name='resolved_faults'),
     url(r'^json/resolved_faults/$', views_json.resolved_faults, name='resolved_faults_json'),
@@ -61,6 +65,9 @@ urlpatterns = [
 
     # admin - my faults
     url(r'^admin/my_faults/$', views_admin.my_faults, name='my_faults_admin'),
+
+    # admin - watched faults
+    url(r'^admin/watched_faults/$', views_admin.watched_faults, name='watched_faults_admin'),
 
     # admin - resolved faults
     url(r'^admin/resolved_faults/$', views_admin.resolved_faults, name='resolved_faults_admin'),

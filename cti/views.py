@@ -101,6 +101,30 @@ def my_faults(request):
 
 
 @login_required
+def watched_faults(request):
+    template = loader.get_template('cti/client/index.html')
+
+    faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-created_at')
+    post_faults_to_session(request, faults_list)
+
+    paginator = Paginator(faults_list, 5)
+
+    page = request.GET.get('page')
+
+    try:
+        faults = paginator.page(page)
+    except PageNotAnInteger:
+        faults = paginator.page(1)
+    except EmptyPage:
+        faults = paginator.page(paginator.num_pages)
+
+    context = {'faults': faults,
+               'header': 'my faults'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
 def resolved_faults(request):
     template = loader.get_template('cti/client/index.html')
 

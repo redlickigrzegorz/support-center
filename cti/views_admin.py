@@ -48,6 +48,20 @@ def my_faults(request):
 
 @login_required
 @staff_member_required
+def watched_faults(request):
+    template = loader.get_template('cti/admin/index.html')
+
+    faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+    post_faults_to_session(request, faults)
+
+    context = {'faults': faults,
+               'header': 'faults assigned to me'}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+@staff_member_required
 def resolved_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
