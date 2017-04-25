@@ -114,6 +114,65 @@ function validateFault() {
 function validateUser() {
     let validation = true;
 
+    let first_name = document.getElementById("first_name").value;
+    let last_name = document.getElementById("last_name").value;
+    let email = document.getElementById("email").value;
+
+    let name_regex = new RegExp("^([A-Z][a-z]+)$");
+    let email_regex = new RegExp("^(\\S+@\\S+)$");
+
+    if (!first_name) {
+        validation = false;
+        $('#first_name').attr('data-original-title', 'first name is required')
+                        .tooltip('fixTitle')
+                        .tooltip('show');
+    }
+    else {
+        if (!name_regex.test(first_name)) {
+            validation = false;
+            $('#first_name').attr('data-original-title', 'first name must have first capital letter and rest lowercase')
+                            .tooltip('fixTitle')
+                            .tooltip('show');
+        }
+        else {
+            $('#first_name').tooltip('hide');
+        }
+    }
+    if (!last_name) {
+        validation = false;
+        $('#last_name').attr('data-original-title', 'last name is required')
+                       .tooltip('fixTitle')
+                       .tooltip('show');
+    }
+    else {
+        if (!name_regex.test(last_name)) {
+            validation = false;
+            $('#last_name').attr('data-original-title', 'last name must have first capital letter and rest lowercase')
+                           .tooltip('fixTitle')
+                           .tooltip('show');
+        }
+        else {
+            $('#last_name').tooltip('hide');
+        }
+    }
+    if (!email) {
+        validation = false;
+        $('#email').attr('data-original-title', 'email is required')
+                   .tooltip('fixTitle')
+                   .tooltip('show');
+    }
+    else {
+        if (!email_regex.test(email)) {
+            validation = false;
+            $('#email').attr('data-original-title', 'email must have \'@\' sign and any white space')
+                       .tooltip('fixTitle')
+                       .tooltip('show');
+        }
+        else {
+            $('#email').tooltip('hide');
+        }
+    }
+
     if (validation) {
         $.confirm({
             title: 'confirm!',

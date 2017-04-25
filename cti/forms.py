@@ -60,13 +60,21 @@ class AdminFaultForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
     # first name
-    first_name = forms.CharField(max_length=30)
+    first_name = forms.RegexField(regex=r'^[A-Z][a-z]+$',
+                                  error_messages={'required': 'this field is required',
+                                                  'invalid': 'first name must have first capital letter '
+                                                             'and rest lowercase'})
 
     #last name
-    last_name = forms.CharField(max_length=30)
+    last_name = forms.RegexField(regex=r'^[A-Z][a-z]+$',
+                                 error_messages={'required': 'this field is required',
+                                                 'invalid': 'last name must have first capital letter '
+                                                            'and rest lowercase'})
 
     # email
-    email = forms.CharField(max_length=200)
+    email = forms.RegexField(regex=r'^\S+@\S+$',
+                             error_messages={'required': 'this field is required',
+                                             'invalid': 'email must have \'@\' sign and any white space'})
 
     class Meta:
         model = User
