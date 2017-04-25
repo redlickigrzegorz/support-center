@@ -188,3 +188,54 @@ function validateUser() {
         });
     }
 }
+
+function validatePassword() {
+    let validation = true;
+
+    let old_password = document.getElementById("old_password").value;
+    let new_password = document.getElementById("new_password").value;
+    let new_password_repeat = document.getElementById("new_password_repeat").value;
+
+    if (!old_password) {
+        validation = false;
+        $('#old_password').attr('data-original-title', 'field is required')
+                          .tooltip('fixTitle')
+                          .tooltip('show');
+    }
+    else {
+        $('#old_password').tooltip('hide');
+    }
+    if (!new_password) {
+        validation = false;
+        $('#new_password').attr('data-original-title', 'field is required')
+                          .tooltip('fixTitle')
+                          .tooltip('show');
+    }
+    else {
+        $('#new_password').tooltip('hide');
+    }
+    if (!new_password_repeat) {
+        validation = false;
+        $('#new_password_repeat').attr('data-original-title', 'field is required')
+                                 .tooltip('fixTitle')
+                                 .tooltip('show');
+    }
+    else {
+        $('#new_password_repeat').tooltip('hide');
+    }
+
+    if (validation) {
+        $.confirm({
+            title: 'confirm!',
+            content: 'are you sure you want to do this??',
+            type: 'red',
+            buttons: {
+                confirm: function () {
+                    $('#password-form').submit();
+                },
+                cancel: function () {
+                }
+            }
+        });
+    }
+}
