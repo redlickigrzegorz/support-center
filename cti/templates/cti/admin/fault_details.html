@@ -27,6 +27,7 @@
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 ending-div">
                             {{ fault.created_at }}
+                            <a href="{% url 'cti:watch_fault_admin' fault.id %}" class="star-button"><span class="glyphicon {% if watcher %}glyphicon-star{% else %}glyphicon-star-empty{% endif %}" aria-hidden="true"></span></a>
                         </div>
                     </div>
                     <hr class="hr-bottom-divider">

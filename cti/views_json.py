@@ -8,10 +8,10 @@ from django.core import serializers
 from django.http import JsonResponse
 from .backends import InvbookBackend
 from .models import User
-from .views import post_faults_to_session, get_faults_from_session
 from django.db.models import Q
 from django.core.mail import send_mail
-from .helper import compare_two_faults
+from .helper import compare_two_faults, post_faults_to_session, get_faults_from_session,\
+    make_list_of_watchers, make_string_of_watchers
 from copy import copy
 
 
@@ -168,6 +168,32 @@ def edit_fault(request, fault_id):
                 raise Http404("fault {} is already ended".format(fault_id))
         else:
             raise Http404("you are not owner of fault {}".format(fault_id))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+def watch_fault(request, fault_id):
+    result = {'watch_status': False}
+
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        watchers = make_list_of_watchers(fault.watchers)
+
+        if request.user.username in watchers:
+            watchers.remove(request.user.username)
+
+            result['watch_status'] = False
+        else:
+            watchers.append(request.user.username)
+
+            result['watch_status'] = True
+
+        fault.watchers = make_string_of_watchers(watchers)
+        fault.save()
+
+        return JsonResponse(result)
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 

@@ -13,7 +13,8 @@ from django.contrib import messages
 from .models import User
 from django.core.mail import send_mail
 from copy import copy
-from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session
+from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
+    make_string_of_watchers, make_list_of_watchers
 from django.db.models import Q
 
 
@@ -167,6 +168,31 @@ def edit_fault(request, fault_id):
             messages.warning(request, "this fault is already ended")
 
             return HttpResponseRedirect(reverse('cti:index_admin'))
+    except Fault.DoesNotExist:
+        raise Http404("fault does not exist")
+
+
+@login_required
+@staff_member_required
+def watch_fault(request, fault_id):
+    try:
+        fault = Fault.objects.get(pk=fault_id)
+
+        watchers = make_list_of_watchers(fault.watchers)
+
+        if request.user.username in watchers:
+            watchers.remove(request.user.username)
+
+            messages.success(request, "you don't watch on this fault from this time")
+        else:
+            watchers.append(request.user.username)
+
+            messages.success(request, "you watch on this fault from this time")
+
+        fault.watchers = make_string_of_watchers(watchers)
+        fault.save()
+
+        return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -494,7 +520,15 @@ def fault_details(request, fault_id):
         fault = Fault.objects.get(pk=fault_id)
         history = History.objects.filter(fault_id=fault_id)
 
+        watchers = make_list_of_watchers(fault.watchers)
+
+        if request.user.username in watchers:
+            watcher = True
+        else:
+            watcher = False
+
         context = {'fault': fault,
+                   'watcher': watcher,
                    'history': history,
                    'header': 'fault\'s details'}
 

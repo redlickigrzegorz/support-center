@@ -276,6 +276,17 @@ def watch_fault(request, fault_id):
 
         watchers = make_list_of_watchers(fault.watchers)
 
+        if request.user.username in watchers:
+            watchers.remove(request.user.username)
+
+            messages.success(request, "you don't watch on this fault from this time")
+        else:
+            watchers.append(request.user.username)
+
+            messages.success(request, "you watch on this fault from this time")
+
+        fault.watchers = make_string_of_watchers(watchers)
+        fault.save()
 
         return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
     except Fault.DoesNotExist:
@@ -289,8 +300,16 @@ def fault_details(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
+        watchers = make_list_of_watchers(fault.watchers)
+
+        if request.user.username in watchers:
+            watcher = True
+        else:
+            watcher = False
+
         if not fault.status == 3:
             context = {'fault': fault,
+                       'watcher': watcher,
                        'header': 'fault\'s details'}
 
             return HttpResponse(template.render(context, request))

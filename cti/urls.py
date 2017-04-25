@@ -42,6 +42,7 @@ urlpatterns = [
 
     # watching fault
     url(r'^watch_fault/(?P<fault_id>[0-9]+)/$', views.watch_fault, name='watch_fault'),
+    url(r'^json/watch_fault/(?P<fault_id>[0-9]+)/$', views_json.watch_fault, name='watch_fault_json'),
 
     # details of fault
     url(r'^fault_details/(?P<fault_id>[0-9]+)/$', views.fault_details, name='fault_details'),
@@ -78,6 +79,9 @@ urlpatterns = [
 
     # admin - editing fault
     url(r'^admin/edit_fault/(?P<fault_id>[0-9]+)/$', views_admin.edit_fault, name='edit_fault_admin'),
+
+    # admin - watching fault
+    url(r'^admin/watch_fault/(?P<fault_id>[0-9]+)/$', views_admin.watch_fault, name='watch_fault_admin'),
 
     # admin - finishing fault
     url(r'^admin/finish_fault/(?P<fault_id>[0-9]+)/$', views_admin.finish_fault, name='finish_fault_admin'),
