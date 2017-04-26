@@ -1,4 +1,5 @@
-$(document).ready(function(){
+<script type="text/javascript">
+    $(document).ready(function(){
 	$('#header').load('../header-ads.html');
 $('#footer').load('../footer-ads.html');
     var data = [
@@ -7,7 +8,7 @@ $('#footer').load('../footer-ads.html');
 $('#searched_text').keyup(function(){
             var searchField = $(this).val();
 			if(searchField === '')  {
-				$('#filter-records').html('');
+				$('#filtered-faults').html('');
 				return;
 			}
 
@@ -30,6 +31,7 @@ $('#searched_text').keyup(function(){
 				}
 			  });
 			  output += '</div>';
-			  $('#filter-records').html(output);
+			  $('#filtered-faults').html(output);
         });
   });
+</script>

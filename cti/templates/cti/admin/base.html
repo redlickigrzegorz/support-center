@@ -33,12 +33,12 @@
         <script type="text/javascript" src="{% static 'cti/js/dropdown_menu.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/modal.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/option_menu.js' %}"></script>
-        <script type="text/javascript" src="{% static 'cti/js/searcher.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/selector.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/tablesorter.js' %}"></script>
         <script type="text/javascript" src="{% static 'cti/js/validator.js' %}"></script>
 
         {% include 'cti/scripts/alert_messages.html' %}
+        {% include 'cti/scripts/filtered_faults.html' %}
     </head>
     <body>
         <nav class="navbar navbar-default-admin navbar-fixed-top">
@@ -64,7 +64,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div id="filter-records"></div>
+                            <div id="filtered-faults"></div>
                         </form>
                     </div>
                     <ul class="nav navbar-nav navbar-right">
