@@ -110,9 +110,10 @@ def searched_faults(request):
     query = request.GET.get('searched_text')
 
     if query:
-        faults = get_faults_from_session(request).filter(Q(topic__icontains=query)).order_by('-created_at')
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]). \
+            filter(Q(topic__icontains=query)).order_by('-created_at')
     else:
-        faults = get_faults_from_session(request).order_by('-created_at')
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
 
     post_faults_to_session(request, faults)
 

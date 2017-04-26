@@ -183,11 +183,12 @@ def searched_faults(request):
     query = request.GET.get('searched_text')
 
     if query:
-        faults_list = get_faults_from_session(request).filter(Q(topic__icontains=query)).order_by('-created_at')
+        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).\
+            filter(Q(topic__icontains=query)).order_by('-created_at')
     else:
         messages.warning(request, 'no matches for this query')
 
-        faults_list = get_faults_from_session(request).order_by('-created_at')
+        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
 
     post_faults_to_session(request, faults_list)
 
