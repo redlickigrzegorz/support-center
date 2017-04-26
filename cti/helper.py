@@ -111,7 +111,10 @@ def compare_two_faults(request, previous_version, actual_version):
         history.save()
 
 
-def send_email(subject, message, from_email, users):
+def send_email(subject, message, users, from_email=None):
+    if not from_email:
+        from_email = "redlicki.grzegorz@gmail.com"
+
     recipient_list = []
 
     for user in users:

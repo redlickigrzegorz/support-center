@@ -226,15 +226,16 @@ def add_fault(request):
             subject = 'new fault created - {} - {}'.format(fault.id, fault.topic)
             message = 'issuer: {}\n' \
                       'object: {} located in room: {}\n\n' \
+                      'priority: {}\n' \
                       'topic: {}\n' \
                       'description: {}\n\n' \
                       'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'.\
-                format(fault.issuer, fault.object_number, fault_object.room, fault.topic, fault.description, fault.id)
-            from_email = 'redlicki.grzegorz@gmail.com'
+                format(fault.issuer, fault.object_number, fault_object.room, fault.priority,
+                       fault.topic, fault.description, fault.id)
 
             users = User.objects.filter(is_staff=True)
 
-            send_email(subject, message, from_email, users)
+            send_email(subject, message, users)
 
             messages.success(request, "fault added successful")
 

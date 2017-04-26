@@ -11,10 +11,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .models import User
-from django.core.mail import send_mail
 from copy import copy
 from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
-    make_string_of_watchers, make_list_of_watchers
+    make_string_of_watchers, make_list_of_watchers, send_email
 from django.db.models import Q
 
 
@@ -162,15 +161,16 @@ def edit_fault(request, fault_id):
                         compare_two_faults(request, previous_version_of_fault, fault)
 
                         if request.user.username != fault.issuer:
-                            subject = 'fault {} - fault was edited by admins'.format(fault.id)
-                            message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                                format(fault.id)
-                            from_email = 'redlicki.grzegorz@gmail.com'
+                            subject = 'your fault - {} - has been edited by admins'.format(fault.id)
+                            message = 'priority: {}\n' \
+                                      'topic: {}\n' \
+                                      'description: {}\n\n' \
+                                      'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                                format(fault.priority, fault.topic, fault.description, fault.id)
 
-                            user = User.objects.get(username=fault.issuer)
-                            recipient_list = [user.email]
+                            users = User.objects.filter(username=fault.issuer)
 
-                            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                            send_email(subject, message, users)
 
                         messages.success(request, "fault edited successful")
 
@@ -238,15 +238,16 @@ def finish_fault(request, fault_id):
                 compare_two_faults(request, previous_version_of_fault, fault)
 
                 if request.user.username != fault.issuer:
-                    subject = 'fault {} - your fault was finished'.format(fault.id)
-                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                        format(fault.id)
-                    from_email = 'redlicki.grzegorz@gmail.com'
+                    subject = 'your fault - {} - has been finished already'.format(fault.id)
+                    message = 'priority: {}\n' \
+                              'topic: {}\n' \
+                              'description: {}\n\n' \
+                              'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.priority, fault.topic, fault.description, fault.id)
 
-                    user = User.objects.get(username=fault.issuer)
-                    recipient_list = [user.email]
+                    users = User.objects.filter(username=fault.issuer)
 
-                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                    send_email(subject, message, users)
 
                 messages.success(request, "fault finished successful")
 
@@ -277,15 +278,15 @@ def delete_fault(request, fault_id):
                 compare_two_faults(request, previous_version_of_fault, fault)
 
                 if request.user.username != fault.issuer:
-                    subject = 'fault {} - your fault was deleted'.format(fault.id)
-                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                        format(fault.id)
-                    from_email = 'redlicki.grzegorz@gmail.com'
+                    subject = 'your fault - {} - has been deleted already'.format(fault.id)
+                    message = 'priority: {}\n' \
+                              'topic: {}\n' \
+                              'description: {}\n\n'. \
+                        format(fault.priority, fault.topic, fault.description)
 
-                    user = User.objects.get(username=fault.issuer)
-                    recipient_list = [user.email]
+                    users = User.objects.filter(username=fault.issuer)
 
-                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                    send_email(subject, message, users)
 
                 messages.success(request, "fault deleted successful")
 
@@ -316,15 +317,16 @@ def assign_to_me(request, fault_id):
                 compare_two_faults(request, previous_version_of_fault, fault)
 
                 if request.user.username != fault.issuer:
-                    subject = 'fault {} - your fault was assigned'.format(fault.id)
-                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                        format(fault.id)
-                    from_email = 'redlicki.grzegorz@gmail.com'
+                    subject = 'your fault - {} - has been started already'.format(fault.id)
+                    message = 'priority: {}\n' \
+                              'topic: {}\n' \
+                              'description: {}\n\n' \
+                              'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.priority, fault.topic, fault.description, fault.id)
 
-                    user = User.objects.get(username=fault.issuer)
-                    recipient_list = [user.email]
+                    users = User.objects.filter(username=fault.issuer)
 
-                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                    send_email(subject, message, users)
 
                 messages.success(request, "fault assigned successful")
 
@@ -355,17 +357,6 @@ def reassign_fault(request, fault_id, username):
 
                 compare_two_faults(request, previous_version_of_fault, fault)
 
-                subject = 'fault {} - fault was reasigned'.format(fault.id)
-                message = 'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
-                    format(fault.id)
-                from_email = 'redlicki.grzegorz@gmail.com'
-
-                issuer = User.objects.get(username=fault.issuer)
-
-                recipient_list = [user.email, issuer.email]
-
-                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-
                 messages.success(request, "fault reassigned successful")
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
@@ -395,15 +386,16 @@ def restore_fault(request, fault_id):
                 compare_two_faults(request, previous_version_of_fault, fault)
 
                 if request.user.username != fault.issuer:
-                    subject = 'fault {} - your fault was restored'.format(fault.id)
-                    message = 'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                        format(fault.id)
-                    from_email = 'redlicki.grzegorz@gmail.com'
+                    subject = 'your fault - {} - has been restore already'.format(fault.id)
+                    message = 'priority: {}\n' \
+                              'topic: {}\n' \
+                              'description: {}\n\n' \
+                              'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                        format(fault.priority, fault.topic, fault.description, fault.id)
 
-                    user = User.objects.get(username=fault.issuer)
-                    recipient_list = [user.email]
+                    users = User.objects.filter(username=fault.issuer)
 
-                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                    send_email(subject, message, users)
 
                 messages.success(request, "fault restore successful")
 
@@ -466,6 +458,17 @@ def block_user(request, user_id):
                 user.is_active = False
                 user.save()
 
+                subject = 'support center blocked your account'
+                message = 'Hello,\n\n' \
+                          'your account on support center has been blocked already\n' \
+                          'Please, contact with admins of CTI building to resolve this case.\n\n' \
+                          'BR,\n' \
+                          'support center admins'
+
+                users = User.objects.filter(id=user_id)
+
+                send_email(subject, message, users)
+
                 messages.success(request, "user blocked successful")
 
                 return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
@@ -489,6 +492,17 @@ def restore_user(request, user_id):
             if not user.is_staff:
                 user.is_active = True
                 user.save()
+
+                subject = 'support center restore your account'
+                message = 'Hello,\n\n' \
+                          'your account on support center has been restore already\n' \
+                          'You have all previous privileges.\n\n' \
+                          'BR,\n' \
+                          'support center admins'
+
+                users = User.objects.filter(id=user_id)
+
+                send_email(subject, message, users)
 
                 messages.success(request, "user restored successful")
 
@@ -603,17 +617,18 @@ def ask_for_reassign(request, fault_id, username):
 
         if request.user.is_staff:
             if fault.handler != request.user.username:
-                subject = 'fault {} - asking for reasign'.format(fault.id)
-                message = 'please reassign me to this fault\n\n' \
-                          'link to reassign automatically: ' \
+                subject = 'fault - {} - ask for reassign'.format(fault.id)
+                message = 'ask for reassign has been sent by {}\n\n' \
+                          'priority: {}\n' \
+                          'topic: {}\n' \
+                          'description: {}\n\n' \
+                          'link to do this automatically: ' \
                           'http://212.191.92.101:6009/admin/fault_details/{}/reassign_fault/{}'. \
-                    format(fault.id, username)
-                from_email = 'redlicki.grzegorz@gmail.com'
+                    format(username, fault.priority, fault.topic, fault.description, fault.id, username)
 
-                user = User.objects.get(username=fault.handler)
-                recipient_list = [user.email]
+                users = User.objects.filter(username=fault.handler)
 
-                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                send_email(subject, message, users)
 
                 messages.success(request, "ask for reassign send successfully")
 
@@ -635,21 +650,24 @@ def report_phone_number(request, fault_id):
         fault = Fault.objects.get(pk=fault_id)
 
         if request.user.is_staff:
-            subject = 'fault {} - phone number reported'.format(fault.id)
-            message = 'please change phone number\n' \
-                      '{} - this is not working\n\n' \
-                      'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
-                format(fault.phone_number, fault.topic, fault.description, fault.id)
-            from_email = 'redlicki.grzegorz@gmail.com'
+            if request.user.username != fault.issuer:
+                subject = 'fault - {} - your phone has been reported'.format(fault.id)
+                message = 'your phone number has been repored\n\n' \
+                          'priority: {}\n' \
+                          'topic: {}\n' \
+                          'description: {}\n\n' \
+                          'link to details: http://212.191.92.101:6009/fault_details/{}/'. \
+                    format(fault.priority, fault.topic, fault.description, fault.id)
 
-            user = User.objects.get(username=fault.issuer)
-            recipient_list = [user.email]
+                users = User.objects.filter(username=fault.handler)
 
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                send_email(subject, message, users)
 
-            messages.success(request, "phone number reported successfully")
+                messages.success(request, "phone number reported successfully")
 
-            return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+                return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
+            else:
+                messages.warning(request, "you are issuer of this fault")
         else:
             messages.warning(request, "you are not allowed to reporting phones")
 
