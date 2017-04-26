@@ -12,7 +12,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .models import User
 from copy import copy
-from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email, get_faults_as_json
+from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email
 from django.db.models import Q
 
 
@@ -24,7 +24,7 @@ def index(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
     context = {'faults': faults,
-               'faults_json': get_faults_as_json(),
+               'all_faults': Fault.objects.all(),
                'header': 'all faults'}
 
     return HttpResponse(template.render(context, request))
@@ -38,7 +38,7 @@ def my_faults(request):
     faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
 
     context = {'faults': faults,
-               'faults_json': get_faults_as_json(),
+               'all_faults': Fault.objects.all(),
                'header': 'faults assigned to me'}
 
     return HttpResponse(template.render(context, request))
@@ -57,7 +57,7 @@ def watched_faults(request):
             faults.append(fault)
 
     context = {'faults': faults,
-               'faults_json': get_faults_as_json(),
+               'all_faults': Fault.objects.all(),
                'header': 'watched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -71,7 +71,7 @@ def resolved_faults(request):
     faults = Fault.objects.filter(is_visible=True, status=2)
 
     context = {'faults': faults,
-               'faults_json': get_faults_as_json(),
+               'all_faults': Fault.objects.all(),
                'header': 'resolved faults'}
 
     return HttpResponse(template.render(context, request))
@@ -91,7 +91,7 @@ def searched_faults(request):
         faults = Fault.objects.all()
 
     context = {'faults': faults,
-               'faults_json': get_faults_as_json(),
+               'all_faults': Fault.objects.all(),
                'header': 'searched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -105,7 +105,7 @@ def deleted_faults(request):
     faults = Fault.objects.filter(is_visible=False, status=3)
 
     context = {'faults': faults,
-               'faults_json': get_faults_as_json(),
+               'all_faults': Fault.objects.all(),
                'header': 'deleted faults'}
 
     return HttpResponse(template.render(context, request))
@@ -118,7 +118,7 @@ def all_users(request):
 
     users = User.objects.all()
 
-    context = {'faults_json': get_faults_as_json(),
+    context = {'all_faults': Fault.objects.all(),
                'users': users,
                'header': 'all users'}
 
@@ -132,7 +132,7 @@ def all_history(request):
 
     history = History.objects.all()
 
-    context = {'faults_json': get_faults_as_json(),
+    context = {'all_faults': Fault.objects.all(),
                'history': history,
                'header': 'history'}
 
@@ -179,7 +179,7 @@ def edit_fault(request, fault_id):
                             for error in field.errors:
                                 messages.warning(request, "{} - {}".format(field.name, error))
 
-                context = {'faults_json': get_faults_as_json(),
+                context = {'all_faults': Fault.objects.all(),
                            'form': form,
                            'button': 'edit',
                            'header': 'edit fault'}
@@ -434,7 +434,7 @@ def edit_user(request, user_id):
                         for error in field.errors:
                             messages.warning(request, "{} - {}".format(field.name, error))
 
-            context = {'faults_json': get_faults_as_json(),
+            context = {'all_faults': Fault.objects.all(),
                        'form': form,
                        'button': 'edit',
                        'header': 'edit user'}
@@ -546,7 +546,7 @@ def change_password(request):
         else:
             messages.warning(request, 'old password is wrong')
 
-    context = {'faults_json': get_faults_as_json(),
+    context = {'all_faults': Fault.objects.all(),
                'button': 'change',
                'header': 'change password'}
 
@@ -570,7 +570,7 @@ def fault_details(request, fault_id):
             watcher = False
 
         context = {'fault': fault,
-                   'faults_json': get_faults_as_json(),
+                   'all_faults': Fault.objects.all(),
                    'watcher': watcher,
                    'history': history,
                    'header': 'fault\'s details'}
@@ -588,7 +588,7 @@ def object_details(request, object_id):
     try:
         fault_object = Object.objects.get(object_number=object_id)
 
-        context = {'faults_json': get_faults_as_json(),
+        context = {'all_faults': Fault.objects.all(),
                    'object': fault_object,
                    'header': 'object\'s details'}
 
@@ -605,7 +605,7 @@ def user_details(request, user_id):
     try:
         user = User.objects.get(id=user_id)
 
-        context = {'faults_json': get_faults_as_json(),
+        context = {'all_faults': Fault.objects.all(),
                    'user': user,
                    'header': 'user\'s details'}
 

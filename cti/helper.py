@@ -22,10 +22,6 @@ def get_faults_from_session(request):
     return faults
 
 
-def get_faults_as_json():
-    return serializers.serialize('json', Fault.objects.all())
-
-
 def make_list_of_watchers(string_of_watchers):
     pattern = r"(\d{6})"
 
