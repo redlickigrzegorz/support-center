@@ -12,10 +12,9 @@ from django.contrib import messages
 from .backends import InvbookBackend
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
-from django.core.mail import send_mail
 from copy import copy
 from .helper import compare_two_faults, get_faults_from_session,\
-    post_faults_to_session, make_list_of_watchers, make_string_of_watchers
+    post_faults_to_session, make_list_of_watchers, make_string_of_watchers, send_email
 
 
 def login(request):
@@ -222,24 +221,20 @@ def add_fault(request):
             fault.save()
 
             invbook = InvbookBackend()
-            invbook.get_or_create_object(fault.object_number)
+            fault_object = invbook.get_or_create_object(fault.object_number)
 
-            subject = 'fault {} created - {}'.format(fault.id, fault.topic)
+            subject = 'new fault created - {} - {}'.format(fault.id, fault.topic)
             message = 'issuer: {}\n' \
-                      'object: {}\n\n' \
+                      'object: {} located in room: {}\n\n' \
                       'topic: {}\n' \
                       'description: {}\n\n' \
                       'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'.\
-                format(fault.issuer, fault.object_number, fault.topic, fault.description, fault.id)
+                format(fault.issuer, fault.object_number, fault_object.room, fault.topic, fault.description, fault.id)
             from_email = 'redlicki.grzegorz@gmail.com'
-            recipient_list = []
 
             users = User.objects.filter(is_staff=True)
 
-            for user in users:
-                recipient_list.append(user.email)
-
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            send_email(subject, message, from_email, users)
 
             messages.success(request, "fault added successful")
 

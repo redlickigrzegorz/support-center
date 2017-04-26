@@ -2,6 +2,7 @@ from .models import History
 from django.core import serializers
 from .models import Fault
 import re
+from django.core.mail import send_mail
 
 
 def post_faults_to_session(request, faults):
@@ -108,3 +109,17 @@ def compare_two_faults(request, previous_version, actual_version):
                           previous_version=str(previous_version.watchers),
                           actual_version=str(actual_version.watchers))
         history.save()
+
+
+def send_email(subject, message, from_email, users):
+    recipient_list = []
+
+    for user in users:
+        pattern = r"\S+@\S+"
+        match = re.search(pattern, user.email)
+
+        if match:
+            recipient_list.append(user.email)
+
+    if len(recipient_list) > 0:
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
