@@ -12,7 +12,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
 from .models import User
 from copy import copy
-from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email
+from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email, get_faults_as_json
 from django.db.models import Q
 
 
@@ -24,6 +24,7 @@ def index(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'all faults'}
 
     return HttpResponse(template.render(context, request))
@@ -37,6 +38,7 @@ def my_faults(request):
     faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'faults assigned to me'}
 
     return HttpResponse(template.render(context, request))
@@ -55,6 +57,7 @@ def watched_faults(request):
             faults.append(fault)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'watched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -68,6 +71,7 @@ def resolved_faults(request):
     faults = Fault.objects.filter(is_visible=True, status=2)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'resolved faults'}
 
     return HttpResponse(template.render(context, request))
@@ -84,9 +88,10 @@ def searched_faults(request):
     else:
         messages.warning(request, 'no matches for this query')
 
-        faults = Fault.objects.filter()
+        faults = Fault.objects.all()
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'searched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -100,6 +105,7 @@ def deleted_faults(request):
     faults = Fault.objects.filter(is_visible=False, status=3)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'deleted faults'}
 
     return HttpResponse(template.render(context, request))
@@ -112,7 +118,8 @@ def all_users(request):
 
     users = User.objects.all()
 
-    context = {'users': users,
+    context = {'faults_json': get_faults_as_json(),
+               'users': users,
                'header': 'all users'}
 
     return HttpResponse(template.render(context, request))
@@ -125,7 +132,8 @@ def all_history(request):
 
     history = History.objects.all()
 
-    context = {'history': history,
+    context = {'faults_json': get_faults_as_json(),
+               'history': history,
                'header': 'history'}
 
     return HttpResponse(template.render(context, request))
@@ -171,7 +179,8 @@ def edit_fault(request, fault_id):
                             for error in field.errors:
                                 messages.warning(request, "{} - {}".format(field.name, error))
 
-                context = {'form': form,
+                context = {'faults_json': get_faults_as_json(),
+                           'form': form,
                            'button': 'edit',
                            'header': 'edit fault'}
 
@@ -425,7 +434,8 @@ def edit_user(request, user_id):
                         for error in field.errors:
                             messages.warning(request, "{} - {}".format(field.name, error))
 
-            context = {'form': form,
+            context = {'faults_json': get_faults_as_json(),
+                       'form': form,
                        'button': 'edit',
                        'header': 'edit user'}
 
@@ -536,7 +546,8 @@ def change_password(request):
         else:
             messages.warning(request, 'old password is wrong')
 
-    context = {'button': 'change',
+    context = {'faults_json': get_faults_as_json(),
+               'button': 'change',
                'header': 'change password'}
 
     return HttpResponse(template.render(context, request))
@@ -559,6 +570,7 @@ def fault_details(request, fault_id):
             watcher = False
 
         context = {'fault': fault,
+                   'faults_json': get_faults_as_json(),
                    'watcher': watcher,
                    'history': history,
                    'header': 'fault\'s details'}
@@ -576,7 +588,8 @@ def object_details(request, object_id):
     try:
         fault_object = Object.objects.get(object_number=object_id)
 
-        context = {'object': fault_object,
+        context = {'faults_json': get_faults_as_json(),
+                   'object': fault_object,
                    'header': 'object\'s details'}
 
         return HttpResponse(template.render(context, request))
@@ -592,7 +605,8 @@ def user_details(request, user_id):
     try:
         user = User.objects.get(id=user_id)
 
-        context = {'user': user,
+        context = {'faults_json': get_faults_as_json(),
+                   'user': user,
                    'header': 'user\'s details'}
 
         return HttpResponse(template.render(context, request))

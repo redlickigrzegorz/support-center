@@ -13,8 +13,8 @@ from .backends import InvbookBackend
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from copy import copy
-from .helper import compare_two_faults, get_faults_from_session,\
-    post_faults_to_session, make_list_of_watchers, make_string_of_watchers, send_email
+from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
+    make_list_of_watchers, make_string_of_watchers, send_email, get_faults_as_json
 
 
 def login(request):
@@ -69,6 +69,7 @@ def index(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'all faults'}
 
     return HttpResponse(template.render(context, request))
@@ -93,6 +94,7 @@ def my_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'my faults'}
 
     return HttpResponse(template.render(context, request))
@@ -123,6 +125,7 @@ def watched_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'watched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -147,6 +150,7 @@ def resolved_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'resolved faults'}
 
     return HttpResponse(template.render(context, request))
@@ -171,6 +175,7 @@ def sorted_faults(request, order_by):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'sorted faults'}
 
     return HttpResponse(template.render(context, request))
@@ -204,6 +209,7 @@ def searched_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
+               'faults_json': get_faults_as_json(),
                'header': 'searched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -248,7 +254,8 @@ def add_fault(request):
     else:
         form = FaultForm()
 
-    context = {'form': form,
+    context = {'faults_json': get_faults_as_json(),
+               'form': form,
                'button': 'add',
                'header': 'new fault'}
 
@@ -282,7 +289,8 @@ def edit_fault(request, fault_id):
                             for error in field.errors:
                                 messages.warning(request, "{} - {}".format(field.name, error))
 
-                context = {'form': form,
+                context = {'faults_json': get_faults_as_json(),
+                           'form': form,
                            'button': 'edit',
                            'header': 'edit fault'}
 
@@ -338,6 +346,7 @@ def fault_details(request, fault_id):
 
         if not fault.status == 3:
             context = {'fault': fault,
+                       'faults_json': get_faults_as_json(),
                        'watcher': watcher,
                        'header': 'fault\'s details'}
 
@@ -355,7 +364,8 @@ def object_details(request, object_id):
     try:
         fault_object = Object.objects.get(object_number=object_id)
 
-        context = {'object': fault_object,
+        context = {'faults_json': get_faults_as_json(),
+                   'object': fault_object,
                    'header': 'object\'s details'}
 
         return HttpResponse(template.render(context, request))
@@ -370,7 +380,8 @@ def user_details(request):
     try:
         user = User.objects.get(username__exact=request.user)
 
-        context = {'user': user,
+        context = {'faults_json': get_faults_as_json(),
+                   'user': user,
                    'header': 'user\'s details'}
 
         return HttpResponse(template.render(context, request))
