@@ -71,37 +71,6 @@ class Fault(models.Model):
         return '{} - {}'.format(self.created_at, self.topic)
 
 
-class History(models.Model):
-    # fault id
-    fault_id = models.IntegerField()
-
-    # changer id
-    changer_id = models.IntegerField()
-
-    # created at
-    changed_at = models.DateTimeField()
-
-    # changed field
-    changed_field = models.CharField(max_length=20)
-
-    # previous version
-    previous_version = models.CharField(max_length=200)
-
-    # actual version
-    actual_version = models.CharField(max_length=200)
-
-    def get_fields(self):
-        all_fields = []
-
-        for field in self._meta.fields:
-            all_fields.append(field)
-
-        return [field.name for field in all_fields]
-
-    def __str__(self):
-        return '{} - {} - {}'.format(self.changed_at, self.fault_id, self.changed_field)
-
-
 class Object(models.Model):
     # object number
     object_number_regex = RegexValidator(regex=r'^\d{10}$',
@@ -144,3 +113,34 @@ class Object(models.Model):
 
 class User(AbstractUser):
     pass
+
+
+class History(models.Model):
+    # fault id
+    fault = models.ForeignKey(Fault)
+
+    # changer id
+    changer = models.ForeignKey(User)
+
+    # created at
+    changed_at = models.DateTimeField()
+
+    # changed field
+    changed_field = models.CharField(max_length=20)
+
+    # previous version
+    previous_version = models.CharField(max_length=200)
+
+    # actual version
+    actual_version = models.CharField(max_length=200)
+
+    def get_fields(self):
+        all_fields = []
+
+        for field in self._meta.fields:
+            all_fields.append(field)
+
+        return [field.name for field in all_fields]
+
+    def __str__(self):
+        return '{} - {} - {}'.format(self.changed_at, self.fault_id, self.changed_field)
