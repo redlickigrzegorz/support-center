@@ -69,7 +69,7 @@ def index(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'all_faults': Fault.objects.all(),
+               'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'header': 'all faults'}
 
     return HttpResponse(template.render(context, request))
@@ -94,7 +94,7 @@ def my_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'all_faults': Fault.objects.all(),
+               'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'header': 'my faults'}
 
     return HttpResponse(template.render(context, request))
@@ -125,7 +125,7 @@ def watched_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'all_faults': Fault.objects.all(),
+               'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'header': 'watched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -150,7 +150,7 @@ def resolved_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'all_faults': Fault.objects.all(),
+               'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'header': 'resolved faults'}
 
     return HttpResponse(template.render(context, request))
@@ -175,7 +175,7 @@ def sorted_faults(request, order_by):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'all_faults': Fault.objects.all(),
+               'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'header': 'sorted faults'}
 
     return HttpResponse(template.render(context, request))
@@ -188,12 +188,12 @@ def searched_faults(request):
     query = request.GET.get('searched_text')
 
     if query:
-        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).\
+        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).\
             filter(Q(topic__icontains=query)).order_by('-created_at')
     else:
         messages.warning(request, 'no matches for this query')
 
-        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
 
     post_faults_to_session(request, faults_list)
 
@@ -209,7 +209,7 @@ def searched_faults(request):
         faults = paginator.page(paginator.num_pages)
 
     context = {'faults': faults,
-               'all_faults': Fault.objects.all(),
+               'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'header': 'searched faults'}
 
     return HttpResponse(template.render(context, request))
@@ -254,7 +254,7 @@ def add_fault(request):
     else:
         form = FaultForm()
 
-    context = {'all_faults': Fault.objects.all(),
+    context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'form': form,
                'button': 'add',
                'header': 'new fault'}
@@ -289,7 +289,7 @@ def edit_fault(request, fault_id):
                             for error in field.errors:
                                 messages.warning(request, "{} - {}".format(field.name, error))
 
-                context = {'all_faults': Fault.objects.all(),
+                context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                            'form': form,
                            'button': 'edit',
                            'header': 'edit fault'}
@@ -346,7 +346,7 @@ def fault_details(request, fault_id):
 
         if not fault.status == 3:
             context = {'fault': fault,
-                       'all_faults': Fault.objects.all(),
+                       'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                        'watcher': watcher,
                        'header': 'fault\'s details'}
 
@@ -364,7 +364,7 @@ def object_details(request, object_id):
     try:
         fault_object = Object.objects.get(object_number=object_id)
 
-        context = {'all_faults': Fault.objects.all(),
+        context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                    'object': fault_object,
                    'header': 'object\'s details'}
 
@@ -380,7 +380,7 @@ def user_details(request):
     try:
         user = User.objects.get(username__exact=request.user)
 
-        context = {'all_faults': Fault.objects.all(),
+        context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                    'user': user,
                    'header': 'user\'s details'}
 
