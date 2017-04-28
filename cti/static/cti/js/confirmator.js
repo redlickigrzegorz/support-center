@@ -3,8 +3,8 @@ function confirm_reporting_phone_number() {
 
     if (validation) {
         $.confirm({
-            title: 'confirm!',
-            content: 'are you sure you want to report phone number??',
+            title: gettext('confirm!'),
+            content: gettext('are you sure you want to report phone number??'),
             type: 'red',
             buttons: {
                 confirm: function () {
@@ -24,8 +24,8 @@ function confirm_asking_for_reassigning() {
 
     if (validation) {
         $.confirm({
-            title: 'confirm!',
-            content: 'are you sure you want to ask for reassign??',
+            title: gettext('confirm!'),
+            content: gettext('are you sure you want to ask for reassign??'),
             type: 'red',
             buttons: {
                 confirm: function () {

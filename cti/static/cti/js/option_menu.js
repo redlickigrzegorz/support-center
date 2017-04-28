@@ -12,12 +12,12 @@ $(document).ready(function() {
                                         '<span class="glyphicon glyphicon-option-horizontal"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="details">'+
+                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="'+gettext('details')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-file"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/restore_fault/'+id+'" class="option-button restore-button" title="restore">'+
+                                '<a href="/admin/restore_fault/'+id+'" class="option-button restore-button" title="'+gettext('restore')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-share"></span>'+
                                     '</div>'+
@@ -36,12 +36,12 @@ $(document).ready(function() {
                                         '<span class="glyphicon glyphicon-option-horizontal"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="details">'+
+                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="'+gettext('details')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-file"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/restore_fault/'+id+'" class="option-button restore-button" title="restore">'+
+                                '<a href="/admin/restore_fault/'+id+'" class="option-button restore-button" title="'+gettext('restore')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-share"></span>'+
                                     '</div>'+
@@ -55,22 +55,22 @@ $(document).ready(function() {
         }
         else if (header === 'faults assigned to me') {
             var content = $('<div class="options-menu">'+
-                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="details">'+
+                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="'+gettext('details')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-file"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/edit_fault/'+id+'" class="option-button edit-button" title="edit">'+
+                                '<a href="/admin/edit_fault/'+id+'" class="option-button edit-button" title="'+gettext('edit')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-pencil"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/finish_fault/'+id+'" class="option-button finish-button" title="finish">'+
+                                '<a href="/admin/finish_fault/'+id+'" class="option-button finish-button" title="'+gettext('finish')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-check"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/delete_fault/'+id+'" class="option-button delete-button" title="delete">'+
+                                '<a href="/admin/delete_fault/'+id+'" class="option-button delete-button" title="'+gettext('delete')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-trash"></span>'+
                                     '</div>'+
@@ -79,22 +79,22 @@ $(document).ready(function() {
         }
         else {
             var content = $('<div class="options-menu">'+
-                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="details">'+
+                                '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="'+gettext('details')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-file"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/edit_fault/'+id+'" class="option-button edit-button" title="edit">'+
+                                '<a href="/admin/edit_fault/'+id+'" class="option-button edit-button" title="'+gettext('edit')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-pencil"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/assign_to_me/'+id+'" class="option-button assign-button" title="assign to me">'+
+                                '<a href="/admin/assign_to_me/'+id+'" class="option-button assign-button" title="'+gettext('assign to me')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-plus"></span>'+
                                     '</div>'+
                                 '</a>'+
-                                '<a href="/admin/delete_fault/'+id+'" class="option-button delete-button" title="delete">'+
+                                '<a href="/admin/delete_fault/'+id+'" class="option-button delete-button" title="'+gettext('delete')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                         '<span class="glyphicon glyphicon-trash"></span>'+
                                     '</div>'+
@@ -111,22 +111,22 @@ $(document).ready(function() {
         let id = $(this).attr('id');
 
         var content = $('<div class="options-menu">'+
-                            '<a href="/admin/user_details/'+id+'" class="option-button details-button" title="details">'+
+                            '<a href="/admin/user_details/'+id+'" class="option-button details-button" title="'+gettext('details')+'">'+
                                 '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                     '<span class="glyphicon glyphicon-file"></span>'+
                                 '</div>'+
                             '</a>'+
-                            '<a href="/admin/edit_user/'+id+'" class="option-button edit-button" title="edit">'+
+                            '<a href="/admin/edit_user/'+id+'" class="option-button edit-button" title="'+gettext('edit')+'">'+
                                 '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                     '<span class="glyphicon glyphicon-pencil"></span>'+
                                 '</div>'+
                             '</a>'+
-                            '<a href="/admin/restore_user/'+id+'" class="option-button restore-button" title="restore">'+
+                            '<a href="/admin/restore_user/'+id+'" class="option-button restore-button" title="'+gettext('restore')+'">'+
                                 '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                     '<span class="glyphicon glyphicon-share"></span>'+
                                 '</div>'+
                             '</a>'+
-                            '<a href="/admin/block_user/'+id+'" class="option-button delete-button" title="block">'+
+                            '<a href="/admin/block_user/'+id+'" class="option-button delete-button" title="'+gettext('block')+'">'+
                                 '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
                                     '<span class="glyphicon glyphicon-trash"></span>'+
                                 '</div>'+

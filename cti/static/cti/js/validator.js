@@ -24,14 +24,14 @@ function validateFault() {
     if (phone_number) {
         if (!phone_number.value) {
             validation = false;
-            $('#phone_number').attr('data-original-title', 'phone number is required')
+            $('#phone_number').attr('data-original-title', gettext('phone number is required'))
                 .tooltip('fixTitle')
                 .tooltip('show');
         }
         else {
             if (!phone_number_regex.test(phone_number.value)) {
                 validation = false;
-                $('#phone_number').attr('data-original-title', 'allowed phone number format: +999999999 (9-15 digits with possible plus)')
+                $('#phone_number').attr('data-original-title', gettext('allowed phone number format: +999999999 (9-15 digits with possible plus)'))
                     .tooltip('fixTitle')
                     .tooltip('show');
             }
@@ -43,14 +43,14 @@ function validateFault() {
 
     if (!object_number) {
         validation = false;
-        $('#object_number').attr('data-original-title', 'object number is required')
+        $('#object_number').attr('data-original-title', gettext('object number is required'))
                            .tooltip('fixTitle')
                            .tooltip('show');
     }
     else {
         if (!object_number_regex.test(object_number)) {
             validation = false;
-            $('#object_number').attr('data-original-title', 'allowed object number format: 9999999999 (10 digits)')
+            $('#object_number').attr('data-original-title', gettext('allowed object number format: 9999999999 (10 digits)'))
                                .tooltip('fixTitle')
                                .tooltip('show');
         }
@@ -61,14 +61,14 @@ function validateFault() {
 
     if (!topic) {
         validation = false;
-        $('#topic').attr('data-original-title', 'topic is required')
+        $('#topic').attr('data-original-title', gettext('topic is required'))
                    .tooltip('fixTitle')
                    .tooltip('show');
     }
     else {
         if (topic.length > 50) {
             validation = false;
-            $('#topic').attr('data-original-title', 'allowed topic max length: 50 signs')
+            $('#topic').attr('data-original-title', gettext('allowed topic max length: 50 signs'))
                        .tooltip('fixTitle')
                        .tooltip('show');
         }
@@ -79,14 +79,14 @@ function validateFault() {
 
     if (!description) {
         validation = false;
-        $('#description').attr('data-original-title', 'description is required')
+        $('#description').attr('data-original-title', gettext('description is required'))
                          .tooltip('fixTitle')
                          .tooltip('show');
     }
     else {
         if (description.length > 200) {
             validation = false;
-            $('#description').attr('data-original-title', 'allowed description max length: 200 signs')
+            $('#description').attr('data-original-title', gettext('allowed description max length: 200 signs'))
                              .tooltip('fixTitle')
                              .tooltip('show');
         }
@@ -98,7 +98,7 @@ function validateFault() {
     if (validation) {
         $.confirm({
             title: 'confirm!',
-            content: 'are you sure you want to do this??',
+            content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
                 confirm: function () {
@@ -123,14 +123,14 @@ function validateUser() {
 
     if (!first_name) {
         validation = false;
-        $('#first_name').attr('data-original-title', 'first name is required')
+        $('#first_name').attr('data-original-title', gettext('first name is required'))
                         .tooltip('fixTitle')
                         .tooltip('show');
     }
     else {
         if (!name_regex.test(first_name)) {
             validation = false;
-            $('#first_name').attr('data-original-title', 'first name must have first capital letter and rest lowercase')
+            $('#first_name').attr('data-original-title', gettext('first name must have first capital letter and rest lowercase'))
                             .tooltip('fixTitle')
                             .tooltip('show');
         }
@@ -140,14 +140,14 @@ function validateUser() {
     }
     if (!last_name) {
         validation = false;
-        $('#last_name').attr('data-original-title', 'last name is required')
+        $('#last_name').attr('data-original-title', gettext('last name is required'))
                        .tooltip('fixTitle')
                        .tooltip('show');
     }
     else {
         if (!name_regex.test(last_name)) {
             validation = false;
-            $('#last_name').attr('data-original-title', 'last name must have first capital letter and rest lowercase')
+            $('#last_name').attr('data-original-title', gettext('last name must have first capital letter and rest lowercase'))
                            .tooltip('fixTitle')
                            .tooltip('show');
         }
@@ -157,14 +157,14 @@ function validateUser() {
     }
     if (!email) {
         validation = false;
-        $('#email').attr('data-original-title', 'email is required')
+        $('#email').attr('data-original-title', gettext('email is required'))
                    .tooltip('fixTitle')
                    .tooltip('show');
     }
     else {
         if (!email_regex.test(email)) {
             validation = false;
-            $('#email').attr('data-original-title', 'email must have \'@\' sign and any white space')
+            $('#email').attr('data-original-title', gettext('email must have \'@\' sign and any white space'))
                        .tooltip('fixTitle')
                        .tooltip('show');
         }
@@ -176,7 +176,7 @@ function validateUser() {
     if (validation) {
         $.confirm({
             title: 'confirm!',
-            content: 'are you sure you want to do this??',
+            content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
                 confirm: function () {
@@ -198,7 +198,7 @@ function validatePassword() {
 
     if (!old_password) {
         validation = false;
-        $('#old_password').attr('data-original-title', 'field is required')
+        $('#old_password').attr('data-original-title', gettext('field is required'))
                           .tooltip('fixTitle')
                           .tooltip('show');
     }
@@ -207,7 +207,7 @@ function validatePassword() {
     }
     if (!new_password) {
         validation = false;
-        $('#new_password').attr('data-original-title', 'field is required')
+        $('#new_password').attr('data-original-title', gettext('field is required'))
                           .tooltip('fixTitle')
                           .tooltip('show');
     }
@@ -216,7 +216,7 @@ function validatePassword() {
     }
     if (!new_password_repeat) {
         validation = false;
-        $('#new_password_repeat').attr('data-original-title', 'field is required')
+        $('#new_password_repeat').attr('data-original-title', gettext('field is required'))
                                  .tooltip('fixTitle')
                                  .tooltip('show');
     }
@@ -227,7 +227,7 @@ function validatePassword() {
     if (validation) {
         $.confirm({
             title: 'confirm!',
-            content: 'are you sure you want to do this??',
+            content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
                 confirm: function () {

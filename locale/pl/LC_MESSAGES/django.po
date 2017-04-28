@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 14:52+0200\n"
+"POT-Creation-Date: 2017-04-28 23:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,17 +19,603 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: .\cti\views_admin.py:29
-msgid "all faults"
-msgstr "wszystkie zgłoszenia"
+#: cti/templates/cti/admin/base.html:76 cti/templates/cti/admin/base.html:78
+#: cti/templates/cti/client/base.html:75 cti/templates/cti/client/base.html:77
+msgid "home"
+msgstr ""
 
-#: .\support_center\settings.py:188
+#: cti/templates/cti/admin/base.html:82 cti/templates/cti/admin/base.html:84
+#: cti/views_admin.py:43
+msgid "faults assigned to me"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:88 cti/templates/cti/client/base.html:93
+msgid "faults which you are watching"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:90 cti/templates/cti/client/base.html:95
+#: cti/views.py:130 cti/views_admin.py:62
+msgid "watched faults"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:94 cti/templates/cti/admin/base.html:96
+#: cti/templates/cti/client/base.html:99 cti/templates/cti/client/base.html:101
+#: cti/views.py:155 cti/views_admin.py:76
+msgid "resolved faults"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:100 cti/templates/cti/admin/base.html:102
+#: cti/views_admin.py:110
+msgid "deleted faults"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:106 cti/templates/cti/admin/base.html:108
+msgid "users"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:112 cti/templates/cti/admin/base.html:114
+#: cti/views_admin.py:138
+msgid "history"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:118 cti/templates/cti/admin/base.html:120
+msgid "statistics"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:133 cti/templates/cti/client/base.html:120
+msgid "my account"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:139 cti/views_admin.py:552
+msgid "change password"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:146 cti/templates/cti/client/base.html:127
+msgid "log out"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:186
+msgid "client site"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:188 cti/templates/cti/client/base.html:169
+msgid "© copyright by Grzegorz Redlicki"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:37
+#: cti/templates/cti/admin/index.html:23
+#: cti/templates/cti/admin/object_details.html:29
+#: cti/templates/cti/client/fault_details.html:37
+#: cti/templates/cti/client/index.html:40
+#: cti/templates/cti/client/index.html:46
+#: cti/templates/cti/client/object_details.html:29
+msgid "status"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:39
+#: cti/templates/cti/client/fault_details.html:39
+msgid "not started"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:41
+#: cti/templates/cti/client/fault_details.html:41
+msgid "queued"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:43
+#: cti/templates/cti/client/fault_details.html:43
+msgid "completed"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:45
+#: cti/templates/cti/client/fault_details.html:45
+msgid "deleted"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:51
+#: cti/templates/cti/admin/index.html:22
+#: cti/templates/cti/client/fault_details.html:51
+#: cti/templates/cti/client/index.html:52
+#: cti/templates/cti/client/index.html:58
+msgid "priority"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:53
+#: cti/templates/cti/admin/fault_form.html:18
+#: cti/templates/cti/admin/index.html:45
+#: cti/templates/cti/client/fault_details.html:53
+msgid "trivial"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:55
+#: cti/templates/cti/admin/fault_form.html:19
+#: cti/templates/cti/admin/index.html:47
+#: cti/templates/cti/client/fault_details.html:55
+msgid "standard"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:57
+#: cti/templates/cti/admin/fault_form.html:20
+#: cti/templates/cti/admin/index.html:49
+#: cti/templates/cti/client/fault_details.html:57
+msgid "urgent"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:63
+#: cti/templates/cti/admin/index.html:21
+#: cti/templates/cti/client/fault_details.html:63
+msgid "handler"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:65
+#: cti/templates/cti/client/fault_details.html:65
+msgid "none"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:69
+msgid "ask for reassign"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:78
+#: cti/templates/cti/admin/index.html:17
+#: cti/templates/cti/admin/object_details.html:24
+#: cti/templates/cti/client/fault_details.html:73
+#: cti/templates/cti/client/object_details.html:24
+msgid "object number"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:79
+#: cti/templates/cti/client/fault_details.html:74
+msgid "details of object"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:93
+#: cti/templates/cti/client/fault_details.html:88
+msgid "last update"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:96
+msgid "created by "
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:97
+msgid "report phone number"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:106
+#: cti/templates/cti/admin/user_details.html:46
+#: cti/templates/cti/client/fault_details.html:98 cti/views.py:295
+#: cti/views_admin.py:185 cti/views_admin.py:440
+msgid "edit"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:109
+msgid "assign"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:112
+msgid "delete"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:115
+msgid "finish"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:118
+#: cti/templates/cti/admin/user_details.html:48
+msgid "restore"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:129
+#: cti/templates/cti/admin/history.html:15
+msgid "changed at"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:130
+#: cti/templates/cti/admin/history.html:16
+msgid "fault id"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:131
+#: cti/templates/cti/admin/history.html:17
+msgid "changer id"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:132
+#: cti/templates/cti/admin/history.html:18
+msgid "changed field"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:133
+#: cti/templates/cti/admin/history.html:19
+msgid "previous version"
+msgstr ""
+
+#: cti/templates/cti/admin/fault_details.html:134
+#: cti/templates/cti/admin/history.html:20
+msgid "actual version"
+msgstr ""
+
+#: cti/templates/cti/admin/history.html:28
+msgid "details of fault"
+msgstr ""
+
+#: cti/templates/cti/admin/history.html:33
+msgid "details of user"
+msgstr ""
+
+#: cti/templates/cti/admin/index.html:15 cti/templates/cti/client/index.html:28
+#: cti/templates/cti/client/index.html:34
+msgid "created at"
+msgstr ""
+
+#: cti/templates/cti/admin/index.html:16
+msgid "updated at"
+msgstr ""
+
+#: cti/templates/cti/admin/index.html:18 cti/templates/cti/client/index.html:16
+#: cti/templates/cti/client/index.html:22
+msgid "topic"
+msgstr ""
+
+#: cti/templates/cti/admin/index.html:19
+msgid "issuer"
+msgstr ""
+
+#: cti/templates/cti/admin/index.html:20
+msgid "phone number"
+msgstr ""
+
+#: cti/templates/cti/admin/index.html:39
+msgid "not handled"
+msgstr ""
+
+#: cti/templates/cti/admin/object_details.html:31
+#: cti/templates/cti/client/object_details.html:31
+msgid "missing"
+msgstr ""
+
+#: cti/templates/cti/admin/object_details.html:33
+#: cti/templates/cti/client/object_details.html:33
+msgid "located"
+msgstr ""
+
+#: cti/templates/cti/admin/object_details.html:39
+#: cti/templates/cti/client/object_details.html:39
+msgid "room"
+msgstr ""
+
+#: cti/templates/cti/admin/object_details.html:44
+#: cti/templates/cti/client/object_details.html:44
+msgid "price"
+msgstr ""
+
+#: cti/templates/cti/admin/user_details.html:24
+#: cti/templates/cti/admin/users.html:18
+#: cti/templates/cti/client/user_details.html:24
+msgid "first name"
+msgstr ""
+
+#: cti/templates/cti/admin/user_details.html:29
+#: cti/templates/cti/admin/users.html:19
+#: cti/templates/cti/client/user_details.html:29
+msgid "last name"
+msgstr ""
+
+#: cti/templates/cti/admin/user_details.html:34
+#: cti/templates/cti/admin/users.html:20
+#: cti/templates/cti/client/user_details.html:34
+msgid "email"
+msgstr ""
+
+#: cti/templates/cti/admin/user_details.html:40
+#: cti/templates/cti/admin/users.html:16
+#: cti/templates/cti/client/user_details.html:40
+msgid "last login"
+msgstr ""
+
+#: cti/templates/cti/admin/user_details.html:51
+msgid "block"
+msgstr ""
+
+#: cti/templates/cti/admin/users.html:15
+msgid "date joined"
+msgstr ""
+
+#: cti/templates/cti/admin/users.html:17
+msgid "username"
+msgstr ""
+
+#: cti/templates/cti/admin/users.html:21
+msgid "active"
+msgstr ""
+
+#: cti/templates/cti/admin/users.html:22
+msgid "admin"
+msgstr ""
+
+#: cti/templates/cti/client/base.html:81 cti/templates/cti/client/base.html:83
+msgid "add fault"
+msgstr ""
+
+#: cti/templates/cti/client/base.html:87 cti/templates/cti/client/base.html:89
+#: cti/views.py:99
+msgid "my faults"
+msgstr ""
+
+#: cti/templates/cti/client/base.html:105
+#: cti/templates/cti/client/base.html:107
+msgid "contact"
+msgstr ""
+
+#: cti/templates/cti/client/base.html:167
+msgid "admin site"
+msgstr ""
+
+#: cti/templates/cti/client/fault_details.html:91
+#: cti/templates/cti/client/index.html:99
+msgid "created by"
+msgstr ""
+
+#: cti/templates/cti/client/index.html:12
+msgid "sort by"
+msgstr ""
+
+#: cti/templates/cti/client/index.html:116
+msgid "page"
+msgstr ""
+
+#: cti/templates/cti/client/index.html:116
+msgid "of"
+msgstr ""
+
+#: cti/templates/cti/client/index.html:120
+msgid "next"
+msgstr ""
+
+#: cti/templates/cti/client/login.html:30
+#: cti/templates/cti/client/logout.html:18
+msgid "SUPPORT CENTER"
+msgstr ""
+
+#: cti/templates/cti/client/login.html:34
+msgid "please, sign in"
+msgstr ""
+
+#: cti/templates/cti/client/login.html:47
+msgid "sign in"
+msgstr ""
+
+#: cti/templates/cti/client/logout.html:21
+msgid "I hope you will not have to come back here anymore :)"
+msgstr ""
+
+#: cti/templates/cti/client/logout.html:25
+msgid "login again"
+msgstr ""
+
+#: cti/views.py:39
+msgid "your account has been disabled"
+msgstr ""
+
+#: cti/views.py:41
+msgid "invalid login or password"
+msgstr ""
+
+#: cti/views.py:74 cti/views_admin.py:29
+msgid "all faults"
+msgstr ""
+
+#: cti/views.py:180
+msgid "sorted faults"
+msgstr ""
+
+#: cti/views.py:195 cti/views_admin.py:90
+msgid "no matches for this query"
+msgstr ""
+
+#: cti/views.py:214 cti/views_admin.py:96
+msgid "searched faults"
+msgstr ""
+
+#: cti/views.py:248
+msgid "fault added successful"
+msgstr ""
+
+#: cti/views.py:260
+msgid "add"
+msgstr ""
+
+#: cti/views.py:261
+msgid "new fault"
+msgstr ""
+
+#: cti/views.py:285 cti/views_admin.py:175
+msgid "fault edited successful"
+msgstr ""
+
+#: cti/views.py:296 cti/views_admin.py:186
+msgid "edit fault"
+msgstr ""
+
+#: cti/views.py:300 cti/views.py:329 cti/views.py:356 cti/views_admin.py:190
+#: cti/views_admin.py:220
+msgid "this fault is already ended"
+msgstr ""
+
+#: cti/views.py:302
+msgid "you are not owner of this fault"
+msgstr ""
+
+#: cti/views.py:304 cti/views.py:331 cti/views.py:358 cti/views_admin.py:196
+#: cti/views_admin.py:224 cti/views_admin.py:263 cti/views_admin.py:302
+#: cti/views_admin.py:342 cti/views_admin.py:371 cti/views_admin.py:411
+#: cti/views_admin.py:484 cti/views_admin.py:519 cti/views_admin.py:581
+#: cti/views_admin.py:649 cti/views_admin.py:682
+msgid "fault does not exist"
+msgstr ""
+
+#: cti/views.py:318 cti/views_admin.py:211
+msgid "you don't watch on this fault from this time"
+msgstr ""
+
+#: cti/views.py:322 cti/views_admin.py:215
+msgid "you watch on this fault from this time"
+msgstr ""
+
+#: cti/views.py:352 cti/views_admin.py:577
+msgid "fault's details"
+msgstr ""
+
+#: cti/views.py:370 cti/views_admin.py:594
+msgid "object's details"
+msgstr ""
+
+#: cti/views.py:374 cti/views_admin.py:598
+msgid "object does not exist"
+msgstr ""
+
+#: cti/views.py:386 cti/views_admin.py:611
+msgid "user's details"
+msgstr ""
+
+#: cti/views.py:390 cti/views_admin.py:449 cti/views_admin.py:615
+msgid "user does not exist"
+msgstr ""
+
+#: cti/views_admin.py:124
+msgid "all users"
+msgstr ""
+
+#: cti/views_admin.py:192 cti/views_admin.py:257 cti/views_admin.py:296
+#: cti/views_admin.py:405
+msgid "you are not handler of this fault"
+msgstr ""
+
+#: cti/views_admin.py:253
+msgid "fault finished successful"
+msgstr ""
+
+#: cti/views_admin.py:259
+msgid "fault is not ready to finish"
+msgstr ""
+
+#: cti/views_admin.py:292
+msgid "fault deleted successful"
+msgstr ""
+
+#: cti/views_admin.py:298
+msgid "fault is already deleted"
+msgstr ""
+
+#: cti/views_admin.py:332
+msgid "fault assigned successful"
+msgstr ""
+
+#: cti/views_admin.py:336
+msgid "fault status is not free to assign"
+msgstr ""
+
+#: cti/views_admin.py:338
+msgid "fault is already assigned"
+msgstr ""
+
+#: cti/views_admin.py:361
+msgid "fault reassigned successful"
+msgstr ""
+
+#: cti/views_admin.py:365
+msgid "this user is not authorized to assigning faults"
+msgstr ""
+
+#: cti/views_admin.py:367
+msgid "you can not reassign this fault"
+msgstr ""
+
+#: cti/views_admin.py:401
+msgid "fault restore successful"
+msgstr ""
+
+#: cti/views_admin.py:407
+msgid "fault is not ended"
+msgstr ""
+
+#: cti/views_admin.py:430
+msgid "user edited successful"
+msgstr ""
+
+#: cti/views_admin.py:441
+msgid "edit user"
+msgstr ""
+
+#: cti/views_admin.py:445
+msgid "this user is not editable"
+msgstr ""
+
+#: cti/views_admin.py:474
+msgid "user blocked successful"
+msgstr ""
+
+#: cti/views_admin.py:478 cti/views_admin.py:513
+msgid "user is one of admins"
+msgstr ""
+
+#: cti/views_admin.py:480
+msgid "user is already blocked"
+msgstr ""
+
+#: cti/views_admin.py:509
+msgid "user restored successful"
+msgstr ""
+
+#: cti/views_admin.py:515
+msgid "user is not blocked"
+msgstr ""
+
+#: cti/views_admin.py:542
+msgid "password has been changed"
+msgstr ""
+
+#: cti/views_admin.py:546
+msgid "password fields are different!"
+msgstr ""
+
+#: cti/views_admin.py:548
+msgid "old password is wrong"
+msgstr ""
+
+#: cti/views_admin.py:551
+msgid "change"
+msgstr ""
+
+#: cti/views_admin.py:639
+msgid "ask for reassign send successfully"
+msgstr ""
+
+#: cti/views_admin.py:643
+msgid "you are handler of this fault already"
+msgstr ""
+
+#: cti/views_admin.py:645
+msgid "you are not allowed to reassigning"
+msgstr ""
+
+#: cti/views_admin.py:672
+msgid "phone number reported successfully"
+msgstr ""
+
+#: cti/views_admin.py:676
+msgid "you are issuer of this fault"
+msgstr ""
+
+#: cti/views_admin.py:678
+msgid "you are not allowed to reporting phones"
+msgstr ""
+
+#: support_center/settings.py:191
 msgid "English"
 msgstr ""
 
-#: .\support_center\settings.py:189
+#: support_center/settings.py:192
 msgid "Polish"
 msgstr ""
-
-#~ msgid "Welcome to my site."
-#~ msgstr "Witam na mojej stronie"
