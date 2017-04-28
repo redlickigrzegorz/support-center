@@ -72,51 +72,51 @@
                     </div>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="{% url 'cti:index_admin' %}" title="home">
+                            <a href="{% url 'cti:index_admin' %}" title="{% trans "home" %}">
                                 <span class="glyphicon glyphicon-home"></span>
-                                <span class="navbar-label">home</span>
+                                <span class="navbar-label">{% trans "home" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:my_faults_admin' %}" title="faults assigned to me">
+                            <a href="{% url 'cti:my_faults_admin' %}" title="{% trans "faults assigned to me" %}">
                                 <span class="glyphicon glyphicon-th-list"></span>
-                                <span class="navbar-label">faults assigned to me</span>
+                                <span class="navbar-label">{% trans "faults assigned to me" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:watched_faults_admin' %}" title="faults which you are watching">
+                            <a href="{% url 'cti:watched_faults_admin' %}" title="{% trans "faults which you are watching" %}">
                                 <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="navbar-label">watched faults</span>
+                                <span class="navbar-label">{% trans "watched faults" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:resolved_faults_admin' %}" title="resolved faults">
+                            <a href="{% url 'cti:resolved_faults_admin' %}" title="{% trans "resolved faults" %}">
                                 <span class="glyphicon glyphicon-check"></span>
-                                <span class="navbar-label">resolved faults</span>
+                                <span class="navbar-label">{% trans "resolved faults" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:deleted_faults_admin' %}" title="deleted faults">
+                            <a href="{% url 'cti:deleted_faults_admin' %}" title="{% trans "deleted faults" %}">
                                 <span class="glyphicon glyphicon-trash"></span>
-                                <span class="navbar-label">deleted faults</span>
+                                <span class="navbar-label">{% trans "deleted faults" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:all_users_admin' %}" title="users">
+                            <a href="{% url 'cti:all_users_admin' %}" title="{% trans "users" %}">
                                 <span class="glyphicon glyphicon-education"></span>
-                                <span class="navbar-label">users</span>
+                                <span class="navbar-label">{% trans "users" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{% url 'cti:all_history_admin' %}" title="history">
+                            <a href="{% url 'cti:all_history_admin' %}" title="{% trans "history" %}">
                                 <span class="glyphicon glyphicon-book"></span>
-                                <span class="navbar-label">history</span>
+                                <span class="navbar-label">{% trans "history" %}</span>
                             </a>
                         </li>
                         <li>
-                            <a href="" title="statistics">
+                            <a href="" title="statistics" title="{% trans "statistics" %}">
                                 <span class="glyphicon glyphicon-stats"></span>
-                                <span class="navbar-label">statistics</span>
+                                <span class="navbar-label">{% trans "statistics" %}</span>
                             </a>
                         </li>
                         <li class="dropdown">
@@ -129,20 +129,20 @@
                                 <li>
                                     <a href="{% url 'cti:user_details_admin' request.user.id %}">
                                         <span class="glyphicon glyphicon-info-sign"></span>
-                                        <span class="navbar-dropdown-label">my account</span>
+                                        <span class="navbar-dropdown-label">{% trans "my account" %}</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{% url 'cti:change_password_admin' %}">
                                         <span class="glyphicon glyphicon-wrench"></span>
-                                        <span class="navbar-dropdown-label">change password</span>
+                                        <span class="navbar-dropdown-label">{% trans "change password" %}</span>
                                     </a>
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
                                     <a href="{% url 'cti:logout' %}">
                                         <span class="glyphicon glyphicon-off"></span>
-                                        <span class="navbar-dropdown-label">log out</span>
+                                        <span class="navbar-dropdown-label">{% trans "log out" %}</span>
                                     </a>
                                 </li>
                             </ul>
@@ -182,9 +182,9 @@
         <footer class="footer navbar-fixed-bottom">
             <div class="container footer-container">
                 {% if request.user.is_staff %}
-                    <a href="{% url 'cti:index' %}" class="text-muted">client site</a>
+                    <a href="{% url 'cti:index' %}" class="text-muted">{% trans "client site" %}</a>
                 {% endif %}
-                <span class="text-muted footer">© copyright by Grzegorz Redlicki</span>
+                <span class="text-muted footer">{% trans "© copyright by Grzegorz Redlicki" %}</span>
             </div>
         </footer>
     </body>

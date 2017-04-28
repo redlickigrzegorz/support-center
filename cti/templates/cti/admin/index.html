@@ -5,20 +5,22 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
+
     <div class="content-row">
         {% if faults %}
             <table id="faultTable" class="tablesorter">
                 <thead>
                     <tr>
-                        <th>created at</th>
-                        <th>updated at</th>
-                        <th>object number</th>
-                        <th>topic</th>
-                        <th>issuer</th>
-                        <th>phone number</th>
-                        <th>handler</th>
-                        <th>priority</th>
-                        <th>status</th>
+                        <th>{% trans "created at" %}</th>
+                        <th>{% trans "updated at" %}</th>
+                        <th>{% trans "object number" %}</th>
+                        <th>{% trans "topic" %}</th>
+                        <th>{% trans "issuer" %}</th>
+                        <th>{% trans "phone number" %}</th>
+                        <th>{% trans "handler" %}</th>
+                        <th>{% trans "priority" %}</th>
+                        <th>{% trans "status" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -34,17 +36,17 @@
                                 {% if fault.handler != '0' %}
                                     {{ fault.handler }}
                                 {% else %}
-                                    non handler
+                                    {% trans "not handled" %}
                                 {% endif %}
                             </td>
                             <td class="fault-td">
                                 <span class="status">{{ fault.priority }}</span>
                                 {% if fault.priority == 0 %}
-                                    trivial
+                                    {% trans "trivial" %}
                                 {% elif fault.priority == 1 %}
-                                    standard
+                                    {% trans "standard" %}
                                 {% elif fault.priority == 2 %}
-                                    urgent
+                                    {% trans "urgent" %}
                                 {% endif %}
                             </td>
                             <td class="fault-td">

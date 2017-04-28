@@ -5,19 +5,21 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
+
     <div class="content-row">
         {% if users %}
             <table id="userTable" class="tablesorter">
                 <thead>
                     <tr>
-                        <th>date joined</th>
-                        <th>last login</th>
-                        <th>username</th>
-                        <th>first name</th>
-                        <th>last name</th>
-                        <th>email</th>
-                        <th>active</th>
-                        <th>admin</th>
+                        <th>{% trans "date joined" %}</th>
+                        <th>{% trans "last login" %}</th>
+                        <th>{% trans "username" %}</th>
+                        <th>{% trans "first name" %}</th>
+                        <th>{% trans "last name" %}</th>
+                        <th>{% trans "email" %}</th>
+                        <th>{% trans "active" %}</th>
+                        <th>{% trans "admin" %}</th>
                     </tr>
                 </thead>
                 <tbody>

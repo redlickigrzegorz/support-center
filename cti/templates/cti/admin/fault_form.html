@@ -5,6 +5,8 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
+
     <div class="panel panel-default">
         <div class="panel-body col-xs-10 col-sm-8 col-md-6">
             <form id="fault-form" class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
@@ -13,9 +15,9 @@
                     <div class="form-short-div">
                         <label for="priority"></label>
                         <select id="priority" name="priority" class="form-control form-cell">
-                            <option value="0" {% if form.priority.value == 0 %}selected{% endif %}>trivial</option>
-                            <option value="1" {% if form.priority.value == 1 %}selected{% endif %}>standard</option>
-                            <option value="2" {% if form.priority.value == 2 %}selected{% endif %}>urgent</option>
+                            <option value="0" {% if form.priority.value == 0 %}selected{% endif %}>{% trans "trivial" %}</option>
+                            <option value="1" {% if form.priority.value == 1 %}selected{% endif %}>{% trans "standard" %}</option>
+                            <option value="2" {% if form.priority.value == 2 %}selected{% endif %}>{% trans "urgent" %}</option>
                         </select>
                     </div>
                 </div>

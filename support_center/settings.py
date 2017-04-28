@@ -80,7 +80,10 @@ ROOT_URLCONF = 'support_center.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'cti/templates/cti/admin'),
+            os.path.join(BASE_DIR, 'cti/templates/cti/client'),
+            os.path.join(BASE_DIR, 'cti/templates/cti/scripts')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

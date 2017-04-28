@@ -5,17 +5,19 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
+
     <div class="content-row">
         {% if history %}
             <table id="historyTable" class="tablesorter">
                 <thead>
                     <tr>
-                        <th>changed at</th>
-                        <th>fault id</th>
-                        <th>changer id</th>
-                        <th>changed field</th>
-                        <th>previous version</th>
-                        <th>actual version</th>
+                        <th>{% trans "changed at" %}</th>
+                        <th>{% trans "fault id" %}</th>
+                        <th>{% trans "changer id" %}</th>
+                        <th>{% trans "changed field" %}</th>
+                        <th>{% trans "previous version" %}</th>
+                        <th>{% trans "actual version" %}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,12 +25,12 @@
                         <tr id="{{ element.id }}" class="history-tr">
                             <td class="history-td">{{ element.changed_at|date:'Y-m-d H:i' }}</td>
                             <td class="history-td">
-                                <a href="{% url 'cti:fault_details_admin' element.fault_id %}">
+                                <a href="{% url 'cti:fault_details_admin' element.fault_id %}" title="{% trans "details of fault" %}">
                                     {{ element.fault_id }}
                                 </a>
                             </td>
                             <td class="history-td">
-                                <a href="{% url 'cti:user_details_admin' element.changer_id %}">
+                                <a href="{% url 'cti:user_details_admin' element.changer_id %}" title="{% trans "details of user" %}">
                                     {{ element.changer_id }}
                                 </a>
                             </td>
