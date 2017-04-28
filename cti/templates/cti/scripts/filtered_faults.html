@@ -29,7 +29,12 @@
                 {% endif %}
 
                 if (topic.search(regex) != -1) {
-                    content += '<a href="/admin/fault_details/'+id+'">';
+                    if (window.location.href.search("admin") != -1) {
+                        content += '<a href="/admin/fault_details/' + id + '">';
+                    }
+                    else {
+                        content += '<a href="/fault_details/' + id + '">';
+                    }
                     content += '<div class="row result-row">';
                     content += 'fault: '+ id + ' - ' + topic + '&nbsp; - &nbsp;' + icon;
                     content += '</div>';
