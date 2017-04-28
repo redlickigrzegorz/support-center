@@ -5,6 +5,7 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -33,35 +34,35 @@
                     <hr class="hr-bottom-divider">
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                            <b>status:</b>
+                            <b>{% trans "status" %}: </b>
                             {% if fault.status == 0 %}
-                                not started
+                                {% trans "not started" %}
                             {% elif fault.status == 1 %}
-                                queued
+                                {% trans "queued" %}
                             {% elif fault.status == 2 %}
-                                completed
+                                {% trans "completed" %}
                             {% elif fault.status == 3 %}
-                                deleted
+                                {% trans "deleted" %}
                             {% endif %}
                         </div>
                     </div>
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                            <b>priority:</b>
+                            <b>{% trans "priority" %}: </b>
                             {% if fault.priority == 0 %}
-                                trivial
+                                {% trans "trivial" %}
                             {% elif fault.priority == 1 %}
-                                standard
+                                {% trans "standard" %}
                             {% elif fault.priority == 2 %}
-                                urgent
+                                {% trans "urgent" %}
                             {% endif %}
                         </div>
                     </div>
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                            <b>handler:</b>
+                            <b>{% trans "handler" %}: </b>
                             {% if fault.handler == "0" %}
-                                none
+                                {% trans "none" %}
                             {% else %}
                                 {{ fault.handler }}
                             {% endif %}
@@ -69,8 +70,8 @@
                     </div>
                     <div class="panel-row row">
                         <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                            <b>object number:</b>
-                            <a href="{% url 'cti:object_details' fault.object_number %}" title="details of object">
+                            <b>{% trans "object number" %}: </b>
+                            <a href="{% url 'cti:object_details' fault.object_number %}" title="{% trans "details of object" %}">
                                 {{ fault.object_number }}
                             </a>
                         </div>
@@ -84,17 +85,17 @@
                     <hr class="hr-top-divider">
                     <div class="panel-row row">
                         <div class="col-xs-6 col-sm-6 col-md-6 starting-div">
-                            last update: {{ fault.updated_at }}
+                            {% trans "last update" %}: {{ fault.updated_at }}
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6 ending-div">
-                            created by {{ fault.issuer }} (phone number: {{ fault.phone_number }})
+                            {% trans "created by" %} {{ fault.issuer }} (phone number: {{ fault.phone_number }})
                         </div>
                     </div>
                     {% if request.user.username == fault.issuer %}
                         <hr class="hr-top-divider">
                         <div class="panel-row row">
                             <div class="col-xs-12 col-sm-12 col-md-12 ending-div">
-                                <a href="{% url 'cti:edit_fault' fault.id %}" class="button edit-button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>edit</a>
+                                <a href="{% url 'cti:edit_fault' fault.id %}" class="button edit-button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>{% trans "edit" %}</a>
                             </div>
                         </div>
                     {% endif %}

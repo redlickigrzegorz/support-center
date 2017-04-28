@@ -5,6 +5,7 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -20,27 +21,27 @@
                 <hr class="hr-bottom-divider">
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>object number:</b> {{ object.object_number }}
+                        <b>{% trans "object number" %}: </b>{{ object.object_number }}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>status:</b>
+                        <b>{% trans "status" %}:</b>
                         {% if object.status == 0 %}
-                            missing
+                            {% trans "missing" %}
                         {% elif object.status == 1 %}
-                            located
+                            {% trans "located" %}
                         {% endif %}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>room:</b> {{ object.room }}
+                        <b>{% trans "room" %}:</b> {{ object.room }}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>price:</b> {{ object.price }}
+                        <b>{% trans "price" %}:</b> {{ object.price }}
                     </div>
                 </div>
                 <hr class="hr-bottom-divider">

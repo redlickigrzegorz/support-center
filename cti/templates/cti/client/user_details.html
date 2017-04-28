@@ -5,6 +5,7 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
 
     <div class="panel panel-default">
         <div class="panel-body">
@@ -20,23 +21,23 @@
                 <hr class="hr-bottom-divider">
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>first name:</b> {{ user.first_name }}
+                        <b>{% trans "first name" %}:</b> {{ user.first_name }}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>last name:</b> {{ user.last_name }}
+                        <b>{% trans "last name" %}:</b> {{ user.last_name }}
                     </div>
                 </div>
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>email:</b> {{ user.email }}
+                        <b>{% trans "email" %}:</b> {{ user.email }}
                     </div>
                 </div>
                 <hr class="hr-bottom-divider">
                 <div class="panel-row row">
                     <div class="col-xs-12 col-sm-12 col-md-12 starting-div">
-                        <b>last login:</b> {{ user.last_login }}
+                        <b>{% trans "last login" %}:</b> {{ user.last_login }}
                     </div>
                 </div>
             </div>

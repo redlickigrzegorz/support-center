@@ -5,55 +5,57 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
+
     <div class="dropdown-row">
         <div class="dropdown">
-            <button onclick="dropdownFunction()" class="dropdown-button">sort by<span class="caret"></span></button>
+            <button onclick="dropdownFunction()" class="dropdown-button">{% trans "sort by" %}<span class="caret"></span></button>
             <div id="myDropdown" class="dropdown-content">
                 <a href="{% url 'cti:sorted_faults' '-topic' %}">
                     <span>
-                        <span>topic</span>
+                        <span>{% trans "topic" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' 'topic' %}">
                     <span class="dropup">
-                        <span>topic</span>
+                        <span>{% trans "topic" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' '-created_at' %}">
                     <span>
-                        <span>created at</span>
+                        <span>{% trans "created at" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' 'created_at' %}">
                     <span class="dropup">
-                        <span>created at</span>
+                        <span>{% trans "created at" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' '-status' %}">
                     <span>
-                        <span>status</span>
+                        <span>{% trans "status" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' 'status' %}">
                     <span class="dropup">
-                        <span>status</span>
+                        <span>{% trans "status" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' '-priority' %}">
                     <span>
-                        <span>priority</span>
+                        <span>{% trans "priority" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
                 <a href="{% url 'cti:sorted_faults' 'priority' %}">
                     <span class="dropup">
-                        <span>priority</span>
+                        <span>{% trans "priority" %}</span>
                         <span class="caret"></span>
                     </span>
                 </a>
@@ -94,7 +96,7 @@
                             <hr class="hr-top-divider">
                             <div class="row panel-row">
                                 <div class="col-xs-12 col-sm-12 col-md-12 ending-div">
-                                    <span>created by {{ fault.issuer }}</span>
+                                    <span>{% trans "created by" %} {{ fault.issuer }}</span>
                                 </div>
                             </div>
                         </div>
@@ -111,11 +113,11 @@
             {% endif %}
 
             <span class="current">
-                page {{ faults.number }} of {{ faults.paginator.num_pages }}
+                {% trans "page" %} {{ faults.number }} {% trans "of" %} {{ faults.paginator.num_pages }}
             </span>
 
             {% if faults.has_next %}
-                <a href="?page={{ faults.next_page_number }}" class="button">next</a>
+                <a href="?page={{ faults.next_page_number }}" class="button">{% trans "next" %}</a>
             {% endif %}
         </div>
     </div>

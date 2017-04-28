@@ -2,6 +2,7 @@
 <html lang="pl">
     <head>
         {% load static %}
+        {% load i18n %}
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -26,11 +27,11 @@
     <body>
         <div class="container">
             <div class="row brand-row">
-                <hr><span>SUPPORT CENTER</span><hr>
+                <hr><span>{% trans "SUPPORT CENTER" %}</span><hr>
             </div>
             <div class="row wall-row col-xs-8 col-sm-6 col-md-4">
                 <div class="row title-row">
-                    <span>please, sign in</span>
+                    <span>{% trans "please, sign in" %}</span>
                 </div>
                 <div class="row form-row">
                     <form class="form-signin" role="form" action="{% url 'cti:login' %}" method="post" enctype="multipart/form-data">
@@ -43,7 +44,7 @@
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             <input type="password" id="id_password" name="password" class="form-control" placeholder="password" required>
                         </div>
-                        <button class="btn btn-lg btn-default btn-block" type="submit">sign in</button>
+                        <button class="btn btn-lg btn-default btn-block" type="submit">{% trans "sign in" %}</button>
                     </form>
                 </div>
             </div>
