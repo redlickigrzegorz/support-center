@@ -14,6 +14,7 @@ from .models import User
 from copy import copy
 from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email
 from django.db.models import Q
+from django.utils.translation import ugettext_lazy as _
 
 
 @login_required
@@ -25,7 +26,7 @@ def index(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
-               'header': 'all faults'}
+               'header': _('all faults')}
 
     return HttpResponse(template.render(context, request))
 
