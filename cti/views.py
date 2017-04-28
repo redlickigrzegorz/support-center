@@ -15,6 +15,7 @@ from django.db.models import Q
 from copy import copy
 from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
     make_list_of_watchers, make_string_of_watchers, send_email
+from django.utils.translation import ugettext_lazy as _
 
 
 def login(request):
@@ -35,9 +36,9 @@ def login(request):
                 else:
                     return HttpResponseRedirect(reverse('cti:index'))
             else:
-                messages.warning(request, 'your account has been disabled')
+                messages.warning(request, _('your account has been disabled'))
         else:
-            messages.error(request, 'invalid login or password')
+            messages.error(request, _('invalid login or password'))
 
     return HttpResponse(template.render(request=request))
 
@@ -70,7 +71,7 @@ def index(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': 'all faults'}
+               'header': _('all faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -95,7 +96,7 @@ def my_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': 'my faults'}
+               'header': _('my faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -126,7 +127,7 @@ def watched_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': 'watched faults'}
+               'header': _('watched faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -151,7 +152,7 @@ def resolved_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': 'resolved faults'}
+               'header': _('resolved faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -176,7 +177,7 @@ def sorted_faults(request, order_by):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': 'sorted faults'}
+               'header': _('sorted faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -191,7 +192,7 @@ def searched_faults(request):
         faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).\
             filter(Q(topic__icontains=query)).order_by('-created_at')
     else:
-        messages.warning(request, 'no matches for this query')
+        messages.warning(request, _('no matches for this query'))
 
         faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
 
@@ -210,7 +211,7 @@ def searched_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': 'searched faults'}
+               'header': _('searched faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -244,7 +245,7 @@ def add_fault(request):
 
             send_email(subject, message, users)
 
-            messages.success(request, "fault added successful")
+            messages.success(request, _("fault added successful"))
 
             return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault.id}))
         else:
@@ -256,8 +257,8 @@ def add_fault(request):
 
     context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                'form': form,
-               'button': 'add',
-               'header': 'new fault'}
+               'button': _('add'),
+               'header': _('new fault')}
 
     return HttpResponse(template.render(context, request))
 
@@ -281,7 +282,7 @@ def edit_fault(request, fault_id):
 
                         compare_two_faults(request, previous_version_of_fault, fault)
 
-                        messages.success(request, "fault edited successful")
+                        messages.success(request, _("fault edited successful"))
 
                         return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
                     else:
@@ -291,16 +292,16 @@ def edit_fault(request, fault_id):
 
                 context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                            'form': form,
-                           'button': 'edit',
-                           'header': 'edit fault'}
+                           'button': _('edit'),
+                           'header': _('edit fault')}
 
                 return HttpResponse(template.render(context, request))
             else:
-                raise Http404("fault {} is already ended".format(fault_id))
+                raise Http404(_("this fault is already ended"))
         else:
-            raise Http404("you are not owner of fault {}".format(fault_id))
+            raise Http404(_("you are not owner of this fault"))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -314,20 +315,20 @@ def watch_fault(request, fault_id):
             if request.user.username in watchers:
                 watchers.remove(request.user.username)
 
-                messages.success(request, "you don't watch on this fault from this time")
+                messages.success(request, _("you don't watch on this fault from this time"))
             else:
                 watchers.append(request.user.username)
 
-                messages.success(request, "you watch on this fault from this time")
+                messages.success(request, _("you watch on this fault from this time"))
 
             fault.watchers = make_string_of_watchers(watchers)
             fault.save()
 
             return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
         else:
-            raise Http404("fault {} is already ended".format(fault_id))
+            raise Http404(_("this fault is already ended"))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -348,13 +349,13 @@ def fault_details(request, fault_id):
             context = {'fault': fault,
                        'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                        'watcher': watcher,
-                       'header': 'fault\'s details'}
+                       'header': _('fault\'s details')}
 
             return HttpResponse(template.render(context, request))
         else:
-            raise Http404("fault does not exist")
+            raise Http404(_("this fault is already ended"))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -366,11 +367,11 @@ def object_details(request, object_id):
 
         context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                    'object': fault_object,
-                   'header': 'object\'s details'}
+                   'header': _('object\'s details')}
 
         return HttpResponse(template.render(context, request))
     except Object.DoesNotExist:
-        raise Http404("object does not exist")
+        raise Http404(_("object does not exist"))
 
 
 @login_required
@@ -382,8 +383,8 @@ def user_details(request):
 
         context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                    'user': user,
-                   'header': 'user\'s details'}
+                   'header': _('user\'s details')}
 
         return HttpResponse(template.render(context, request))
     except User.DoesNotExist:
-        raise Http404("user does not exist")
+        raise Http404(_("user does not exist"))

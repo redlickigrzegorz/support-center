@@ -40,7 +40,7 @@ def my_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
-               'header': 'faults assigned to me'}
+               'header': _('faults assigned to me')}
 
     return HttpResponse(template.render(context, request))
 
@@ -59,7 +59,7 @@ def watched_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
-               'header': 'watched faults'}
+               'header': _('watched faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -73,7 +73,7 @@ def resolved_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
-               'header': 'resolved faults'}
+               'header': _('resolved faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -87,13 +87,13 @@ def searched_faults(request):
     if query:
         faults = Fault.objects.filter(Q(topic__icontains=query))
     else:
-        messages.warning(request, 'no matches for this query')
+        messages.warning(request, _('no matches for this query'))
 
         faults = Fault.objects.all()
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
-               'header': 'searched faults'}
+               'header': _('searched faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -107,7 +107,7 @@ def deleted_faults(request):
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
-               'header': 'deleted faults'}
+               'header': _('deleted faults')}
 
     return HttpResponse(template.render(context, request))
 
@@ -121,7 +121,7 @@ def all_users(request):
 
     context = {'all_faults': Fault.objects.all(),
                'users': users,
-               'header': 'all users'}
+               'header': _('all users')}
 
     return HttpResponse(template.render(context, request))
 
@@ -135,7 +135,7 @@ def all_history(request):
 
     context = {'all_faults': Fault.objects.all(),
                'history': history,
-               'header': 'history'}
+               'header': _('history')}
 
     return HttpResponse(template.render(context, request))
 
@@ -172,7 +172,7 @@ def edit_fault(request, fault_id):
 
                             send_email(subject, message, users)
 
-                        messages.success(request, "fault edited successful")
+                        messages.success(request, _("fault edited successful"))
 
                         return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
                     else:
@@ -182,18 +182,18 @@ def edit_fault(request, fault_id):
 
                 context = {'all_faults': Fault.objects.all(),
                            'form': form,
-                           'button': 'edit',
-                           'header': 'edit fault'}
+                           'button': _('edit'),
+                           'header': _('edit fault')}
 
                 return HttpResponse(template.render(context, request))
             else:
-                messages.warning(request, "this fault is already ended")
+                messages.warning(request, _("this fault is already ended"))
         else:
-            messages.warning(request, "you are not handler of this fault")
+            messages.warning(request, _("you are not handler of this fault"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -208,20 +208,20 @@ def watch_fault(request, fault_id):
             if request.user.username in watchers:
                 watchers.remove(request.user.username)
 
-                messages.success(request, "you don't watch on this fault from this time")
+                messages.success(request, _("you don't watch on this fault from this time"))
             else:
                 watchers.append(request.user.username)
 
-                messages.success(request, "you watch on this fault from this time")
+                messages.success(request, _("you watch on this fault from this time"))
 
             fault.watchers = make_string_of_watchers(watchers)
             fault.save()
         else:
-            messages.warning(request, "this fault is already ended")
+            messages.warning(request, _("this fault is already ended"))
 
         return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -250,17 +250,17 @@ def finish_fault(request, fault_id):
 
                     send_email(subject, message, users)
 
-                messages.success(request, "fault finished successful")
+                messages.success(request, _("fault finished successful"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "you are not handler of this fault")
+                messages.warning(request, _("you are not handler of this fault"))
         else:
-            messages.warning(request, "fault is not ready to finish")
+            messages.warning(request, _("fault is not ready to finish"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -289,17 +289,17 @@ def delete_fault(request, fault_id):
 
                     send_email(subject, message, users)
 
-                messages.success(request, "fault deleted successful")
+                messages.success(request, _("fault deleted successful"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "you are not handler of this fault")
+                messages.warning(request, _("you are not handler of this fault"))
         else:
-            messages.warning(request, "fault is already deleted")
+            messages.warning(request, _("fault is already deleted"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -329,17 +329,17 @@ def assign_to_me(request, fault_id):
 
                     send_email(subject, message, users)
 
-                messages.success(request, "fault assigned successful")
+                messages.success(request, _("fault assigned successful"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "fault status is not free to assign")
+                messages.warning(request, _("fault status is not free to assign"))
         else:
-            messages.warning(request, "fault is already assigned")
+            messages.warning(request, _("fault is already assigned"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -358,17 +358,17 @@ def reassign_fault(request, fault_id, username):
 
                 compare_two_faults(request, previous_version_of_fault, fault)
 
-                messages.success(request, "fault reassigned successful")
+                messages.success(request, _("fault reassigned successful"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "this user is not authorized to assigning faults")
+                messages.warning(request, _("this user is not authorized to assigning faults"))
         else:
-            messages.warning(request, "you can not reassign this fault")
+            messages.warning(request, _("you can not reassign this fault"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -398,17 +398,17 @@ def restore_fault(request, fault_id):
 
                     send_email(subject, message, users)
 
-                messages.success(request, "fault restore successful")
+                messages.success(request, _("fault restore successful"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "you are not handler of this fault")
+                messages.warning(request, _("you are not handler of this fault"))
         else:
-            messages.warning(request, "fault is not ended")
+            messages.warning(request, _("fault is not ended"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -427,7 +427,7 @@ def edit_user(request, user_id):
                     user = form.save(commit=False)
                     user.save()
 
-                    messages.success(request, "user edited successful")
+                    messages.success(request, _("user edited successful"))
 
                     return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
                 else:
@@ -437,16 +437,16 @@ def edit_user(request, user_id):
 
             context = {'all_faults': Fault.objects.all(),
                        'form': form,
-                       'button': 'edit',
-                       'header': 'edit user'}
+                       'button': _('edit'),
+                       'header': _('edit user')}
 
             return HttpResponse(template.render(context, request))
         else:
-            messages.warning(request, "this user is not editable")
+            messages.warning(request, _("this user is not editable"))
 
             return HttpResponseRedirect(reverse('cti:all_users_admin'))
     except User.DoesNotExist:
-        raise Http404("user does not exist")
+        raise Http404(_("user does not exist"))
 
 
 @login_required
@@ -471,17 +471,17 @@ def block_user(request, user_id):
 
                 send_email(subject, message, users)
 
-                messages.success(request, "user blocked successful")
+                messages.success(request, _("user blocked successful"))
 
                 return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
             else:
-                messages.warning(request, "user is one of admins")
+                messages.warning(request, _("user is one of admins"))
         else:
-            messages.warning(request, "user is already blocked")
+            messages.warning(request, _("user is already blocked"))
 
         return HttpResponseRedirect(reverse('cti:all_users_admin'))
     except User.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -506,17 +506,17 @@ def restore_user(request, user_id):
 
                 send_email(subject, message, users)
 
-                messages.success(request, "user restored successful")
+                messages.success(request, _("user restored successful"))
 
                 return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': user_id}))
             else:
-                messages.warning(request, "user is one of admins")
+                messages.warning(request, _("user is one of admins"))
         else:
-            messages.warning(request, "user is not blocked")
+            messages.warning(request, _("user is not blocked"))
 
         return HttpResponseRedirect(reverse('cti:all_users_admin'))
     except User.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -539,17 +539,17 @@ def change_password(request):
                 user = authenticate(username=request.user, password=new_password)
                 auth.login(request, user)
 
-                messages.success(request, 'password has been changed')
+                messages.success(request, _('password has been changed'))
 
                 return HttpResponseRedirect(reverse('cti:user_details_admin', kwargs={'user_id': request.user.id}))
             else:
-                messages.warning(request, 'password fields are different!')
+                messages.warning(request, _('password fields are different!'))
         else:
-            messages.warning(request, 'old password is wrong')
+            messages.warning(request, _('old password is wrong'))
 
     context = {'all_faults': Fault.objects.all(),
-               'button': 'change',
-               'header': 'change password'}
+               'button': _('change'),
+               'header': _('change password')}
 
     return HttpResponse(template.render(context, request))
 
@@ -574,11 +574,11 @@ def fault_details(request, fault_id):
                    'all_faults': Fault.objects.all(),
                    'watcher': watcher,
                    'history': history,
-                   'header': 'fault\'s details'}
+                   'header': _('fault\'s details')}
 
         return HttpResponse(template.render(context, request))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -591,11 +591,11 @@ def object_details(request, object_id):
 
         context = {'all_faults': Fault.objects.all(),
                    'object': fault_object,
-                   'header': 'object\'s details'}
+                   'header': _('object\'s details')}
 
         return HttpResponse(template.render(context, request))
     except Object.DoesNotExist:
-        raise Http404("object does not exist")
+        raise Http404(_("object does not exist"))
 
 
 @login_required
@@ -608,11 +608,11 @@ def user_details(request, user_id):
 
         context = {'all_faults': Fault.objects.all(),
                    'user': user,
-                   'header': 'user\'s details'}
+                   'header': _('user\'s details')}
 
         return HttpResponse(template.render(context, request))
     except User.DoesNotExist:
-        raise Http404("user does not exist")
+        raise Http404(_("user does not exist"))
 
 
 @login_required
@@ -636,17 +636,17 @@ def ask_for_reassign(request, fault_id, username):
 
                 send_email(subject, message, users)
 
-                messages.success(request, "ask for reassign send successfully")
+                messages.success(request, _("ask for reassign send successfully"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "you are handler of this fault already")
+                messages.warning(request, _("you are handler of this fault already"))
         else:
-            messages.warning(request, "you are not allowed to reassigning")
+            messages.warning(request, _("you are not allowed to reassigning"))
 
         return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
 
 
 @login_required
@@ -669,14 +669,14 @@ def report_phone_number(request, fault_id):
 
                 send_email(subject, message, users)
 
-                messages.success(request, "phone number reported successfully")
+                messages.success(request, _("phone number reported successfully"))
 
                 return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
             else:
-                messages.warning(request, "you are issuer of this fault")
+                messages.warning(request, _("you are issuer of this fault"))
         else:
-            messages.warning(request, "you are not allowed to reporting phones")
+            messages.warning(request, _("you are not allowed to reporting phones"))
 
             return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
-        raise Http404("fault does not exist")
+        raise Http404(_("fault does not exist"))
