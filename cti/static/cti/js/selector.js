@@ -5,7 +5,3 @@ $(document).ready(function() {
         event.preventDefault();
     })
 });
-
-$(document).ready(function() {
-    $('#language-select').niceSelect();
-});

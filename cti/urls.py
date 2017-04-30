@@ -60,6 +60,9 @@ urlpatterns = [
     url(r'^user_details/$', views.user_details, name='user_details'),
     url(r'^json/user_details/$', views_json.user_details, name='user_details_json'),
 
+    # settings
+    url(r'^settings/$', views.settings, name='settings'),
+
     # admin - index
     url(r'^admin/index/$', views_admin.index, name='index_admin'),
 
@@ -134,4 +137,7 @@ urlpatterns = [
     # admin - report phone number
     url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number,
         name='report_phone_number_admin'),
+
+    # settings
+    url(r'^admin/settings/$', views_admin.settings, name='settings_admin'),
 ]

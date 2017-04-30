@@ -388,3 +388,12 @@ def user_details(request):
         return HttpResponse(template.render(context, request))
     except User.DoesNotExist:
         raise Http404(_("user does not exist"))
+
+
+@login_required
+def settings(request):
+    template = loader.get_template('cti/client/settings.html')
+
+    context = {'header': _('settings')}
+
+    return HttpResponse(template.render(context, request))

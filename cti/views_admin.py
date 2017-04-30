@@ -680,3 +680,12 @@ def report_phone_number(request, fault_id):
             return HttpResponseRedirect(reverse('cti:index_admin'))
     except Fault.DoesNotExist:
         raise Http404(_("fault does not exist"))
+
+
+@login_required
+def settings(request):
+    template = loader.get_template('cti/admin/settings.html')
+
+    context = {'header': _('settings')}
+
+    return HttpResponse(template.render(context, request))
