@@ -23,21 +23,21 @@
                 </div>
                 <div class="form-group">
                     <div class="form-normal-div">
-                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="object number"
+                        <input type="text" id="object_number" name="object_number" class="form-control form-cell" placeholder="{% trans "object number" %}"
                                data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
                                 {% if form.object_number.value != None %} value="{{ form.object_number.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="topic"
+                        <input type="text" id="topic" name="topic" class="form-control form-cell" placeholder="{% trans "topic" %}"
                                data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
                                 {% if form.topic.value != None %} value="{{ form.topic.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="description" rows="7"
+                        <textarea id="description" name="description" class="form-control form-description-cell" placeholder="{% trans "description" %}" rows="7"
                                   data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
                         >{% if form.description.value != None %}{{ form.description.value }}{% endif %}</textarea>
                     </div>

@@ -109,7 +109,7 @@
     <div class="pagination-row">
         <div class="col-xs-12 col-sm-12 col-md-12 ending-div">
             {% if faults.has_previous %}
-                <a href="?page={{ faults.previous_page_number }}" class="button">previous</a>
+                <a href="?page={{ faults.previous_page_number }}" class="button">{% trans 'previous' %}</a>
             {% endif %}
 
             <span class="current">
