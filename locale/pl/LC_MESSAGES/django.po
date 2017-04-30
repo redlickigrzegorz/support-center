@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-30 13:40+0200\n"
+"POT-Creation-Date: 2017-04-30 14:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: cti/templates/cti/admin/base.html:64
+#: cti/templates/cti/admin/base.html:64 cti/templates/cti/client/base.html:63
 msgid "search"
 msgstr "szukaj"
 
@@ -63,6 +63,7 @@ msgid "history"
 msgstr "historia"
 
 #: cti/templates/cti/admin/base.html:118 cti/templates/cti/admin/base.html:120
+#: cti/views_admin.py:689
 msgid "statistics"
 msgstr "statystyki"
 
@@ -75,7 +76,7 @@ msgid "change password"
 msgstr "zmień hasło"
 
 #: cti/templates/cti/admin/base.html:145 cti/templates/cti/client/base.html:126
-#: cti/views.py:397 cti/views_admin.py:689
+#: cti/views.py:397 cti/views_admin.py:698
 msgid "settings"
 msgstr "ustawienia"
 

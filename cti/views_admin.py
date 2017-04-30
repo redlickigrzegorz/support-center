@@ -683,6 +683,15 @@ def report_phone_number(request, fault_id):
 
 
 @login_required
+def statistics(request):
+    template = loader.get_template('cti/admin/statistics.html')
+
+    context = {'header': _('statistics')}
+
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
 def settings(request):
     template = loader.get_template('cti/admin/settings.html')
 

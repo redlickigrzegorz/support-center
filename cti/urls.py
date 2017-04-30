@@ -138,6 +138,9 @@ urlpatterns = [
     url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/report_phone_number/$', views_admin.report_phone_number,
         name='report_phone_number_admin'),
 
-    # settings
+    # admin - statistics
+    url(r'^admin/statistics/$', views_admin.statistics, name='statistics_admin'),
+
+    # admin - settings
     url(r'^admin/settings/$', views_admin.settings, name='settings_admin'),
 ]
