@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 23:33+0200\n"
+"POT-Creation-Date: 2017-04-30 12:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,15 +70,20 @@ msgstr ""
 msgid "change password"
 msgstr ""
 
-#: cti/templates/cti/admin/base.html:146 cti/templates/cti/client/base.html:127
+#: cti/templates/cti/admin/base.html:145 cti/templates/cti/client/base.html:126
+#: cti/views.py:397 cti/views_admin.py:689
+msgid "settings"
+msgstr ""
+
+#: cti/templates/cti/admin/base.html:152 cti/templates/cti/client/base.html:133
 msgid "log out"
 msgstr ""
 
-#: cti/templates/cti/admin/base.html:186
+#: cti/templates/cti/admin/base.html:179
 msgid "client site"
 msgstr ""
 
-#: cti/templates/cti/admin/base.html:188 cti/templates/cti/client/base.html:169
+#: cti/templates/cti/admin/base.html:181 cti/templates/cti/client/base.html:162
 msgid "© copyright by Grzegorz Redlicki"
 msgstr ""
 
@@ -290,6 +295,11 @@ msgstr ""
 msgid "price"
 msgstr ""
 
+#: cti/templates/cti/admin/settings.html:14
+#: cti/templates/cti/client/settings.html:14
+msgid "choose language"
+msgstr ""
+
 #: cti/templates/cti/admin/user_details.html:24
 #: cti/templates/cti/admin/users.html:18
 #: cti/templates/cti/client/user_details.html:24
@@ -348,7 +358,7 @@ msgstr ""
 msgid "contact"
 msgstr ""
 
-#: cti/templates/cti/client/base.html:167
+#: cti/templates/cti/client/base.html:160
 msgid "admin site"
 msgstr ""
 
