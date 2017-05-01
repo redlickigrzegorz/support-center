@@ -39,7 +39,7 @@ def login(request):
 
                     counter.users += 1
                     counter.save()
-                except:
+                except Counter.DoesNotExist:
                     counter = Counter(date=date, users=1)
                     counter.save()
 
@@ -247,7 +247,7 @@ def add_fault(request):
 
                 counter.faults += 1
                 counter.save()
-            except:
+            except Counter.DoesNotExist:
                 counter = Counter(date=date, faults=1)
                 counter.save()
 
