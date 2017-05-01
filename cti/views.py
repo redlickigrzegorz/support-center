@@ -16,6 +16,7 @@ from copy import copy
 from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
     make_list_of_watchers, make_string_of_watchers, send_email
 from django.utils.translation import ugettext_lazy as _
+import datetime
 
 
 def login(request):
@@ -30,6 +31,17 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
+
+                date = datetime.date.today()
+
+                try:
+                    counter = Counter.objects.get(date=date)
+
+                    counter.users += 1
+                    counter.save()
+                except:
+                    counter = Counter(date=date, users=1)
+                    counter.save()
 
                 if user.is_staff:
                     return HttpResponseRedirect(reverse('cti:index_admin'))
@@ -227,6 +239,17 @@ def add_fault(request):
             fault = form.save(commit=False)
             fault.issuer = request.user
             fault.save()
+
+            date = datetime.date.today()
+
+            try:
+                counter = Counter.objects.get(date=date)
+
+                counter.faults += 1
+                counter.save()
+            except:
+                counter = Counter(date=date, faults=1)
+                counter.save()
 
             invbook = InvbookBackend()
             fault_object = invbook.get_or_create_object(fault.object_number)

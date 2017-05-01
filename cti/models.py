@@ -148,10 +148,21 @@ class History(models.Model):
 
 class Counter(models.Model):
     # date
-    date = models.DateField()
+    date = models.DateField(unique=True)
 
     # counter of users
-    users = models.IntegerField()
+    users = models.IntegerField(default=0)
 
     # counter of faults
-    faults = models.IntegerField()
+    faults = models.IntegerField(default=0)
+
+    def get_fields(self):
+        all_fields = []
+
+        for field in self._meta.fields:
+            all_fields.append(field)
+
+        return [field.name for field in all_fields]
+
+    def __str__(self):
+        return '{} - {} - {}'.format(self.date, self.users, self.faults)
