@@ -142,7 +142,7 @@ msgstr "opcjonalny"
 #: cti/templates/cti/admin/index.html:47
 #: cti/templates/cti/client/fault_details.html:55
 msgid "standard"
-msgstr "standordowy"
+msgstr "standardowy"
 
 #: cti/templates/cti/admin/fault_details.html:57
 #: cti/templates/cti/admin/fault_form.html:20

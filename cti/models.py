@@ -144,3 +144,14 @@ class History(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.changed_at, self.fault_id, self.changed_field)
+
+
+class Counter(models.Model):
+    # date
+    date = models.DateField()
+
+    # counter of users
+    users = models.IntegerField()
+
+    # counter of faults
+    faults = models.IntegerField()

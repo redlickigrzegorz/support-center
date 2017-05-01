@@ -1,6 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
-from .models import Fault, Object, User
+from .models import Fault, Object, User, Counter
 from django.http import Http404
 from .forms import FaultForm
 from django.contrib.auth import authenticate
