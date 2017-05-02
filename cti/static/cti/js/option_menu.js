@@ -5,7 +5,7 @@ $(document).ready(function() {
         let header = $(".body-header span").text().trim();
         let id = $(this).attr('id');
 
-        if (header === 'resolved faults') {
+        if (header === gettext('resolved faults')) {
             var content = $('<div class="options-menu">'+
                                 '<a class="option-button">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
@@ -29,7 +29,7 @@ $(document).ready(function() {
                                 '</a>'+
                             '</div>');
         }
-        else if (header === 'deleted faults') {
+        else if (header === gettext('deleted faults')) {
             var content = $('<div class="options-menu">'+
                                 '<a class="option-button">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+
@@ -53,7 +53,7 @@ $(document).ready(function() {
                                 '</a>'+
                             '</div>');
         }
-        else if (header === 'faults assigned to me') {
+        else if (header === gettext('faults assigned to me')) {
             var content = $('<div class="options-menu">'+
                                 '<a href="/admin/fault_details/'+id+'" class="option-button details-button" title="'+gettext('details')+'">'+
                                     '<div class="col-xs-3 col-sm-3 col-md-3 option">'+

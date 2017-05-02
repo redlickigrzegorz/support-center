@@ -1,35 +1,133 @@
 <script type="text/javascript">
+    var header = "{{ header }}";
 
-      // Load the Visualization API and the corechart package.
-      google.charts.load('current', {'packages':['corechart']});
+    if (header === 'statistics') {
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
 
-      // Set a callback to run when the Google Visualization API is loaded.
-      google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var status_list = [['status', 'faults with this status'],
+                               ['not started', 0],
+                               ['queued', 0],
+                               ['completed', 0],
+                               ['deleted', 0]];
 
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
-      function drawChart() {
+            {% for fault in faults %}
+                {% if fault.status == 0 %}
+                    status_list[1][1] += 1;
+                {% elif fault.status == 1 %}
+                    status_list[2][1] += 1;
+                {% elif fault.status == 2 %}
+                    status_list[3][1] += 1;
+                {% elif fault.status == 3 %}
+                    status_list[4][1] += 1;
+                {% endif %}
+            {% endfor %}
 
-        // Create the data table.
-        var data = new google.visualization.DataTable();
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 1],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 2]
-        ]);
+            var data_for_status_chart = google.visualization.arrayToDataTable(status_list);
+            var options_for_status_chart = {
+                title: 'status of faults',
+                width: 700,
+                height: 500
+            };
 
-        // Set chart options
-        var options = {'title':'How Much Pizza I Ate Last Night',
-                       'width':400,
-                       'height':300};
+            var status_chart = new google.visualization.PieChart(document.getElementById('status_piechart'));
+            status_chart.draw(data_for_status_chart, options_for_status_chart);
 
-        // Instantiate and draw our chart, passing in some options.
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
-      }
+            var faults_list = [['date', 'faults']];
+
+            {% for counter in counters %}
+                var date = "{{ counter.date }}";
+                var faults = Number("{{ counter.faults }}");
+
+                faults_list.push([date, faults]);
+            {% endfor %}
+
+            var data_for_faults_chart = google.visualization.arrayToDataTable(faults_list);
+            var options_for_faults_chart = {
+                title: 'faults per day',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 700,
+                height: 500
+            };
+
+            var faults_chart = new google.visualization.LineChart(document.getElementById('faults_linechart'));
+            faults_chart.draw(data_for_faults_chart, options_for_faults_chart);
+
+            var logins_list = [['date', 'logins']];
+
+            {% for counter in counters %}
+                var date = "{{ counter.date }}";
+                var logins = Number("{{ counter.users }}");
+
+                logins_list.push([date, logins]);
+            {% endfor %}
+
+            var data_for_logins_chart = google.visualization.arrayToDataTable(logins_list);
+            var options_for_logins_chart = {
+                title: 'logins per day',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 700,
+                height: 500
+            };
+
+            var logins_chart = new google.visualization.LineChart(document.getElementById('logins_linechart'));
+            logins_chart.draw(data_for_logins_chart, options_for_logins_chart);
+
+            var user_list = [['date', 'users']];
+
+            {% for user in users %}
+                var date_joined = "{{ user.date_joined }}";
+                var id = Number("{{ user.id }}");
+
+                user_list.push([date_joined, id]);
+            {% endfor %}
+
+            var data_for_user_chart = google.visualization.arrayToDataTable(user_list);
+            var options_for_user_chart = {
+                title: 'users',
+                curveType: 'function',
+                legend: { position: 'bottom' },
+                width: 700,
+                height: 500
+            };
+
+            var user_chart = new google.visualization.LineChart(document.getElementById('user_linechart'));
+            user_chart.draw(data_for_user_chart, options_for_user_chart);
+
+            var object_list = [['object_number', 'count']];
+
+            {% for fault in faults %}
+                var object_number = "{{ fault.object_number }}";
+
+                var found = false;
+
+                for (var i = 0; i < object_list.length; i++) {
+                    if (object_list[i][0] === object_number) {
+                        object_list[i][1] += 1;
+
+                        found = true;
+
+                        break;
+                    }
+                }
+
+                if (found === false) {
+                    object_list.push([object_number, 1]);
+                }
+            {% endfor %}
+
+            var data_for_object_chart = google.visualization.arrayToDataTable(object_list);
+            var options_for_object_chart = {
+                title: 'objects',
+                width: 700,
+                height: 500
+            };
+
+            var object_chart = new google.visualization.PieChart(document.getElementById('object_piechart'));
+            object_chart.draw(data_for_object_chart, options_for_object_chart);
+        }
+    }
 </script>

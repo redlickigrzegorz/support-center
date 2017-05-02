@@ -1,6 +1,6 @@
 from django.template import loader
 from django.http import HttpResponse
-from .models import Fault, Object, History
+from .models import Fault, Object, History, Counter
 from django.http import Http404
 from .forms import AdminFaultForm, UserForm
 from django.contrib.auth import authenticate
@@ -686,7 +686,14 @@ def report_phone_number(request, fault_id):
 def statistics(request):
     template = loader.get_template('cti/admin/statistics.html')
 
-    context = {'header': _('statistics')}
+    users = User.objects.all()
+    faults = Fault.objects.all()
+    counters = Counter.objects.all()
+
+    context = {'header': _('statistics'),
+               'users': users,
+               'faults': faults,
+               'counters': counters}
 
     return HttpResponse(template.render(context, request))
 
