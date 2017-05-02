@@ -5,9 +5,9 @@
 
     if (header === "{% trans 'statistics' %}") {
         google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
+        google.charts.setOnLoadCallback(drawPieCharts);
 
-        function drawChart() {
+        function drawPieCharts() {
             <!-- pie chart for faults status -->
             var list_of_faults_status = [["{% trans 'status' %}", "{% trans 'count' %}"],
                                          ["{% trans 'not started' %}", 0],
@@ -29,60 +29,13 @@
 
             var data = google.visualization.arrayToDataTable(list_of_faults_status);
             var options = {
-                title: "{% trans 'status of all faults' %}",
-                width: 700,
-                height: 500
+                title: "{% trans 'status of all faults' %}"
             };
 
             var faults_status_chart = new google.visualization.PieChart(document.getElementById('faults_status_piechart'));
             faults_status_chart.draw(data, options);
 
-            <!-- line chart for new faults and users login per day -->
-            var list_of_users_and_faults = [["{% trans 'date' %}", "{% trans 'users' %}", "{% trans 'faults' %}"]];
-
-            {% for counter in counters %}
-                var date = "{{ counter.date }}";
-                var users = Number("{{ counter.users }}");
-                var faults = Number("{{ counter.faults }}");
-
-                list_of_users_and_faults.push([date, users, faults]);
-            {% endfor %}
-
-            data = google.visualization.arrayToDataTable(list_of_users_and_faults);
-            options = {
-                title: "{% trans 'new faults and users login per day' %}",
-                curveType: 'function',
-                legend: { position: 'bottom' },
-                width: 700,
-                height: 500
-            };
-
-            var faults_and_users_chart = new google.visualization.LineChart(document.getElementById('faults_and_users_linechart'));
-            faults_and_users_chart.draw(data, options);
-
-            <!-- line chart for counting users -->
-            var list_of_count_of_users = [["{% trans 'date' %}", "{% trans 'users' %}"]];
-
-            {% for user in users %}
-                var date_joined = "{{ user.date_joined }}";
-                var id = Number("{{ user.id }}");
-
-                list_of_count_of_users.push([date_joined, id]);
-            {% endfor %}
-
-            data = google.visualization.arrayToDataTable(list_of_count_of_users);
-            options = {
-                title: "{% trans 'count of users' %}",
-                curveType: 'function',
-                legend: { position: 'bottom' },
-                width: 700,
-                height: 500
-            };
-
-            var count_of_users_chart = new google.visualization.LineChart(document.getElementById('count_of_users_linechart'));
-            count_of_users_chart.draw(data, options);
-
-            <!-- line chart for count of objects -->
+            <!-- pie chart for count of objects -->
             var list_of_count_of_objects = [["{% trans 'object number' %}", "{% trans 'count' %}"]];
 
             {% for fault in faults %}
@@ -105,13 +58,62 @@
 
             data = google.visualization.arrayToDataTable(list_of_count_of_objects);
             options = {
-                title: "{% trans 'count of objects' %}",
-                width: 700,
-                height: 500
+                title: "{% trans 'count of objects' %}"
             };
 
             var count_of_objects_chart = new google.visualization.PieChart(document.getElementById('count_of_objects_piechart'));
             count_of_objects_chart.draw(data, options);
         }
+
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawLineCharts);
+
+        function drawLineCharts() {
+            <!-- line chart for new faults and users login per day -->
+            var list_of_users_and_faults = [["{% trans 'date' %}", "{% trans 'users' %}", "{% trans 'faults' %}"]];
+
+            {% for counter in counters %}
+                var date = "{{ counter.date }}";
+                var users = Number("{{ counter.users }}");
+                var faults = Number("{{ counter.faults }}");
+
+                list_of_users_and_faults.push([date, users, faults]);
+            {% endfor %}
+
+            var data = google.visualization.arrayToDataTable(list_of_users_and_faults);
+            var options = {
+                title: "{% trans 'new faults and users login per day' %}",
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var faults_and_users_chart = new google.visualization.LineChart(document.getElementById('faults_and_users_linechart'));
+            faults_and_users_chart.draw(data, options);
+
+            <!-- line chart for counting users -->
+            var list_of_count_of_users = [["{% trans 'date' %}", "{% trans 'users' %}"]];
+
+            {% for user in users %}
+                var date_joined = "{{ user.date_joined }}";
+                var id = Number("{{ user.id }}");
+
+                list_of_count_of_users.push([date_joined, id]);
+            {% endfor %}
+
+            data = google.visualization.arrayToDataTable(list_of_count_of_users);
+            options = {
+                title: "{% trans 'count of users' %}",
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var count_of_users_chart = new google.visualization.LineChart(document.getElementById('count_of_users_linechart'));
+            count_of_users_chart.draw(data, options);
+        }
     }
+
+    $(window).resize(function(){
+        drawPieCharts();
+        drawLineCharts();
+    });
 </script>
