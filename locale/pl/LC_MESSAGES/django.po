@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-02 11:45+0200\n"
+"POT-Creation-Date: 2017-05-02 13:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,6 +62,8 @@ msgstr "usunięte zgłoszenia"
 
 #: .\cti\templates\cti\admin\base.html:108
 #: .\cti\templates\cti\admin\base.html:110
+#: .\cti\templates\cti\scripts\charts.html:41
+#: .\cti\templates\cti\scripts\charts.html:64
 msgid "users"
 msgstr "użytkownicy"
 
@@ -71,7 +73,8 @@ msgid "history"
 msgstr "historia"
 
 #: .\cti\templates\cti\admin\base.html:120
-#: .\cti\templates\cti\admin\base.html:122 .\cti\views_admin.py:693
+#: .\cti\templates\cti\admin\base.html:122
+#: .\cti\templates\cti\scripts\charts.html:6 .\cti\views_admin.py:689
 msgid "statistics"
 msgstr "statystyki"
 
@@ -86,7 +89,7 @@ msgstr "zmień hasło"
 
 #: .\cti\templates\cti\admin\base.html:147
 #: .\cti\templates\cti\client\base.html:126 .\cti\views.py:420
-#: .\cti\views_admin.py:705
+#: .\cti\views_admin.py:701
 msgid "settings"
 msgstr "ustawienia"
 
@@ -111,26 +114,31 @@ msgstr "© copyright by Grzegorz Redlicki"
 #: .\cti\templates\cti\client\index.html:40
 #: .\cti\templates\cti\client\index.html:46
 #: .\cti\templates\cti\client\object_details.html:29
+#: .\cti\templates\cti\scripts\charts.html:12
 msgid "status"
 msgstr "status"
 
 #: .\cti\templates\cti\admin\fault_details.html:39
 #: .\cti\templates\cti\client\fault_details.html:39
+#: .\cti\templates\cti\scripts\charts.html:13
 msgid "not started"
 msgstr "nierozpoczęte"
 
 #: .\cti\templates\cti\admin\fault_details.html:41
 #: .\cti\templates\cti\client\fault_details.html:41
+#: .\cti\templates\cti\scripts\charts.html:14
 msgid "queued"
 msgstr "w trakcie"
 
 #: .\cti\templates\cti\admin\fault_details.html:43
 #: .\cti\templates\cti\client\fault_details.html:43
+#: .\cti\templates\cti\scripts\charts.html:15
 msgid "completed"
 msgstr "zakończone"
 
 #: .\cti\templates\cti\admin\fault_details.html:45
 #: .\cti\templates\cti\client\fault_details.html:45
+#: .\cti\templates\cti\scripts\charts.html:16
 msgid "deleted"
 msgstr "usunięte"
 
@@ -185,6 +193,7 @@ msgstr "poproś o przepisanie zgłoszenia"
 #: .\cti\templates\cti\client\fault_details.html:73
 #: .\cti\templates\cti\client\fault_form.html:23
 #: .\cti\templates\cti\client\object_details.html:24
+#: .\cti\templates\cti\scripts\charts.html:86
 msgid "object number"
 msgstr "numer obiektu"
 
@@ -437,6 +446,36 @@ msgstr "Mam nadzieję, że już nigdy nie będziesz musiał tutaj wracać"
 #: .\cti\templates\cti\client\logout.html:25
 msgid "login again"
 msgstr "zaloguj ponownie"
+
+#: .\cti\templates\cti\scripts\charts.html:12
+#: .\cti\templates\cti\scripts\charts.html:86
+msgid "count"
+msgstr "liczba"
+
+#: .\cti\templates\cti\scripts\charts.html:32
+msgid "status of all faults"
+msgstr "status wszystkich zgłoszeń"
+
+#: .\cti\templates\cti\scripts\charts.html:41
+#: .\cti\templates\cti\scripts\charts.html:64
+msgid "date"
+msgstr "data"
+
+#: .\cti\templates\cti\scripts\charts.html:41
+msgid "faults"
+msgstr "zgłoszenia"
+
+#: .\cti\templates\cti\scripts\charts.html:53
+msgid "new faults and users login per day"
+msgstr "nowe zgłoszenia i logowanie użytkowników na dzień"
+
+#: .\cti\templates\cti\scripts\charts.html:75
+msgid "count of users"
+msgstr "podliczenie użytkowników"
+
+#: .\cti\templates\cti\scripts\charts.html:108
+msgid "count of objects"
+msgstr "podliczenie obiektów"
 
 #: .\cti\views.py:51
 msgid "your account has been disabled"

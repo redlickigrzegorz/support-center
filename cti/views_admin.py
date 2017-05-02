@@ -686,14 +686,10 @@ def report_phone_number(request, fault_id):
 def statistics(request):
     template = loader.get_template('cti/admin/statistics.html')
 
-    users = User.objects.all()
-    faults = Fault.objects.all()
-    counters = Counter.objects.all()
-
     context = {'header': _('statistics'),
-               'users': users,
-               'faults': faults,
-               'counters': counters}
+               'users': User.objects.all(),
+               'faults': Fault.objects.all(),
+               'counters': Counter.objects.all()}
 
     return HttpResponse(template.render(context, request))
 

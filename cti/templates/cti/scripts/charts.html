@@ -1,112 +1,96 @@
 <script type="text/javascript">
+    {% load i18n %}
+
     var header = "{{ header }}";
 
-    if (header === 'statistics') {
+    if (header === "{% trans 'statistics' %}") {
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
         function drawChart() {
-            var status_list = [['status', 'faults with this status'],
-                               ['not started', 0],
-                               ['queued', 0],
-                               ['completed', 0],
-                               ['deleted', 0]];
+            <!-- pie chart for faults status -->
+            var list_of_faults_status = [["{% trans 'status' %}", "{% trans 'count' %}"],
+                                         ["{% trans 'not started' %}", 0],
+                                         ["{% trans 'queued' %}", 0],
+                                         ["{% trans 'completed' %}", 0],
+                                         ["{% trans 'deleted' %}", 0]];
 
             {% for fault in faults %}
                 {% if fault.status == 0 %}
-                    status_list[1][1] += 1;
+                    list_of_faults_status[1][1] += 1;
                 {% elif fault.status == 1 %}
-                    status_list[2][1] += 1;
+                    list_of_faults_status[2][1] += 1;
                 {% elif fault.status == 2 %}
-                    status_list[3][1] += 1;
+                    list_of_faults_status[3][1] += 1;
                 {% elif fault.status == 3 %}
-                    status_list[4][1] += 1;
+                    list_of_faults_status[4][1] += 1;
                 {% endif %}
             {% endfor %}
 
-            var data_for_status_chart = google.visualization.arrayToDataTable(status_list);
-            var options_for_status_chart = {
-                title: 'status of faults',
+            var data = google.visualization.arrayToDataTable(list_of_faults_status);
+            var options = {
+                title: "{% trans 'status of all faults' %}",
                 width: 700,
                 height: 500
             };
 
-            var status_chart = new google.visualization.PieChart(document.getElementById('status_piechart'));
-            status_chart.draw(data_for_status_chart, options_for_status_chart);
+            var faults_status_chart = new google.visualization.PieChart(document.getElementById('faults_status_piechart'));
+            faults_status_chart.draw(data, options);
 
-            var faults_list = [['date', 'faults']];
+            <!-- line chart for new faults and users login per day -->
+            var list_of_users_and_faults = [["{% trans 'date' %}", "{% trans 'users' %}", "{% trans 'faults' %}"]];
 
             {% for counter in counters %}
                 var date = "{{ counter.date }}";
+                var users = Number("{{ counter.users }}");
                 var faults = Number("{{ counter.faults }}");
 
-                faults_list.push([date, faults]);
+                list_of_users_and_faults.push([date, users, faults]);
             {% endfor %}
 
-            var data_for_faults_chart = google.visualization.arrayToDataTable(faults_list);
-            var options_for_faults_chart = {
-                title: 'faults per day',
+            data = google.visualization.arrayToDataTable(list_of_users_and_faults);
+            options = {
+                title: "{% trans 'new faults and users login per day' %}",
                 curveType: 'function',
                 legend: { position: 'bottom' },
                 width: 700,
                 height: 500
             };
 
-            var faults_chart = new google.visualization.LineChart(document.getElementById('faults_linechart'));
-            faults_chart.draw(data_for_faults_chart, options_for_faults_chart);
+            var faults_and_users_chart = new google.visualization.LineChart(document.getElementById('faults_and_users_linechart'));
+            faults_and_users_chart.draw(data, options);
 
-            var logins_list = [['date', 'logins']];
-
-            {% for counter in counters %}
-                var date = "{{ counter.date }}";
-                var logins = Number("{{ counter.users }}");
-
-                logins_list.push([date, logins]);
-            {% endfor %}
-
-            var data_for_logins_chart = google.visualization.arrayToDataTable(logins_list);
-            var options_for_logins_chart = {
-                title: 'logins per day',
-                curveType: 'function',
-                legend: { position: 'bottom' },
-                width: 700,
-                height: 500
-            };
-
-            var logins_chart = new google.visualization.LineChart(document.getElementById('logins_linechart'));
-            logins_chart.draw(data_for_logins_chart, options_for_logins_chart);
-
-            var user_list = [['date', 'users']];
+            <!-- line chart for counting users -->
+            var list_of_count_of_users = [["{% trans 'date' %}", "{% trans 'users' %}"]];
 
             {% for user in users %}
                 var date_joined = "{{ user.date_joined }}";
                 var id = Number("{{ user.id }}");
 
-                user_list.push([date_joined, id]);
+                list_of_count_of_users.push([date_joined, id]);
             {% endfor %}
 
-            var data_for_user_chart = google.visualization.arrayToDataTable(user_list);
-            var options_for_user_chart = {
-                title: 'users',
+            data = google.visualization.arrayToDataTable(list_of_count_of_users);
+            options = {
+                title: "{% trans 'count of users' %}",
                 curveType: 'function',
                 legend: { position: 'bottom' },
                 width: 700,
                 height: 500
             };
 
-            var user_chart = new google.visualization.LineChart(document.getElementById('user_linechart'));
-            user_chart.draw(data_for_user_chart, options_for_user_chart);
+            var count_of_users_chart = new google.visualization.LineChart(document.getElementById('count_of_users_linechart'));
+            count_of_users_chart.draw(data, options);
 
-            var object_list = [['object_number', 'count']];
+            <!-- line chart for count of objects -->
+            var list_of_count_of_objects = [["{% trans 'object number' %}", "{% trans 'count' %}"]];
 
             {% for fault in faults %}
-                var object_number = "{{ fault.object_number }}";
-
                 var found = false;
 
-                for (var i = 0; i < object_list.length; i++) {
-                    if (object_list[i][0] === object_number) {
-                        object_list[i][1] += 1;
+                for (var i = 0; i < list_of_count_of_objects.length; i++) {
+                    if (list_of_count_of_objects[i][0] === "{{ fault.object_number }}") {
+                        list_of_count_of_objects[i][1] += 1;
 
                         found = true;
 
@@ -115,19 +99,19 @@
                 }
 
                 if (found === false) {
-                    object_list.push([object_number, 1]);
+                    list_of_count_of_objects.push(["{{ fault.object_number }}", 1]);
                 }
             {% endfor %}
 
-            var data_for_object_chart = google.visualization.arrayToDataTable(object_list);
-            var options_for_object_chart = {
-                title: 'objects',
+            data = google.visualization.arrayToDataTable(list_of_count_of_objects);
+            options = {
+                title: "{% trans 'count of objects' %}",
                 width: 700,
                 height: 500
             };
 
-            var object_chart = new google.visualization.PieChart(document.getElementById('object_piechart'));
-            object_chart.draw(data_for_object_chart, options_for_object_chart);
+            var count_of_objects_chart = new google.visualization.PieChart(document.getElementById('count_of_objects_piechart'));
+            count_of_objects_chart.draw(data, options);
         }
     }
 </script>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-02 11:46+0200\n"
+"POT-Creation-Date: 2017-05-02 13:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -97,7 +97,7 @@ msgstr "- numer telefonu: + 48 42 631 24 40"
 
 #: .\cti\static\cti\js\option_menu.js:8
 msgid "resolved faults"
-msgstr ""
+msgstr "zakończone zgłoszenia"
 
 #: .\cti\static\cti\js\option_menu.js:15 .\cti\static\cti\js\option_menu.js:39
 #: .\cti\static\cti\js\option_menu.js:58 .\cti\static\cti\js\option_menu.js:82
@@ -111,14 +111,10 @@ msgid "restore"
 msgstr "przywróć"
 
 #: .\cti\static\cti\js\option_menu.js:32
-#, fuzzy
-#| msgid "delete"
 msgid "deleted faults"
-msgstr "usuń"
+msgstr "usunięte zgłoszenia"
 
 #: .\cti\static\cti\js\option_menu.js:56
-#, fuzzy
-#| msgid "assign to me"
 msgid "faults assigned to me"
 msgstr "przypisz do mnie"
 
@@ -148,10 +144,8 @@ msgid "phone number is required"
 msgstr "numer telefonu jest wymagany"
 
 #: .\cti\static\cti\js\validator.js:34
-msgid ""
-"allowed phone number format: +999999999 (9-15 digits with possible plus)"
-msgstr ""
-"wymagany zapis numeru telefonu: +999999999 (9-15 cyfry z opcjonalnym plusem)"
+msgid "allowed phone number format: +999999999 (9-15 digits with possible plus)"
+msgstr "wymagany zapis numeru telefonu: +999999999 (9-15 cyfry z opcjonalnym plusem)"
 
 #: .\cti\static\cti\js\validator.js:46
 msgid "object number is required"
