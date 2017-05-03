@@ -15,7 +15,7 @@
                                          ["{% trans 'completed' %}", 0],
                                          ["{% trans 'deleted' %}", 0]];
 
-            {% for fault in faults %}
+            {% for fault in all_faults %}
                 {% if fault.status == 0 %}
                     list_of_faults_status[1][1] += 1;
                 {% elif fault.status == 1 %}
@@ -38,7 +38,7 @@
             <!-- pie chart for count of objects -->
             var list_of_count_of_objects = [["{% trans 'object number' %}", "{% trans 'count' %}"]];
 
-            {% for fault in faults %}
+            {% for fault in all_faults %}
                 var found = false;
 
                 for (var i = 0; i < list_of_count_of_objects.length; i++) {

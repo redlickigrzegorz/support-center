@@ -688,7 +688,7 @@ def statistics(request):
 
     context = {'header': _('statistics'),
                'users': User.objects.all(),
-               'faults': Fault.objects.all(),
+               'all_faults': Fault.objects.all(),
                'counters': Counter.objects.all()}
 
     return HttpResponse(template.render(context, request))
