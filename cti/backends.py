@@ -1,11 +1,10 @@
-import re
-from cti.models import User
 from ldap3 import Server, Connection, SUBTREE
+from django.db import connections
+from .models import User, Object
 from support_center.settings import LDAP_AUTH_URL, LDAP_AUTH_SEARCH_BASE,\
     LDAP_AUTH_CONNECTION_USERNAME, LDAP_AUTH_CONNECTION_PASSWORD, INVBOOK_TABLES
-from django.db import connections
-from .models import Object
 import datetime
+import re
 
 
 class LDAPBackend(object):
@@ -87,7 +86,7 @@ class InvbookBackend(object):
         try:
             return Object.objects.get(object_number=object_number)
         except Object.DoesNotExist:
-            object = Object(object_number=object_number)
+            fault_object = Object(object_number=object_number)
 
             if self.make_connection():
                 for table in INVBOOK_TABLES:
@@ -106,16 +105,16 @@ class InvbookBackend(object):
 
                         break
 
-            object.object_name = self.object_data['object_name']
-            object.date = self.object_data['date']
-            object.room = self.object_data['room']
-            object.status = self.object_data['status']
-            object.price = self.object_data['price']
-            object.comments = self.object_data['comments']
+            fault_object.object_name = self.object_data['object_name']
+            fault_object.date = self.object_data['date']
+            fault_object.room = self.object_data['room']
+            fault_object.status = self.object_data['status']
+            fault_object.price = self.object_data['price']
+            fault_object.comments = self.object_data['comments']
 
-            object.save()
+            fault_object.save()
 
-            return object
+            return fault_object
 
     def make_connection(self):
         try:

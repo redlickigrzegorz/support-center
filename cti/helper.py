@@ -1,6 +1,6 @@
-from .models import History, Fault
 from django.core import serializers
 from django.core.mail import send_mail
+from .models import History, Fault
 import re
 
 
