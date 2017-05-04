@@ -1,8 +1,7 @@
-from .models import History
+from .models import History, Fault
 from django.core import serializers
-from .models import Fault
-import re
 from django.core.mail import send_mail
+import re
 
 
 def post_faults_to_session(request, faults):
@@ -12,12 +11,13 @@ def post_faults_to_session(request, faults):
 def get_faults_from_session(request):
     if 'faults' in request.session:
         pk_list = []
+
         for fault in serializers.deserialize("json", request.session['faults']):
             pk_list.append(fault.object.pk)
 
         faults = Fault.objects.filter(pk__in=pk_list)
     else:
-        faults = Fault.objects.all()
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2])
 
     return faults
 

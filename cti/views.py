@@ -1,21 +1,18 @@
 from django.template import loader
-from django.http import HttpResponse
-from .models import Fault, Object, User, Counter
-from django.http import Http404
-from .forms import FaultForm
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.contrib import auth, messages
 from django.contrib.auth import authenticate
-from django.http import HttpResponseRedirect
-from django.contrib import auth
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from .backends import InvbookBackend
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from copy import copy
+from .forms import FaultForm
+from .backends import InvbookBackend
+from .models import Fault, Object, User, Counter
 from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
     make_list_of_watchers, make_string_of_watchers, send_email
-from django.utils.translation import ugettext_lazy as _
 import datetime
 
 
@@ -41,6 +38,7 @@ def login(request):
                     counter.save()
                 except Counter.DoesNotExist:
                     counter = Counter(date=date, users=1)
+
                     counter.save()
 
                 if user.is_staff:
@@ -67,10 +65,11 @@ def logout(request):
 def index(request):
     template = loader.get_template('cti/client/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
-    post_faults_to_session(request, faults_list)
+    list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
 
-    paginator = Paginator(faults_list, 5)
+    post_faults_to_session(request, list_of_faults)
+
+    paginator = Paginator(list_of_faults, 5)
 
     page = request.GET.get('page')
 
@@ -92,10 +91,11 @@ def index(request):
 def my_faults(request):
     template = loader.get_template('cti/client/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, issuer=request.user.get_username()).order_by('-created_at')
-    post_faults_to_session(request, faults_list)
+    list_of_faults = Fault.objects.filter(is_visible=True, issuer=request.user.username).order_by('-created_at')
 
-    paginator = Paginator(faults_list, 5)
+    post_faults_to_session(request, list_of_faults)
+
+    paginator = Paginator(list_of_faults, 5)
 
     page = request.GET.get('page')
 
@@ -117,16 +117,17 @@ def my_faults(request):
 def watched_faults(request):
     template = loader.get_template('cti/client/index.html')
 
-    all_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
-    faults_list = []
+    list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
 
-    for fault in all_faults:
+    list_of_watched_faults = []
+
+    for fault in list_of_faults:
         if request.user.username in make_list_of_watchers(fault.watchers):
-            faults_list.append(fault)
+            list_of_watched_faults.append(fault)
 
-    post_faults_to_session(request, faults_list)
+    post_faults_to_session(request, list_of_watched_faults)
 
-    paginator = Paginator(faults_list, 5)
+    paginator = Paginator(list_of_watched_faults, 5)
 
     page = request.GET.get('page')
 
@@ -148,10 +149,11 @@ def watched_faults(request):
 def resolved_faults(request):
     template = loader.get_template('cti/client/index.html')
 
-    faults_list = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
-    post_faults_to_session(request, faults_list)
+    list_of_faults = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
 
-    paginator = Paginator(faults_list, 5)
+    post_faults_to_session(request, list_of_faults)
+
+    paginator = Paginator(list_of_faults, 5)
 
     page = request.GET.get('page')
 
@@ -173,10 +175,11 @@ def resolved_faults(request):
 def sorted_faults(request, order_by):
     template = loader.get_template('cti/client/index.html')
 
-    faults_list = get_faults_from_session(request).order_by(order_by)
-    post_faults_to_session(request, faults_list)
+    list_of_faults = get_faults_from_session(request).order_by(order_by)
 
-    paginator = Paginator(faults_list, 5)
+    post_faults_to_session(request, list_of_faults)
+
+    paginator = Paginator(list_of_faults, 5)
 
     page = request.GET.get('page')
 
@@ -201,16 +204,17 @@ def searched_faults(request):
     query = request.GET.get('searched_text')
 
     if query:
-        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).\
+        list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).\
             filter(Q(topic__icontains=query)).order_by('-created_at')
+
+        if not list_of_faults:
+            messages.warning(request, _('no matches for this query'))
     else:
-        messages.warning(request, _('no matches for this query'))
+        list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
 
-        faults_list = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
+    post_faults_to_session(request, list_of_faults)
 
-    post_faults_to_session(request, faults_list)
-
-    paginator = Paginator(faults_list, 5)
+    paginator = Paginator(list_of_faults, 5)
 
     page = request.GET.get('page')
 
@@ -237,7 +241,8 @@ def add_fault(request):
 
         if form.is_valid():
             fault = form.save(commit=False)
-            fault.issuer = request.user
+
+            fault.issuer = request.user.username
             fault.save()
 
             date = datetime.date.today()
@@ -249,9 +254,11 @@ def add_fault(request):
                 counter.save()
             except Counter.DoesNotExist:
                 counter = Counter(date=date, faults=1)
+
                 counter.save()
 
             invbook = InvbookBackend()
+
             fault_object = invbook.get_or_create_object(fault.object_number)
 
             subject = 'new fault created - {} - {}'.format(fault.id, fault.topic)
@@ -290,6 +297,7 @@ def add_fault(request):
 def edit_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.issuer == request.user.username:
@@ -301,6 +309,7 @@ def edit_fault(request, fault_id):
                 if request.method == "POST":
                     if form.is_valid():
                         fault = form.save(commit=False)
+
                         fault.save()
 
                         compare_two_faults(request, previous_version_of_fault, fault)
@@ -332,7 +341,7 @@ def watch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        if fault.status != 2 and fault.status != 3:
+        if fault.status != 3:
             watchers = make_list_of_watchers(fault.watchers)
 
             if request.user.username in watchers:
@@ -349,7 +358,7 @@ def watch_fault(request, fault_id):
 
             return HttpResponseRedirect(reverse('cti:fault_details', kwargs={'fault_id': fault_id}))
         else:
-            raise Http404(_("this fault is already ended"))
+            raise Http404(_("this fault is already deleted"))
     except Fault.DoesNotExist:
         raise Http404(_("fault does not exist"))
 
@@ -361,14 +370,14 @@ def fault_details(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        watchers = make_list_of_watchers(fault.watchers)
+        if fault.status != 3:
+            watchers = make_list_of_watchers(fault.watchers)
 
-        if request.user.username in watchers:
-            watcher = True
-        else:
-            watcher = False
+            if request.user.username in watchers:
+                watcher = True
+            else:
+                watcher = False
 
-        if not fault.status == 3:
             context = {'fault': fault,
                        'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                        'watcher': watcher,
@@ -376,7 +385,7 @@ def fault_details(request, fault_id):
 
             return HttpResponse(template.render(context, request))
         else:
-            raise Http404(_("this fault is already ended"))
+            raise Http404(_("this fault is already deleted"))
     except Fault.DoesNotExist:
         raise Http404(_("fault does not exist"))
 
@@ -398,17 +407,20 @@ def object_details(request, object_id):
 
 
 @login_required
-def user_details(request):
+def user_details(request, user_id):
     template = loader.get_template('cti/client/user_details.html')
 
     try:
-        user = User.objects.get(username__exact=request.user)
+        user = User.objects.get(id=user_id)
 
-        context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-                   'user': user,
-                   'header': _('user\'s details')}
+        if user.id == request.user.id:
+            context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
+                       'user': user,
+                       'header': _('user\'s details')}
 
-        return HttpResponse(template.render(context, request))
+            return HttpResponse(template.render(context, request))
+        else:
+            raise Http404(_("this is not you"))
     except User.DoesNotExist:
         raise Http404(_("user does not exist"))
 
@@ -417,6 +429,7 @@ def user_details(request):
 def settings(request):
     template = loader.get_template('cti/client/settings.html')
 
-    context = {'header': _('settings')}
+    context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
+               'header': _('settings')}
 
     return HttpResponse(template.render(context, request))

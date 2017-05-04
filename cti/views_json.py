@@ -1,17 +1,16 @@
-from .models import Fault, Object
-from django.http import Http404
-from .forms import FaultForm
-from django.contrib.auth import authenticate
+from django.http import Http404, JsonResponse
 from django.contrib import auth
-from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import JsonResponse
-from .backends import InvbookBackend
-from .models import User
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .helper import compare_two_faults, post_faults_to_session, get_faults_from_session,\
-    make_list_of_watchers, make_string_of_watchers, send_email
 from copy import copy
+from .forms import FaultForm
+from .backends import InvbookBackend
+from .models import Fault, Object, User, Counter
+from .helper import compare_two_faults, get_faults_from_session, post_faults_to_session,\
+    make_list_of_watchers, make_string_of_watchers, send_email
+import datetime
 
 
 def login(request):
@@ -31,6 +30,18 @@ def login(request):
                 result['username'] = username
 
                 auth.login(request, user)
+
+                date = datetime.date.today()
+
+                try:
+                    counter = Counter.objects.get(date=date)
+
+                    counter.users += 1
+                    counter.save()
+                except Counter.DoesNotExist:
+                    counter = Counter(date=date, users=1)
+
+                    counter.save()
             else:
                 result['error_message'] = 'your account has been disabled'
         else:
@@ -51,6 +62,7 @@ def logout(request):
 @login_required
 def index(request):
     faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+
     post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
@@ -60,7 +72,8 @@ def index(request):
 
 @login_required
 def my_faults(request):
-    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-created_at')
+    faults = Fault.objects.filter(is_visible=True, issuer=request.user.username).order_by('-created_at')
+
     post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
@@ -70,17 +83,17 @@ def my_faults(request):
 
 @login_required
 def watched_faults(request):
-    all_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
-    faults_list = []
+    list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
 
-    for fault in all_faults:
+    list_of_watched_faults = []
+
+    for fault in list_of_faults:
         if request.user.username in make_list_of_watchers(fault.watchers):
-            faults_list.append(fault)
+            list_of_watched_faults.append(fault)
 
-    faults = Fault.objects.filter(issuer=request.user.get_username(), is_visible=True).order_by('-created_at')
-    post_faults_to_session(request, faults)
+    post_faults_to_session(request, list_of_watched_faults)
 
-    result = {'faults': serializers.serialize('json', faults)}
+    result = {'faults': serializers.serialize('json', list_of_watched_faults)}
 
     return JsonResponse(result)
 
@@ -88,6 +101,7 @@ def watched_faults(request):
 @login_required
 def resolved_faults(request):
     faults = Fault.objects.filter(is_visible=True, status=2).order_by('-created_at')
+
     post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
@@ -98,6 +112,7 @@ def resolved_faults(request):
 @login_required
 def sorted_faults(request, order_by):
     faults = get_faults_from_session(request).order_by(order_by)
+
     post_faults_to_session(request, faults)
 
     result = {'faults': serializers.serialize('json', faults)}
@@ -110,10 +125,10 @@ def searched_faults(request):
     query = request.GET.get('searched_text')
 
     if query:
-        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]). \
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).\
             filter(Q(topic__icontains=query)).order_by('-created_at')
     else:
-        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1]).order_by('-created_at')
+        faults = Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]).order_by('-created_at')
 
     post_faults_to_session(request, faults)
 
@@ -131,19 +146,35 @@ def add_fault(request):
 
         if form.is_valid():
             fault = form.save(commit=False)
+
             fault.issuer = request.user
             fault.save()
 
+            date = datetime.date.today()
+
+            try:
+                counter = Counter.objects.get(date=date)
+
+                counter.faults += 1
+                counter.save()
+            except Counter.DoesNotExist:
+                counter = Counter(date=date, faults=1)
+
+                counter.save()
+
             invbook = InvbookBackend()
+
             fault_object = invbook.get_or_create_object(fault.object_number)
 
             subject = 'new fault created - {} - {}'.format(fault.id, fault.topic)
             message = 'issuer: {}\n' \
                       'object: {} located in room: {}\n\n' \
+                      'priority: {}\n' \
                       'topic: {}\n' \
                       'description: {}\n\n' \
                       'link to details: http://212.191.92.101:6009/admin/fault_details/{}/'. \
-                format(fault.issuer, fault.object_number, fault_object.room, fault.topic, fault.description, fault.id)
+                format(fault.issuer, fault.object_number, fault_object.room, fault.priority,
+                       fault.topic, fault.description, fault.id)
 
             users = User.objects.filter(is_staff=True)
 
@@ -160,6 +191,7 @@ def edit_fault(request, fault_id):
 
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.issuer == request.user.username:
@@ -177,9 +209,9 @@ def edit_fault(request, fault_id):
 
                 return JsonResponse(result)
             else:
-                raise Http404("fault {} is already ended".format(fault_id))
+                raise Http404("this fault is already ended")
         else:
-            raise Http404("you are not owner of fault {}".format(fault_id))
+            raise Http404("you are not owner of this fault")
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -191,7 +223,7 @@ def watch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        if fault.status != 2 and fault.status != 3:
+        if fault.status != 3:
             watchers = make_list_of_watchers(fault.watchers)
 
             if request.user.username in watchers:
@@ -208,7 +240,7 @@ def watch_fault(request, fault_id):
 
             return JsonResponse(result)
         else:
-            raise Http404("fault {} is already ended".format(fault_id))
+            raise Http404("this fault is already deleted")
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -218,12 +250,12 @@ def fault_details(fault_id):
     try:
         fault = Fault.objects.filter(pk=fault_id)
 
-        if fault.status == 3:
+        if fault.status != 3:
             result = {'fault': serializers.serialize('json', fault)}
 
             return JsonResponse(result)
         else:
-            raise Http404("fault does not exist")
+            raise Http404("this fault is already deleted")
     except Fault.DoesNotExist:
         raise Http404("fault does not exist")
 
@@ -241,11 +273,15 @@ def object_details(object_id):
 
 
 @login_required
-def user_details(request):
+def user_details(request, user_id):
     try:
-        user = User.objects.filter(username__exact=request.user)
-        result = {'user': serializers.serialize('json', user)}
+        user = User.objects.get(id=user_id)
 
-        return JsonResponse(result)
+        if user.id == request.user.id:
+            result = {'user': serializers.serialize('json', user)}
+
+            return JsonResponse(result)
+        else:
+            raise Http404("this is not you")
     except User.DoesNotExist:
         raise Http404("user does not exist")

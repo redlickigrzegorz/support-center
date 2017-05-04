@@ -57,8 +57,8 @@ urlpatterns = [
     url(r'^json/object_details/(?P<object_id>[0-9]+)/$', views_json.object_details, name='object_details_json'),
 
     # details of user
-    url(r'^user_details/$', views.user_details, name='user_details'),
-    url(r'^json/user_details/$', views_json.user_details, name='user_details_json'),
+    url(r'^user_details/(?P<user_id>[0-9]+)/$', views.user_details, name='user_details'),
+    url(r'^json/user_details/(?P<user_id>[0-9]+)/$', views_json.user_details, name='user_details_json'),
 
     # settings
     url(r'^settings/$', views.settings, name='settings'),

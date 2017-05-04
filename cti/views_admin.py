@@ -698,6 +698,7 @@ def statistics(request):
 def settings(request):
     template = loader.get_template('cti/admin/settings.html')
 
-    context = {'header': _('settings')}
+    context = {'all_faults': Fault.objects.all(),
+               'header': _('settings')}
 
     return HttpResponse(template.render(context, request))

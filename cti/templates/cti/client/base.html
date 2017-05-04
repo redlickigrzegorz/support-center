@@ -115,7 +115,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="{% url 'cti:user_details' %}">
+                                    <a href="{% url 'cti:user_details' request.user.id %}">
                                         <span class="glyphicon glyphicon-info-sign"></span>
                                         <span class="navbar-dropdown-label">{% trans "my account" %}</span>
                                     </a>
