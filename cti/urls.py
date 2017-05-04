@@ -3,6 +3,7 @@ from . import views, views_json, views_admin
 
 
 app_name = 'cti'
+
 urlpatterns = [
     # login
     url(r'^$', views.login, name='login'),

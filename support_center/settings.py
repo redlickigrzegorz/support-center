@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
-import os
 from django.utils.translation import ugettext_lazy as _
+import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +38,6 @@ EMAIL_HOST_PASSWORD = 'xjqhnmuwssvewnkz'
 
 
 # Authentication settings
-
 AUTH_USER_MODEL = "cti.User"
 
 AUTHENTICATION_BACKENDS = (
@@ -53,7 +52,6 @@ LDAP_AUTH_CONNECTION_PASSWORD = "alamakota"
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'cti.apps.CtiConfig',
     'django.contrib.admin',
@@ -103,7 +101,6 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
 deployment = True
 migration = False
 
@@ -166,7 +163,6 @@ INVBOOK_TABLES = ['b010t4', 'b010t6', 'b010t8', 'b011t4', 'b011t6', 'b011t8', 'b
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -185,7 +181,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
-
 LANGUAGE_CODE = 'pl'
 
 LANGUAGES = [
@@ -204,7 +199,6 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
-
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
