@@ -4,14 +4,13 @@
         {% load static %}
         {% load i18n %}
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="shortcut icon" type="image/png" href="{% static 'resources/favicon.ico' %}"/>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/css/footer.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/css/login.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/css/logo.css' %}" />
-        <link rel="stylesheet" type="text/css" href="{% static 'cti/css/footer.css' %}" />
-
-        <link rel="shortcut icon" type="image/png" href="{% static 'resources/favicon.ico' %}"/>
     </head>
     <body>
         <div class="container">
@@ -22,7 +21,7 @@
                 <span>{% trans "I hope you will not have to come back here anymore :)" %}</span>
             </div>
             <div class="row content-row">
-                <a href="{% url 'cti:login' %}" class="button">
+                <a href="{% url 'cti:login' %}" class="login-again">
                     <span>{% trans "login again" %}</span>
                 </a>
             </div>
@@ -45,7 +44,7 @@
                 </form>
             </div>
             <div class="container footer-container">
-                <span class="text-muted footer">
+                <span class="footer">
                     {% trans "© copyright by Grzegorz Redlicki" %}
                 </span>
             </div>

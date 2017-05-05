@@ -1,5 +1,5 @@
 .language-button {
-    background-color: white;
+    background-color: #e7e7e7;
     border: 2px solid #e7e7e7;
     color: black;
     padding: 5px 15px;
@@ -8,7 +8,7 @@
     display: inline-block;
     font-size: 12px;
     margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
+    -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
 }
@@ -17,7 +17,7 @@
 .language-button:focus,
 .language-button:active {
     outline: none;
-    background-color: #e7e7e7;
+    background-color: #fffee8;
 }
 
 .footer-container {
@@ -30,12 +30,12 @@
     width: 100%;
 }
 
-.text-muted,
-.text-muted:hover,
-.text-muted:focus {
+.footer {
+    float:right;
+    color: #e7e7e7;
+}
+
+.text-muted {
     color: #777777;
 }
 
-.footer {
-    float:right;
-}

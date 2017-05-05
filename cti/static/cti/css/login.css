@@ -72,13 +72,19 @@ body {
     text-align: center;
 }
 
-.button,
-.button:hover {
-    color: #ffffff;
-    font-size: 20px;
+.login-again {
+    color: #e7e7e7;
+    font-size: 15px;
     font-weight: bolder;
     text-align: center;
+}
+
+.login-again:hover,
+.login-again:focus,
+.login-again:active {
+    color: #fffee8;
     text-decoration: none;
+    outline: none;
 }
 
 .form-signin
@@ -108,9 +114,12 @@ body {
     color: #ffffff;
 }
 
-.btn-default:hover {
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active {
     background: #691e19;
     color: #ffffff;
+    outline: none;
 }
 
 .tooltip-inner {

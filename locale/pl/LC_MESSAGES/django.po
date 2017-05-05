@@ -441,7 +441,7 @@ msgstr "zaloguj"
 
 #: .\cti\templates\cti\client\logout.html:21
 msgid "I hope you will not have to come back here anymore :)"
-msgstr "Mam nadzieję, że już nigdy nie będziesz musiał tutaj wracać"
+msgstr "Mam nadzieję, że już nigdy nie będziesz musiał tutaj wracać :)"
 
 #: .\cti\templates\cti\client\logout.html:25
 msgid "login again"

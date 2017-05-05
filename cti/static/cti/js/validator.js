@@ -101,11 +101,17 @@ function validateFault() {
             content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
-                confirm: function () {
-                    $('#fault-form').submit();
+                confirm: {
+                    text: gettext('confirm'),
+                    action: function(){
+                        $('#fault-form').submit();
+                    }
                 },
-                cancel: function () {
-                }
+                close: {
+                    text: gettext('close'),
+                    action: function(){
+                    }
+                },
             }
         });
     }
@@ -179,11 +185,17 @@ function validateUser() {
             content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
-                confirm: function () {
-                    $('#user-form').submit();
+                confirm: {
+                    text: gettext('confirm'),
+                    action: function(){
+                        $('#user-form').submit();
+                    }
                 },
-                cancel: function () {
-                }
+                close: {
+                    text: gettext('close'),
+                    action: function(){
+                    }
+                },
             }
         });
     }
@@ -230,11 +242,17 @@ function validatePassword() {
             content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
-                confirm: function () {
-                    $('#password-form').submit();
+                confirm: {
+                    text: gettext('confirm'),
+                    action: function(){
+                        $('#password-form').submit();
+                    }
                 },
-                cancel: function () {
-                }
+                close: {
+                    text: gettext('close'),
+                    action: function(){
+                    }
+                },
             }
         });
     }
