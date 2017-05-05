@@ -4,9 +4,7 @@
         {% load static %}
         {% load i18n %}
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.7/css/theme.default.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.css">
         <link rel="stylesheet" type='text/css' href='//cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.0/animate.min.css'/>
 
@@ -18,10 +16,10 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.7/js/jquery.tablesorter.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.28.7/js/jquery.tablesorter.widgets.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.2.0/jquery-confirm.min.js"></script>
+        <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+
+        <script type="text/javascript" src="{% static 'cti/js/validator.js' %}"></script>
 
         {% include 'cti/scripts/alert_messages.html' %}
     </head>
@@ -35,17 +33,19 @@
                     <span>{% trans "please, sign in" %}</span>
                 </div>
                 <div class="row form-row">
-                    <form class="form-signin" role="form" action="{% url 'cti:login' %}" method="post" enctype="multipart/form-data">
+                    <form id="login-form" class="form-signin" role="form" action="" method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input type="text" id="id_username" name="username" class="form-control" placeholder="username or email" required autofocus>
+                            <input type="text" id="username" name="username" class="form-control" placeholder="{% trans "username or email" %}" required autofocus
+                                   data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title="">
                         </div>
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input type="password" id="id_password" name="password" class="form-control" placeholder="password" required>
+                            <input type="password" id="password" name="password" class="form-control" placeholder="{% trans "password" %}" required
+                                   data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title="">
                         </div>
-                        <button class="btn btn-lg btn-default btn-block" type="submit">{% trans "sign in" %}</button>
+                        <button id="confirm-login" class="btn btn-lg btn-default btn-block" type="button" onclick="return validateLogin();">{% trans "sign in" %}</button>
                     </form>
                 </div>
             </div>

@@ -112,3 +112,21 @@ body {
     background: #691e19;
     color: #ffffff;
 }
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 3px 8px;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    background-color: #f1c40f;
+    border-radius: 4px;
+ }
+
+.tooltip-arrow {
+    top: 50%;
+    left: 0;
+    margin-top: -5px;
+    border-width: 5px 5px 5px 0;
+    border-right-color: #f1c40f!important;
+}

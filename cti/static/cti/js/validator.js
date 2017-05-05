@@ -239,3 +239,44 @@ function validatePassword() {
         });
     }
 }
+
+function validateLogin() {
+    let validation = true;
+
+    let username = document.getElementById("username").value;
+    let password = document.getElementById("password").value;
+
+    if (!username) {
+        validation = false;
+        $('#username').attr('data-original-title', gettext('field is required'))
+                      .tooltip('fixTitle')
+                      .tooltip('show');
+    }
+    else {
+        $('#username').tooltip('hide');
+    }
+    if (!password) {
+        validation = false;
+        $('#password').attr('data-original-title', gettext('field is required'))
+                      .tooltip('fixTitle')
+                      .tooltip('show');
+    }
+    else {
+        $('#password').tooltip('hide');
+    }
+
+    if (validation) {
+        $('#login-form').submit();
+    }
+    else {
+
+    }
+}
+
+$(function() {
+    $("#login-form").keypress(function (e) {
+        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+            validateLogin()
+        }
+    });
+});

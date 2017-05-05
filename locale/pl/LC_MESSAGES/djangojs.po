@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-02 13:45+0200\n"
+"POT-Creation-Date: 2017-05-05 10:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: .\cti\static\cti\js\confirmator.js:6 .\cti\static\cti\js\confirmator.js:27
+#: .\cti\static\cti\js\confirmator.js:6 .\cti\static\cti\js\confirmator.js:33
 msgid "confirm!"
 msgstr "potwierdź!"
 
@@ -27,7 +27,17 @@ msgstr "potwierdź!"
 msgid "are you sure you want to report phone number??"
 msgstr "czy na pewno chcesz zgłosić ten numer telefonu??"
 
-#: .\cti\static\cti\js\confirmator.js:28
+#: .\cti\static\cti\js\confirmator.js:11 .\cti\static\cti\js\confirmator.js:38
+#, fuzzy
+#| msgid "confirm!"
+msgid "confirm"
+msgstr "potwierdź!"
+
+#: .\cti\static\cti\js\confirmator.js:17 .\cti\static\cti\js\confirmator.js:44
+msgid "close"
+msgstr ""
+
+#: .\cti\static\cti\js\confirmator.js:34
 msgid "are you sure you want to ask for reassign??"
 msgstr "czy na pewno chcesz poprosić o przepisanie tego zgłoszenia"
 
@@ -144,8 +154,10 @@ msgid "phone number is required"
 msgstr "numer telefonu jest wymagany"
 
 #: .\cti\static\cti\js\validator.js:34
-msgid "allowed phone number format: +999999999 (9-15 digits with possible plus)"
-msgstr "wymagany zapis numeru telefonu: +999999999 (9-15 cyfry z opcjonalnym plusem)"
+msgid ""
+"allowed phone number format: +999999999 (9-15 digits with possible plus)"
+msgstr ""
+"wymagany zapis numeru telefonu: +999999999 (9-15 cyfry z opcjonalnym plusem)"
 
 #: .\cti\static\cti\js\validator.js:46
 msgid "object number is required"
@@ -201,6 +213,7 @@ msgid "email must have '@' sign and any white space"
 msgstr "email musi posiadać znak '@'"
 
 #: .\cti\static\cti\js\validator.js:201 .\cti\static\cti\js\validator.js:210
-#: .\cti\static\cti\js\validator.js:219
+#: .\cti\static\cti\js\validator.js:219 .\cti\static\cti\js\validator.js:251
+#: .\cti\static\cti\js\validator.js:260
 msgid "field is required"
 msgstr "to pole jest wymagane"
