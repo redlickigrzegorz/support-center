@@ -1,6 +1,8 @@
 $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-    $('[data-toggle="tooltip"]').on('shown.bs.tooltip', function () {
+    let data_tooltip = $('[data-toggle="tooltip"]');
+
+    data_tooltip.tooltip();
+    data_tooltip.on('shown.bs.tooltip', function () {
         $('.tooltip').addClass('animated tada');
     })
 });
@@ -293,7 +295,7 @@ function validateLogin() {
 
 $(function() {
     $("#login-form").keypress(function (e) {
-        if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+        if ((e.which && e.which === 13) || (e.keyCode && e.keyCode === 13)) {
             validateLogin()
         }
     });

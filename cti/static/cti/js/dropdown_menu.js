@@ -1,13 +1,12 @@
 window.onclick = function(event) {
     if (!event.target.matches('.dropdown-button')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
+        let dropdown_content = document.getElementsByClassName("dropdown-content");
 
-        for (i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
+        for (let i = 0; i < dropdown_content.length; i++) {
+            let open_dropdown = dropdown_content[i];
 
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
+            if (open_dropdown.classList.contains('show')) {
+                open_dropdown.classList.remove('show');
             }
         }
     }
