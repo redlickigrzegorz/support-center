@@ -5,27 +5,29 @@
 {% block header %}{{ header }}{% endblock %}
 
 {% block body %}
+    {% load i18n %}
+
     <div class="panel panel-default">
         <div class="panel-body col-xs-10 col-sm-8 col-md-6">
             <form id="user-form" class="form-horizontal" action="" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <div class="form-long-div">
-                        <input type="text" id="first_name" name="first_name" class="form-control form-cell" placeholder="first name"
+                        <input type="text" id="first_name" name="first_name" class="form-control form-cell" placeholder="{% trans "first name" %}"
                                data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
                                 {% if form.first_name.value != None %} value="{{ form.first_name.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <input type="text" id="last_name" name="last_name" class="form-control form-cell" placeholder="last name"
+                        <input type="text" id="last_name" name="last_name" class="form-control form-cell" placeholder="{% trans "last name" %}"
                                data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
                                 {% if form.last_name.value != None %} value="{{ form.last_name.value }}" {% endif %}>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-long-div">
-                        <input type="text" id="email" name="email" class="form-control form-cell" placeholder="email"
+                        <input type="text" id="email" name="email" class="form-control form-cell" placeholder="{% trans "email" %}"
                                data-animation="true" data-toggle="tooltip" data-placement="right" data-trigger="manual" title=""
                                 {% if form.email.value != None %} value="{{ form.email.value }}" {% endif %}>
                     </div>
