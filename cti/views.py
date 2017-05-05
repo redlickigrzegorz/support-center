@@ -423,13 +423,3 @@ def user_details(request, user_id):
             raise Http404(_("this is not you"))
     except User.DoesNotExist:
         raise Http404(_("user does not exist"))
-
-
-@login_required
-def settings(request):
-    template = loader.get_template('cti/client/settings.html')
-
-    context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
-               'header': _('settings')}
-
-    return HttpResponse(template.render(context, request))

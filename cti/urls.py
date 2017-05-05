@@ -61,9 +61,6 @@ urlpatterns = [
     url(r'^user_details/(?P<user_id>[0-9]+)/$', views.user_details, name='user_details'),
     url(r'^json/user_details/(?P<user_id>[0-9]+)/$', views_json.user_details, name='user_details_json'),
 
-    # settings
-    url(r'^settings/$', views.settings, name='settings'),
-
     # admin - index
     url(r'^admin/index/$', views_admin.index, name='index_admin'),
 
@@ -141,7 +138,4 @@ urlpatterns = [
 
     # admin - statistics
     url(r'^admin/statistics/$', views_admin.statistics, name='statistics_admin'),
-
-    # admin - settings
-    url(r'^admin/settings/$', views_admin.settings, name='settings_admin'),
 ]

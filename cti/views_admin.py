@@ -692,13 +692,3 @@ def statistics(request):
                'counters': Counter.objects.all()}
 
     return HttpResponse(template.render(context, request))
-
-
-@login_required
-def settings(request):
-    template = loader.get_template('cti/admin/settings.html')
-
-    context = {'all_faults': Fault.objects.all(),
-               'header': _('settings')}
-
-    return HttpResponse(template.render(context, request))
