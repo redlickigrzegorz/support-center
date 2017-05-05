@@ -1,18 +1,24 @@
 {% if messages %}
+    {% load i18n %}
+
     <script type="text/javascript">
         {% for message in messages %}
-            let title = "{{ message.tags }}";
+            let message_tag = "{{ message.tags }}";
             let message = "{{ message }}";
+            let title = "{% trans "success" %}";
             let type = 'green';
             let icon = 'glyphicon glyphicon-ok-sign';
 
-            {% if message.tags == "warning" %}
-                icon = 'glyphicon glyphicon-info-sign';
+            if (message_tag === "warning") {
+                title = "{% trans "warning" %}";
                 type = 'orange';
-            {% elif message.tags == "error" %}
-                icon = 'glyphicon glyphicon-remove-sign';
+                icon = 'glyphicon glyphicon-info-sign';
+            }
+            else if (message_tag === "error") {
+                title = "{% trans "error" %}";
                 type = 'red';
-            {% endif %}
+                icon = 'glyphicon glyphicon-remove-sign';
+            }
 
             let dialog = $.dialog({
                 icon: icon,

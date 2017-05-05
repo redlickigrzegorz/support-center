@@ -7,11 +7,17 @@ function confirm_reporting_phone_number() {
             content: gettext('are you sure you want to report phone number??'),
             type: 'red',
             buttons: {
-                confirm: function () {
-                    window.location.replace($("#report-number").attr("href"))
+                confirm: {
+                    text: gettext('confirm'),
+                    action: function(){
+                        window.location.replace($("#report-number").attr("href"))
+                    }
                 },
-                cancel: function () {
-                }
+                close: {
+                    text: gettext('close'),
+                    action: function(){
+                    }
+                },
             }
         });
     }
@@ -28,11 +34,17 @@ function confirm_asking_for_reassigning() {
             content: gettext('are you sure you want to ask for reassign??'),
             type: 'red',
             buttons: {
-                confirm: function () {
-                    window.location.replace($("#ask-for-reassign").attr("href"))
+                confirm: {
+                    text: gettext('confirm'),
+                    action: function(){
+                        window.location.replace($("#ask-for-reassign").attr("href"))
+                    }
                 },
-                cancel: function () {
-                }
+                close: {
+                    text: gettext('close'),
+                    action: function(){
+                    }
+                },
             }
         });
     }
