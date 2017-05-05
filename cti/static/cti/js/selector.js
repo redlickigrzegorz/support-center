@@ -1,7 +1,4 @@
 $(document).ready(function() {
-    $('.menu-button').click(function(event) {
-        $('.menu-button').removeClass('selected');
-        $(this).addClass('selected');
-        event.preventDefault();
-    })
+    $('li.active').removeClass('active');
+    $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
 });
