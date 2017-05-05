@@ -1,20 +1,16 @@
 from django.template import loader
-from django.http import HttpResponse
-from .models import Fault, Object, History, Counter
-from django.http import Http404
-from .forms import AdminFaultForm, UserForm
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.contrib import auth, messages
 from django.contrib.auth import authenticate
-from django.http import HttpResponseRedirect
-from django.contrib import auth
-from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib import messages
-from .models import User
-from copy import copy
-from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email
-from django.db.models import Q
+from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.db.models import Q
+from copy import copy
+from .forms import AdminFaultForm, UserForm
+from .models import Fault, Object, User, History, Counter
+from .helper import compare_two_faults, make_string_of_watchers, make_list_of_watchers, send_email
 
 
 @login_required
