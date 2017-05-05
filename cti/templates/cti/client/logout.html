@@ -9,6 +9,7 @@
 
         <link rel="stylesheet" type="text/css" href="{% static 'cti/css/login.css' %}" />
         <link rel="stylesheet" type="text/css" href="{% static 'cti/css/logo.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'cti/css/footer.css' %}" />
 
         <link rel="shortcut icon" type="image/png" href="{% static 'resources/favicon.ico' %}"/>
     </head>
@@ -31,5 +32,23 @@
                 <img class="logo" src="{% static 'resources/logo_cti.png' %}">
             </div>
         </div>
+        <footer class="footer navbar-fixed-bottom">
+            <div class="container language-container">
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <button type="submit" class="language-button" name="language" value="{{ language.code }}">{{ language.code }}</button>
+                    {% endfor %}
+                </form>
+            </div>
+            <div class="container footer-container">
+                <span class="text-muted footer">
+                    {% trans "© copyright by Grzegorz Redlicki" %}
+                </span>
+            </div>
+        </footer>
     </body>
 </html>
