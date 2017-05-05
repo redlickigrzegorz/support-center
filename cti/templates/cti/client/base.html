@@ -143,36 +143,30 @@
                 </div>
                 <hr class="hr-divider">
                 <div class="body-container">
-                    <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                        <input name="next" type="hidden" value="{{ redirect_to }}" />
-                        <select name="language">
-                            {% get_current_language as LANGUAGE_CODE %}
-                            {% get_available_languages as LANGUAGES %}
-                            {% get_language_info_list for LANGUAGES as languages %}
-                            {% for language in languages %}
-                                <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
-                                    {{ language.name_local }} ({{ language.code }})
-                                </option>
-                            {% endfor %}
-                        </select>
-                        <input type="submit" value="Go" />
-                    </form>
-                    <form action="{% url 'set_language' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" name="language" value="pl">pl</button>
-                        <button type="submit" name="language" value="en">en</button>
-                    </form>
                     {% block body %}
                     {% endblock %}
                 </div>
             </div>
         </div>
         <footer class="footer navbar-fixed-bottom">
+            <div class="container language-container">
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <button type="submit" class="language-button" name="language" value="{{ language.code }}">{{ language.code }}</button>
+                    {% endfor %}
+                </form>
+            </div>
             <div class="container footer-container">
                 {% if request.user.is_staff %}
                     <a href="{% url 'cti:index_admin' %}" class="text-muted">{% trans "admin site" %}</a>
                 {% endif %}
-                <span class="text-muted footer">{% trans "© copyright by Grzegorz Redlicki" %}</span>
+                <span class="text-muted footer">
+                    {% trans "© copyright by Grzegorz Redlicki" %}
+                </span>
             </div>
         </footer>
     </body>

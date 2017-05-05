@@ -171,11 +171,24 @@
             </div>
         </div>
         <footer class="footer navbar-fixed-bottom">
+            <div class="container language-container">
+                <form action="{% url 'set_language' %}" method="post">
+                    {% csrf_token %}
+                    {% get_current_language as LANGUAGE_CODE %}
+                    {% get_available_languages as LANGUAGES %}
+                    {% get_language_info_list for LANGUAGES as languages %}
+                    {% for language in languages %}
+                        <button type="submit" class="language-button" name="language" value="{{ language.code }}">{{ language.code }}</button>
+                    {% endfor %}
+                </form>
+            </div>
             <div class="container footer-container">
                 {% if request.user.is_staff %}
                     <a href="{% url 'cti:index' %}" class="text-muted">{% trans "client site" %}</a>
                 {% endif %}
-                <span class="text-muted footer">{% trans "© copyright by Grzegorz Redlicki" %}</span>
+                <span class="text-muted footer">
+                    {% trans "© copyright by Grzegorz Redlicki" %}
+                </span>
             </div>
         </footer>
     </body>
