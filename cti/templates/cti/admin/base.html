@@ -167,7 +167,7 @@
                 </div>
             </div>
         </div>
-        <footer class="footer navbar-fixed-bottom">
+        <footer class="navbar-fixed-bottom">
             <div class="container language-container">
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
@@ -181,9 +181,9 @@
             </div>
             <div class="container footer-container">
                 {% if request.user.is_staff %}
-                    <a href="{% url 'cti:index' %}" class="text-muted">{% trans "client site" %}</a>
+                    <a href="{% url 'cti:index' %}" class="site-button">{% trans "client site" %}</a>
                 {% endif %}
-                <span class="text-muted footer">
+                <span class="footer-text">
                     {% trans "© copyright by Grzegorz Redlicki" %}
                 </span>
             </div>

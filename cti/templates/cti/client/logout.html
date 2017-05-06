@@ -31,7 +31,7 @@
                 <img class="logo" src="{% static 'resources/logo_cti.png' %}">
             </div>
         </div>
-        <footer class="footer navbar-fixed-bottom">
+        <footer class="navbar-fixed-bottom">
             <div class="container language-container">
                 <form action="{% url 'set_language' %}" method="post">
                     {% csrf_token %}
@@ -44,7 +44,7 @@
                 </form>
             </div>
             <div class="container footer-container">
-                <span class="footer">
+                <span class="footer-text">
                     {% trans "© copyright by Grzegorz Redlicki" %}
                 </span>
             </div>
