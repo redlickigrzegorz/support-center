@@ -95,8 +95,8 @@
                         <div class="col-xs-6 col-sm-6 col-md-6 ending-div">
                             {% trans "created by " %}{{ fault.issuer }} ({{ fault.phone_number }}
                             <a href="{% url 'cti:report_phone_number_admin' fault.id %}" id="report-number" onclick="return confirm_reporting_phone_number()" title="{% trans "report phone number" %}">
-                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
-                            </a>)
+                                <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>)
+                            </a>
                         </div>
                     </div>
                     <hr class="hr-top-divider">

@@ -337,7 +337,7 @@ def edit_fault(request, fault_id):
 
 
 @login_required
-def watch_fault(request, fault_id):
+def watch_unwatch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 

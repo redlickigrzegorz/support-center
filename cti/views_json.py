@@ -217,7 +217,7 @@ def edit_fault(request, fault_id):
 
 
 @login_required
-def watch_fault(request, fault_id):
+def watch_unwatch_fault(request, fault_id):
     result = {'watch_status': False}
 
     try:

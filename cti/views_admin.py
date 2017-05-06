@@ -46,10 +46,10 @@ def my_faults(request):
 def watched_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
-    all_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
     faults = []
 
-    for fault in all_faults:
+    for fault in list_of_faults:
         if request.user.username in make_list_of_watchers(fault.watchers):
             faults.append(fault)
 
@@ -82,9 +82,10 @@ def searched_faults(request):
 
     if query:
         faults = Fault.objects.filter(Q(topic__icontains=query))
-    else:
-        messages.warning(request, _('no matches for this query'))
 
+        if not faults:
+            messages.warning(request, _('no matches for this query'))
+    else:
         faults = Fault.objects.all()
 
     context = {'faults': faults,
@@ -141,6 +142,7 @@ def all_history(request):
 def edit_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.handler == request.user.username:
@@ -152,6 +154,7 @@ def edit_fault(request, fault_id):
                 if request.method == "POST":
                     if form.is_valid():
                         fault = form.save(commit=False)
+
                         fault.save()
 
                         compare_two_faults(request, previous_version_of_fault, fault)
@@ -194,26 +197,23 @@ def edit_fault(request, fault_id):
 
 @login_required
 @staff_member_required
-def watch_fault(request, fault_id):
+def watch_unwatch_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
 
-        if fault.status != 2 and fault.status != 3:
-            watchers = make_list_of_watchers(fault.watchers)
+        watchers = make_list_of_watchers(fault.watchers)
 
-            if request.user.username in watchers:
-                watchers.remove(request.user.username)
+        if request.user.username in watchers:
+            watchers.remove(request.user.username)
 
-                messages.success(request, _("you don't watch on this fault from this time"))
-            else:
-                watchers.append(request.user.username)
-
-                messages.success(request, _("you watch on this fault from this time"))
-
-            fault.watchers = make_string_of_watchers(watchers)
-            fault.save()
+            messages.success(request, _("you don't watch on this fault from this time"))
         else:
-            messages.warning(request, _("this fault is already ended"))
+            watchers.append(request.user.username)
+
+            messages.success(request, _("you watch on this fault from this time"))
+
+        fault.watchers = make_string_of_watchers(watchers)
+        fault.save()
 
         return HttpResponseRedirect(reverse('cti:fault_details_admin', kwargs={'fault_id': fault_id}))
     except Fault.DoesNotExist:
@@ -225,6 +225,7 @@ def watch_fault(request, fault_id):
 def finish_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.status != 2 and fault.status != 3:
@@ -264,6 +265,7 @@ def finish_fault(request, fault_id):
 def delete_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.is_visible:
@@ -303,11 +305,12 @@ def delete_fault(request, fault_id):
 def assign_to_me(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.handler == '0':
             if fault.status == 0:
-                fault.handler = request.user.get_username()
+                fault.handler = request.user.username
                 fault.status = 1
                 fault.save()
 
@@ -343,6 +346,7 @@ def assign_to_me(request, fault_id):
 def reassign_fault(request, fault_id, username):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.handler == request.user.username:
@@ -372,6 +376,7 @@ def reassign_fault(request, fault_id, username):
 def restore_fault(request, fault_id):
     try:
         fault = Fault.objects.get(pk=fault_id)
+
         previous_version_of_fault = copy(fault)
 
         if fault.status == 2 or fault.status == 3:
@@ -580,10 +585,10 @@ def fault_details(request, fault_id):
 @login_required
 @staff_member_required
 def object_details(request, object_id):
-    template = loader.get_template('cti/admin/object_details.html')
-
     try:
         fault_object = Object.objects.get(object_number=object_id)
+
+        template = loader.get_template('cti/admin/object_details.html')
 
         context = {'all_faults': Fault.objects.all(),
                    'object': fault_object,
@@ -597,10 +602,10 @@ def object_details(request, object_id):
 @login_required
 @staff_member_required
 def user_details(request, user_id):
-    template = loader.get_template('cti/admin/user_details.html')
-
     try:
         user = User.objects.get(id=user_id)
+
+        template = loader.get_template('cti/admin/user_details.html')
 
         context = {'all_faults': Fault.objects.all(),
                    'user': user,
