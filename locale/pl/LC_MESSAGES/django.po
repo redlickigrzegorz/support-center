@@ -209,7 +209,7 @@ msgstr "ostatnia zmiana"
 
 #: cti/templates/cti/admin/fault_details.html:96
 msgid "created by "
-msgstr "stworzone przez"
+msgstr "stworzone przez "
 
 #: cti/templates/cti/admin/fault_details.html:97
 msgid "report phone number"
