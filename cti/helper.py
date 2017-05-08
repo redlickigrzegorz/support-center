@@ -1,6 +1,7 @@
 from django.core import serializers
 from django.core.mail import send_mail
-from .models import History, Fault
+from .models import History, Fault, User
+from .backends import InvbookBackend
 import re
 
 
@@ -36,6 +37,23 @@ def make_string_of_watchers(list_of_watchers):
     return string_of_watchers
 
 
+def send_email(subject, message, users, from_email=None):
+    if not from_email:
+        from_email = "redlicki.grzegorz@gmail.com"
+
+    recipient_list = []
+
+    for user in users:
+        pattern = r"\S+@\S+"
+        match = re.search(pattern, user.email)
+
+        if match:
+            recipient_list.append(user.email)
+
+    if len(recipient_list) > 0:
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+
+
 def compare_two_faults(request, previous_version, actual_version):
     if previous_version.handler != actual_version.handler:
         history = History(fault_id=actual_version.id,
@@ -53,6 +71,10 @@ def compare_two_faults(request, previous_version, actual_version):
                           previous_version=str(previous_version.object_number),
                           actual_version=str(actual_version.object_number))
         history.save()
+
+        invbook = InvbookBackend()
+
+        invbook.get_or_create_object(actual_version.object_number)
     if previous_version.topic != actual_version.topic:
         history = History(fault_id=actual_version.id,
                           changer_id=request.user.id,
@@ -85,6 +107,18 @@ def compare_two_faults(request, previous_version, actual_version):
                           previous_version=str(previous_version.status),
                           actual_version=str(actual_version.status))
         history.save()
+
+        subject = 'fault which you are watching - {} - has been changed status'.format(actual_version.id)
+        message = 'status: {}\n' \
+                  'topic: {}\n' \
+                  'description: {}\n\n' \
+                  'link to details: http://212.191.92.101:6009/fault_details/{}/'.\
+            format(actual_version.status, actual_version.topic, actual_version.description, actual_version.id)
+
+        for user in make_list_of_watchers(actual_version.watchers):
+            users = User.objects.filter(username=user)
+
+            send_email(subject, message, users)
     if previous_version.priority != actual_version.priority:
         history = History(fault_id=actual_version.id,
                           changer_id=request.user.id,
@@ -109,20 +143,3 @@ def compare_two_faults(request, previous_version, actual_version):
                           previous_version=str(previous_version.watchers),
                           actual_version=str(actual_version.watchers))
         history.save()
-
-
-def send_email(subject, message, users, from_email=None):
-    if not from_email:
-        from_email = "redlicki.grzegorz@gmail.com"
-
-    recipient_list = []
-
-    for user in users:
-        pattern = r"\S+@\S+"
-        match = re.search(pattern, user.email)
-
-        if match:
-            recipient_list.append(user.email)
-
-    if len(recipient_list) > 0:
-        send_mail(subject, message, from_email, recipient_list, fail_silently=False)
