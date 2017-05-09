@@ -32,7 +32,7 @@ def index(request):
 def my_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
-    faults = Fault.objects.filter(is_visible=True, handler=request.user.username)
+    faults = Fault.objects.filter(is_visible=True, status__in=[0, 1], handler=request.user.username)
 
     context = {'faults': faults,
                'all_faults': Fault.objects.all(),
@@ -46,7 +46,7 @@ def my_faults(request):
 def watched_faults(request):
     template = loader.get_template('cti/admin/index.html')
 
-    list_of_faults = Fault.objects.filter(is_visible=True, status__in=[0, 1])
+    list_of_faults = Fault.objects.all()
     faults = []
 
     for fault in list_of_faults:
