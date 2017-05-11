@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator, MaxValueValidator
+import re
 
 
 class Fault(models.Model):
@@ -70,6 +71,18 @@ class Fault(models.Model):
     def __str__(self):
         return '{} - {}'.format(self.created_at, self.topic)
 
+    def validate_issuer_field(self):
+        return True if re.search(r'^\d{6}$', self.issuer) else False
+
+    def validate_handler_field(self):
+        return True if re.search(r'^0|\d{6}$', self.handler) else False
+
+    def validate_object_number_field(self):
+        return True if re.search(r'^\d{10}$', self.object_number) else False
+
+    def validate_phone_number_field(self):
+        return True if re.search(r'^\+?\d{9,15}$', self.phone_number) else False
+
 
 class Object(models.Model):
     # object number
@@ -109,6 +122,9 @@ class Object(models.Model):
 
     def __str__(self):
         return '{} - {} - {}'.format(self.date, self.object_number, self.object_name)
+
+    def validate_object_number_field(self):
+        return True if re.search(r'^\d{10}$', self.object_number) else False
 
 
 class User(AbstractUser):
