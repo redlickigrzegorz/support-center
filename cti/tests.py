@@ -13,7 +13,7 @@ class FaultModelTest(TestCase):
         self.assertIs(self.fault.validate_issuer_field(), True)
 
     def test_bad_inout_data_for_issuer_field(self):
-        self.fault.issuer = 'test'
+        self.fault.issuer = 'issuer'
 
         self.assertIs(self.fault.validate_issuer_field(), False)
 
@@ -23,7 +23,7 @@ class FaultModelTest(TestCase):
         self.assertIs(self.fault.validate_handler_field(), True)
 
     def test_bad_inout_data_for_handler_field(self):
-        self.fault.handler = 'test'
+        self.fault.handler = 'handler'
 
         self.assertIs(self.fault.validate_handler_field(), False)
 
@@ -33,7 +33,7 @@ class FaultModelTest(TestCase):
         self.assertIs(self.fault.validate_object_number_field(), True)
 
     def test_bad_inout_data_for_object_number_field(self):
-        self.fault.object_number = 'test'
+        self.fault.object_number = 'object number'
 
         self.assertIs(self.fault.validate_object_number_field(), False)
 
@@ -43,7 +43,7 @@ class FaultModelTest(TestCase):
         self.assertIs(self.fault.validate_phone_number_field(), True)
 
     def test_bad_inout_data_for_phone_number_field(self):
-        self.fault.phone_number = 'test'
+        self.fault.phone_number = 'phone number'
 
         self.assertIs(self.fault.validate_phone_number_field(), False)
 
