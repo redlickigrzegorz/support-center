@@ -42,7 +42,7 @@ AUTH_USER_MODEL = "cti.User"
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    #'cti.backends.LDAPBackend',
+    'cti.backends.LDAPBackend',
 )
 
 LDAP_AUTH_URL = "ldap://10.105.10.97"
@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'support_center.wsgi.cti'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-deployment = False
+deployment = True
 migration = False
 
 if deployment:
