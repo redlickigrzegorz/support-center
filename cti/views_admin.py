@@ -584,9 +584,9 @@ def fault_details(request, fault_id):
 
 @login_required
 @staff_member_required
-def object_details(request, object_id):
+def object_details(request, object_number):
     try:
-        fault_object = Object.objects.get(object_number=object_id)
+        fault_object = Object.objects.get(object_number=object_number)
 
         template = loader.get_template('cti/admin/object_details.html')
 

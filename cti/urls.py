@@ -54,8 +54,8 @@ urlpatterns = [
     url(r'^json/fault_details/(?P<fault_id>[0-9]+)/$', views_json.fault_details, name='fault_details_json'),
 
     # details of object
-    url(r'^object_details/(?P<object_id>[0-9]+)/$', views.object_details, name='object_details'),
-    url(r'^json/object_details/(?P<object_id>[0-9]+)/$', views_json.object_details, name='object_details_json'),
+    url(r'^object_details/(?P<object_number>[0-9]+)/$', views.object_details, name='object_details'),
+    url(r'^json/object_details/(?P<object_number>[0-9]+)/$', views_json.object_details, name='object_details_json'),
 
     # details of user
     url(r'^user_details/(?P<user_id>[0-9]+)/$', views.user_details, name='user_details'),
@@ -123,7 +123,7 @@ urlpatterns = [
     url(r'^admin/fault_details/(?P<fault_id>[0-9]+)/$', views_admin.fault_details, name='fault_details_admin'),
 
     # admin - details of object
-    url(r'^admin/object_details/(?P<object_id>[0-9]+)/$', views_admin.object_details, name='object_details_admin'),
+    url(r'^admin/object_details/(?P<object_number>[0-9]+)/$', views_admin.object_details, name='object_details_admin'),
 
     # admin - details of user
     url(r'^admin/user_details/(?P<user_id>[0-9]+)/$', views_admin.user_details, name='user_details_admin'),

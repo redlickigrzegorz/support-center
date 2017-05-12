@@ -391,11 +391,11 @@ def fault_details(request, fault_id):
 
 
 @login_required
-def object_details(request, object_id):
+def object_details(request, object_number):
     template = loader.get_template('cti/client/object_details.html')
 
     try:
-        fault_object = Object.objects.get(object_number=object_id)
+        fault_object = Object.objects.get(object_number=object_number)
 
         context = {'all_faults': Fault.objects.filter(is_visible=True, status__in=[0, 1, 2]),
                    'object': fault_object,

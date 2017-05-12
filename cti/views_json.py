@@ -261,9 +261,9 @@ def fault_details(fault_id):
 
 
 @login_required
-def object_details(object_id):
+def object_details(object_number):
     try:
-        fault_object = Object.objects.filter(object_number=object_id)
+        fault_object = Object.objects.filter(object_number=object_number)
 
         result = {'object': serializers.serialize('json', fault_object)}
 
