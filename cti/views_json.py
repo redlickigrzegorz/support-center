@@ -246,12 +246,18 @@ def watch_unwatch_fault(request, fault_id):
 
 
 @login_required
-def fault_details(fault_id):
+def fault_details(request, fault_id):
     try:
-        fault = Fault.objects.filter(pk=fault_id)
+        list_of_faults = Fault.objects.filter(pk=fault_id)
 
-        if fault.status != 3:
-            result = {'fault': serializers.serialize('json', fault)}
+        faults = []
+
+        for fault in list_of_faults:
+            if fault.status != 3:
+                faults.append(fault)
+
+        if faults:
+            result = {'fault': serializers.serialize('json', faults)}
 
             return JsonResponse(result)
         else:
@@ -261,11 +267,11 @@ def fault_details(fault_id):
 
 
 @login_required
-def object_details(object_number):
+def object_details(request, object_number):
     try:
-        fault_object = Object.objects.filter(object_number=object_number)
+        fault_objects = Object.objects.filter(object_number=object_number)
 
-        result = {'object': serializers.serialize('json', fault_object)}
+        result = {'object': serializers.serialize('json', fault_objects)}
 
         return JsonResponse(result)
     except Object.DoesNotExist:
@@ -275,10 +281,16 @@ def object_details(object_number):
 @login_required
 def user_details(request, user_id):
     try:
-        user = User.objects.get(id=user_id)
+        list_of_users = User.objects.filter(id=user_id)
 
-        if user.id == request.user.id:
-            result = {'user': serializers.serialize('json', user)}
+        users = []
+
+        for user in list_of_users:
+            if user.id == request.user.id:
+                users.append(user)
+
+        if users:
+            result = {'user': serializers.serialize('json', users)}
 
             return JsonResponse(result)
         else:
