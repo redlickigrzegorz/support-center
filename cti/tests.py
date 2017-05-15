@@ -433,7 +433,8 @@ class AdminViewTest(TestCase):
         self.assertTemplateUsed(response, 'cti/admin/user_details.html')
 
     def test_call_view_for_ask_for_reassign_admin(self):
-        response = self.client.get(reverse('cti:ask_for_reassign_admin', args=(self.fault.id, self.superuser.username,)))
+        response = self.client.get(reverse('cti:ask_for_reassign_admin',
+                                           args=(self.fault.id, self.superuser.username,)))
 
         self.assertEqual(response.status_code, 302)
 
