@@ -245,15 +245,13 @@ def add_fault(request):
             fault.issuer = request.user.username
             fault.save()
 
-            date = datetime.date.today()
-
             try:
-                counter = Counter.objects.get(date=date)
+                counter = Counter.objects.get(date=datetime.date.today())
 
                 counter.faults += 1
                 counter.save()
             except Counter.DoesNotExist:
-                counter = Counter(date=date, faults=1)
+                counter = Counter(date=datetime.date.today(), faults=1)
 
                 counter.save()
 
