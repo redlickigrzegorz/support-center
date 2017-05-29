@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-06 15:40+0200\n"
+"POT-Creation-Date: 2017-05-29 13:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,203 +19,206 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2);\n"
 
-#: cti/static/cti/js/confirmator.js:6 cti/static/cti/js/confirmator.js:33
+#: .\cti\static\cti\js\confirmator.js:6 .\cti\static\cti\js\confirmator.js:33
+#: .\cti\static\cti\js\validator.js:102 .\cti\static\cti\js\validator.js:186
+#: .\cti\static\cti\js\validator.js:243
 msgid "confirm!"
 msgstr "potwierdź!"
 
-#: cti/static/cti/js/confirmator.js:7
+#: .\cti\static\cti\js\confirmator.js:7
 msgid "are you sure you want to report phone number??"
 msgstr "czy na pewno chcesz zgłosić ten numer telefonu??"
 
-#: cti/static/cti/js/confirmator.js:11 cti/static/cti/js/confirmator.js:38
-#: cti/static/cti/js/validator.js:107 cti/static/cti/js/validator.js:191
-#: cti/static/cti/js/validator.js:248
+#: .\cti\static\cti\js\confirmator.js:11 .\cti\static\cti\js\confirmator.js:38
+#: .\cti\static\cti\js\validator.js:107 .\cti\static\cti\js\validator.js:191
+#: .\cti\static\cti\js\validator.js:248
 msgid "confirm"
 msgstr "potwierdź"
 
-#: cti/static/cti/js/confirmator.js:17 cti/static/cti/js/confirmator.js:44
-#: cti/static/cti/js/validator.js:113 cti/static/cti/js/validator.js:197
-#: cti/static/cti/js/validator.js:254
+#: .\cti\static\cti\js\confirmator.js:17 .\cti\static\cti\js\confirmator.js:44
+#: .\cti\static\cti\js\validator.js:113 .\cti\static\cti\js\validator.js:197
+#: .\cti\static\cti\js\validator.js:254
 msgid "close"
 msgstr "zamknij"
 
-#: cti/static/cti/js/confirmator.js:34
+#: .\cti\static\cti\js\confirmator.js:34
 msgid "are you sure you want to ask for reassign??"
 msgstr "czy na pewno chcesz poprosić o przepisanie tego zgłoszenia"
 
-#: cti/static/cti/js/modal.js:5
+#: .\cti\static\cti\js\modal.js:5
 msgid "Project was written for:"
 msgstr "Projekt został stworzony dla:"
 
-#: cti/static/cti/js/modal.js:6
+#: .\cti\static\cti\js\modal.js:6
 msgid "- credit with subject"
 msgstr "- zaliczenia przedmiotu"
 
-#: cti/static/cti/js/modal.js:7
+#: .\cti\static\cti\js\modal.js:7
 msgid "- cloud computing for web application"
 msgstr "- przetwarzania w chmurze dla aplikacji webowych"
 
-#: cti/static/cti/js/modal.js:8
+#: .\cti\static\cti\js\modal.js:8
 msgid "- operation system for web application"
 msgstr "- systemu aplikacji"
 
-#: cti/static/cti/js/modal.js:9
+#: .\cti\static\cti\js\modal.js:9
 msgid "In the same time, mobile application is developed"
 msgstr "W tym samym czasie jest rozwijany projekt aplikacji mobilnej"
 
-#: cti/static/cti/js/modal.js:10
+#: .\cti\static\cti\js\modal.js:10
 msgid "For now application is ready only for CTI building"
 msgstr "Na ten moment aplikacja jest gotowa jedynie dla budynku CTI"
 
-#: cti/static/cti/js/modal.js:11
+#: .\cti\static\cti\js\modal.js:11
 msgid "Emergency number: 112"
 msgstr "Numer alarmowy: 112"
 
-#: cti/static/cti/js/modal.js:12
+#: .\cti\static\cti\js\modal.js:12
 msgid "Municipal Police: 986"
 msgstr "Straż miejska: 986"
 
-#: cti/static/cti/js/modal.js:13
+#: .\cti\static\cti\js\modal.js:13
 msgid "Energy Ambulance: 991"
 msgstr "Pogotowie energetyczne: 991"
 
-#: cti/static/cti/js/modal.js:14
+#: .\cti\static\cti\js\modal.js:14
 msgid "Gas Ambulance: 992"
 msgstr "Pogotowie gazowe: 992"
 
-#: cti/static/cti/js/modal.js:15
+#: .\cti\static\cti\js\modal.js:15
 msgid "Police: 997"
 msgstr "Policja: 997"
 
-#: cti/static/cti/js/modal.js:16
+#: .\cti\static\cti\js\modal.js:16
 msgid "Fire brigade: 998"
 msgstr "Straż pożarna: 998"
 
-#: cti/static/cti/js/modal.js:17
+#: .\cti\static\cti\js\modal.js:17
 msgid "Emergency Medical Services: 999"
 msgstr "Pogotowie ratunkowe: 999"
 
-#: cti/static/cti/js/modal.js:18
+#: .\cti\static\cti\js\modal.js:18
 msgid "Administration of CTI building:"
 msgstr "Administracja budynku CTI"
 
-#: cti/static/cti/js/modal.js:19
+#: .\cti\static\cti\js\modal.js:19
 msgid "- email: cti@adm.p.lodz.pl"
 msgstr "- email: cti@adm.p.lodz.pl"
 
-#: cti/static/cti/js/modal.js:20
+#: .\cti\static\cti\js\modal.js:20
 msgid "- telephone: + 48 42 631 24 40"
 msgstr "- numer telefonu: + 48 42 631 24 40"
 
-#: cti/static/cti/js/option_menu.js:12
+#: .\cti\static\cti\js\option_menu.js:12
 msgid "resolved faults"
 msgstr "zakończone zgłoszenia"
 
-#: cti/static/cti/js/option_menu.js:19 cti/static/cti/js/option_menu.js:43
-#: cti/static/cti/js/option_menu.js:62 cti/static/cti/js/option_menu.js:86
-#: cti/static/cti/js/option_menu.js:120
+#: .\cti\static\cti\js\option_menu.js:19 .\cti\static\cti\js\option_menu.js:43
+#: .\cti\static\cti\js\option_menu.js:62 .\cti\static\cti\js\option_menu.js:86
+#: .\cti\static\cti\js\option_menu.js:120
 msgid "details"
 msgstr "szczegóły"
 
-#: cti/static/cti/js/option_menu.js:24 cti/static/cti/js/option_menu.js:48
-#: cti/static/cti/js/option_menu.js:130
+#: .\cti\static\cti\js\option_menu.js:24 .\cti\static\cti\js\option_menu.js:48
+#: .\cti\static\cti\js\option_menu.js:130
 msgid "restore"
 msgstr "przywróć"
 
-#: cti/static/cti/js/option_menu.js:36
+#: .\cti\static\cti\js\option_menu.js:36
 msgid "deleted faults"
 msgstr "usunięte zgłoszenia"
 
-#: cti/static/cti/js/option_menu.js:60
+#: .\cti\static\cti\js\option_menu.js:60
 msgid "faults assigned to me"
 msgstr "przypisz do mnie"
 
-#: cti/static/cti/js/option_menu.js:67 cti/static/cti/js/option_menu.js:91
-#: cti/static/cti/js/option_menu.js:125
+#: .\cti\static\cti\js\option_menu.js:67 .\cti\static\cti\js\option_menu.js:91
+#: .\cti\static\cti\js\option_menu.js:125
 msgid "edit"
 msgstr "edytuj"
 
-#: cti/static/cti/js/option_menu.js:72
+#: .\cti\static\cti\js\option_menu.js:72
 msgid "finish"
 msgstr "zakończ"
 
-#: cti/static/cti/js/option_menu.js:77 cti/static/cti/js/option_menu.js:101
+#: .\cti\static\cti\js\option_menu.js:77
+#: .\cti\static\cti\js\option_menu.js:101
 msgid "delete"
 msgstr "usuń"
 
-#: cti/static/cti/js/option_menu.js:96
+#: .\cti\static\cti\js\option_menu.js:96
 msgid "assign to me"
 msgstr "przypisz do mnie"
 
-#: cti/static/cti/js/option_menu.js:135
+#: .\cti\static\cti\js\option_menu.js:135
 msgid "block"
 msgstr "zablokuj"
 
-#: cti/static/cti/js/validator.js:29
+#: .\cti\static\cti\js\validator.js:29
 msgid "phone number is required"
 msgstr "numer telefonu jest wymagany"
 
-#: cti/static/cti/js/validator.js:36
+#: .\cti\static\cti\js\validator.js:36
 msgid ""
 "allowed phone number format: +999999999 (9-15 digits with possible plus)"
 msgstr ""
 "wymagany zapis numeru telefonu: +999999999 (9-15 cyfry z opcjonalnym plusem)"
 
-#: cti/static/cti/js/validator.js:48
+#: .\cti\static\cti\js\validator.js:48
 msgid "object number is required"
 msgstr "numer obiektu jest wymagany"
 
-#: cti/static/cti/js/validator.js:55
+#: .\cti\static\cti\js\validator.js:55
 msgid "allowed object number format: 9999999999 (10 digits)"
 msgstr "wymagany zapis numeru obiektu: 999999999 (10 cyfr)"
 
-#: cti/static/cti/js/validator.js:66
+#: .\cti\static\cti\js\validator.js:66
 msgid "topic is required"
 msgstr "temat jest wymagany"
 
-#: cti/static/cti/js/validator.js:73
+#: .\cti\static\cti\js\validator.js:73
 msgid "allowed topic max length: 50 signs"
 msgstr "maksymalna długość tematu to 50 znaków"
 
-#: cti/static/cti/js/validator.js:84
+#: .\cti\static\cti\js\validator.js:84
 msgid "description is required"
 msgstr "opis jest wymagany"
 
-#: cti/static/cti/js/validator.js:91
+#: .\cti\static\cti\js\validator.js:91
 msgid "allowed description max length: 200 signs"
 msgstr "maksymalna długość opisu to 200 znaków"
 
-#: cti/static/cti/js/validator.js:103 cti/static/cti/js/validator.js:187
-#: cti/static/cti/js/validator.js:244
+#: .\cti\static\cti\js\validator.js:103 .\cti\static\cti\js\validator.js:187
+#: .\cti\static\cti\js\validator.js:244
 msgid "are you sure you want to do this??"
 msgstr "na pewno chcesz to zrobić??"
 
-#: cti/static/cti/js/validator.js:134
+#: .\cti\static\cti\js\validator.js:134
 msgid "first name is required"
 msgstr "imię jest wymagane"
 
-#: cti/static/cti/js/validator.js:141
+#: .\cti\static\cti\js\validator.js:141
 msgid "first name must have first capital letter and rest lowercase"
 msgstr "imię musi posiadać pierwszą dużą literę"
 
-#: cti/static/cti/js/validator.js:151
+#: .\cti\static\cti\js\validator.js:151
 msgid "last name is required"
 msgstr "nazwisko jest wymagane"
 
-#: cti/static/cti/js/validator.js:158
+#: .\cti\static\cti\js\validator.js:158
 msgid "last name must have first capital letter and rest lowercase"
 msgstr "nazwisko musi posiadać pierwszą dużą literę"
 
-#: cti/static/cti/js/validator.js:168
+#: .\cti\static\cti\js\validator.js:168
 msgid "email is required"
 msgstr "email jest wymagany"
 
-#: cti/static/cti/js/validator.js:175
+#: .\cti\static\cti\js\validator.js:175
 msgid "email must have '@' sign and any white space"
 msgstr "email musi posiadać znak '@'"
 
-#: cti/static/cti/js/validator.js:215 cti/static/cti/js/validator.js:224
-#: cti/static/cti/js/validator.js:233 cti/static/cti/js/validator.js:271
-#: cti/static/cti/js/validator.js:280
+#: .\cti\static\cti\js\validator.js:215 .\cti\static\cti\js\validator.js:224
+#: .\cti\static\cti\js\validator.js:233 .\cti\static\cti\js\validator.js:271
+#: .\cti\static\cti\js\validator.js:280
 msgid "field is required"
 msgstr "to pole jest wymagane"

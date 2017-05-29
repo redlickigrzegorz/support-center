@@ -99,7 +99,7 @@ function validateFault() {
 
     if (validation) {
         $.confirm({
-            title: 'confirm!',
+            title: gettext('confirm!'),
             content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
@@ -183,7 +183,7 @@ function validateUser() {
 
     if (validation) {
         $.confirm({
-            title: 'confirm!',
+            title: gettext('confirm!'),
             content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
@@ -240,7 +240,7 @@ function validatePassword() {
 
     if (validation) {
         $.confirm({
-            title: 'confirm!',
+            title: gettext('confirm!'),
             content: gettext('are you sure you want to do this??'),
             type: 'red',
             buttons: {
